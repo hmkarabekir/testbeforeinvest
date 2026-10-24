@@ -580,7 +580,12 @@ export class SocialAudienceIngestionService {
    * Builds an intuitive, high-level summary for the UI
    */
   private buildSummary(dataset: AudienceDatasetV1, platform: SocialPlatform, handle: string, _region?: string): SocialAudienceSummary {
-    const source = dataset.sources[0];
+    // When demo/JSON data is appended to an existing dataset, use the newest
+    // observed source for the headline demographics instead of the stale first source.
+    const source = [...dataset.sources].sort((a, b) =>
+      new Date(b.collectedAt).getTime() - new Date(a.collectedAt).getTime(),
+    ).find(candidate => dataset.observations.some(o => o.sourceRef === candidate.id && o.status === 'observed' && o.value !== null))
+      || [...dataset.sources].sort((a, b) => new Date(b.collectedAt).getTime() - new Date(a.collectedAt).getTime())[0];
     const observations = dataset.observations.filter((o) => o.sourceRef === source?.id && o.status === 'observed' && o.value !== null);
     const total = observations.find((o) => ['followers_count','audience_size','follower_count'].includes(o.metric) && o.unit === 'count')?.value ?? null;
     const distribution = (dimension: string): Record<string, number> => {

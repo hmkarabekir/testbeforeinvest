@@ -83,7 +83,8 @@ function generateSyntheticPixelEvents(count: number, startAnonIndex = 1, options
   return events;
 }
 
-const pixelEventsBuffer: PixelEventRecord[] = generateSyntheticPixelEvents(243, 1);
+// Start with no traffic. Synthetic traffic is added only when the demo action is used.
+const pixelEventsBuffer: PixelEventRecord[] = [];
 const oauthSessions = new Map<string, { platform: 'facebook' | 'instagram'; handle: string; redirectUri: string; expires: number }>();
 
 function getOrchestrator(mode?: string) {
@@ -362,6 +363,10 @@ const server = createServer(async (req, res) => {
       return sendJson(res, 200, { ...result, panel: { personas: panel.personas, personasCount: panel.personas.length, identitiesCount: panel.identities.length } });
     }
     if (['/api/auth/meta/callback','/api/auth/instagram/callback'].includes(pathname) && req.method === 'GET') {
+      if (pathname === '/api/auth/instagram/callback' && !url.searchParams.has('code')
+        && !url.searchParams.has('state') && !url.searchParams.has('error')) {
+        return sendJson(res, 200, { status: 'ready', endpoint: 'instagram-oauth-callback' });
+      }
       const state = url.searchParams.get('state') || '';
       const session = oauthSessions.get(state);
       oauthSessions.delete(state);
@@ -383,8 +388,9 @@ const server = createServer(async (req, res) => {
         login:instagram?'instagram':'facebook',population: 'followers' });
       const panel = getOrchestrator('local').compilePanel(result.dataset);
       const payload = JSON.stringify({ type: 'META_AUTH_SUCCESS', ...result, panel: { personas: panel.personas, personasCount: panel.personas.length, identitiesCount: panel.identities.length } }).replace(/</g, '\\u003c');
+      const appOrigin = process.env.AUDIENCE_LAB_APP_ORIGIN || `http://localhost:${PORT}`;
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-      return res.end(`<!doctype html><html lang="tr"><meta charset="utf-8"><title>Meta bağlantısı</title><body><p>İzin verilen hesap verileri alındı. Bu pencereyi kapatabilirsiniz.</p><script>if(window.opener){window.opener.postMessage(${payload},window.location.origin);window.close();}</script></body></html>`);
+      return res.end(`<!doctype html><html lang="tr"><meta charset="utf-8"><title>Meta bağlantısı</title><body><p>İzin verilen hesap verileri alındı. Bu pencereyi kapatabilirsiniz.</p><script>if(window.opener){window.opener.postMessage(${payload},${JSON.stringify(appOrigin)});window.close();}</script></body></html>`);
     }
 
     // 2.5 Social Audience Extraction (Meta & X)

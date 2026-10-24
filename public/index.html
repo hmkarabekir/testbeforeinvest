@@ -1174,6 +1174,346 @@
     .pill-blue { background: var(--accent-blue-subtle); color: var(--accent-blue); }
     .pill-green { background: var(--accent-green-subtle); color: #047857; }
     .pill-gray { background: var(--surface-muted); color: var(--text-muted); }
+
+    /* Clean, Modern A/B Arena (No Spaceship Clutter) */
+    .ab-context-bar {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+    .ab-primary-row {
+      display: flex;
+      gap: 16px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+    .ab-task-group {
+      flex: 3;
+      min-width: 280px;
+    }
+    .ab-format-group {
+      flex: 1;
+      min-width: 170px;
+    }
+    .ab-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+    .ab-input-lead {
+      width: 100%;
+      box-sizing: border-box;
+      font: inherit;
+      font-size: 13px;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--text-main);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .ab-input-lead:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    }
+    .ab-select-lead {
+      width: 100%;
+      box-sizing: border-box;
+      font: inherit;
+      font-size: 13px;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+    .ab-advanced-details {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+    }
+    .ab-advanced-summary {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ab-advanced-summary:hover {
+      color: var(--accent-blue);
+    }
+    .ab-advanced-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: #f8fafc;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .ab-advanced-grid label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .ab-advanced-grid select {
+      font-size: 12px;
+      padding: 6px 8px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #ffffff;
+    }
+    .ab-arena-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .ab-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .ab-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+    .ab-card.side-a {
+      border-top: 3px solid #3b82f6;
+    }
+    .ab-card.side-b {
+      border-top: 3px solid #10b981;
+    }
+    .ab-card-header {
+      padding: 14px 18px;
+      background: #fbfcfe;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .ab-badge-pill {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 4px 10px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ab-badge-a {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #dbeafe;
+    }
+    .ab-badge-b {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #d1fae5;
+    }
+    .ab-ai-derive-box {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ab-derive-select {
+      font-size: 11px;
+      padding: 5px 8px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #ffffff;
+      color: var(--text-main);
+    }
+    .btn-derive-action {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      color: #ffffff;
+      border: none;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .btn-derive-action:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+    .btn-derive-action:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .ab-card-body {
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+    }
+    .ab-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .ab-title-input {
+      font-size: 14px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--text-main);
+      box-sizing: border-box;
+      width: 100%;
+    }
+    .ab-title-input:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+    }
+    .ab-content-textarea {
+      font-family: inherit;
+      font-size: 13px;
+      line-height: 1.5;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--text-main);
+      resize: vertical;
+      min-height: 95px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+    .ab-content-textarea:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+    }
+    .ab-cta-box {
+      background: #f8fafc;
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .ab-cta-icon {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+    .ab-cta-input {
+      background: transparent;
+      border: none;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-main);
+      width: 100%;
+    }
+    .ab-cta-input:focus {
+      outline: none;
+    }
+    .ab-media-tray {
+      border-top: 1px solid #f1f5f9;
+      padding-top: 8px;
+      margin-top: 4px;
+    }
+    .ab-tray-summary {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+    }
+    .ab-tray-summary:hover {
+      color: var(--accent-blue);
+    }
+    .ab-tray-content {
+      padding-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .ab-footer-notice {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: -6px;
+      margin-bottom: 12px;
+    }
+    @media (max-width: 820px) {
+      .ab-arena-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Top Nav Quick Demo Fill (S Button) */
+    .btn-s-magic {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      padding: 0;
+      border-radius: 8px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      color: #ffffff;
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      letter-spacing: 0;
+      line-height: 1;
+    }
+    .btn-s-magic:hover {
+      transform: translateY(-1px) scale(1.06);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    }
+    .btn-s-magic:active {
+      transform: translateY(1px) scale(0.96);
+      box-shadow: 0 1px 3px rgba(37, 99, 235, 0.4);
+    }
+    .btn-s-magic.loading {
+      opacity: 0.7;
+      animation: pulse-s 1s infinite alternate;
+      cursor: wait;
+    }
+    @keyframes pulse-s {
+      from { transform: scale(0.97); opacity: 0.6; }
+      to { transform: scale(1.03); opacity: 1; }
+    }
   </style>
   <link rel="stylesheet" href="/lab.css">
   <script src="/lab.js" defer></script>
@@ -1197,6 +1537,7 @@
           <option value="codex">Codex CLI (gpt-6-luna)</option>
           <option value="local" selected>Kural Motoru (Yerel Heuristic)</option>
         </select>
+        <button id="btnQuickSynthetic" type="button" class="btn-s-magic" title="Tüm Sentetik Verileri Doldur (Sunum Modu)" onclick="quickFillAllSyntheticData()">S</button>
       </div>
     </div>
   </header>
@@ -1600,37 +1941,177 @@ Talk is cheap show me the code prensibi.</textarea>
       </div>
     </section>
     <section class="panel" id="experimentPanel">
-      <div class="panel-header"><div class="panel-title-group"><span class="step-badge">2</span><div><div class="panel-title">A ve B deneyimini karşılaştır</div><div class="panel-subtitle">Web, mobil ekran, akış, görsel, HTML veya metin</div></div></div></div>
-      <div class="lab-fields">
-        <label>Test hedefi<select id="testObjective"><option value="task-completion">Görevi tamamlamayı kolaylaştırma</option><option value="clarity">Anlaşılabilirlik</option><option value="trust">Güven</option><option value="attention">Dikkat ve fark edilebilirlik</option><option value="consideration">Seçeneği değerlendirme</option><option value="click-intent">Sonraki adıma yönelme</option></select></label>
-        <label>Deneyim<select id="testSurface"><option value="web">Web sitesi</option><option value="mobile">Mobil uygulama</option><option value="content">İçerik / teklif</option><option value="other">Diğer</option></select></label>
-        <label class="lab-wide">Kullanıcı ne yapmak istiyor?<input id="testTask" maxlength="1000" value="Ürünün nasıl çalıştığını anlamak ve uygun planı incelemek" placeholder="Örn. hesap oluşturmak, plan seçmek veya ödeme adımını bulmak"></label>
-        <label>Materyal<select id="artifactType"><option value="text">Metin / teklif</option><option value="screen">Ekran görüntüsü / görsel</option><option value="flow">Birden fazla ekranla akış</option><option value="html">HTML kaynak kodu</option></select></label>
-        <label>Değişen öğe<select id="testedVariable"><option value="bundle">Bütün konsept / birden fazla öğe</option><option value="hook">Başlık / açılış</option><option value="cta">Eylem çağrısı</option><option value="need-frame">İhtiyacın anlatımı</option><option value="proof">Açıklama / dayanak</option><option value="length">Metin uzunluğu</option></select></label>
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <span class="step-badge">2</span>
+          <div>
+            <div class="panel-title">A ve B Deneyimini Karşılaştır</div>
+            <div class="panel-subtitle">Materyalleri doğrudan girin veya A'dan yapay zeka ile otomatik B alternatifi üretin</div>
+          </div>
+        </div>
+        <div class="panel-badges">
+          <span class="pill pill-blue">A / B Arena</span>
+          <span class="pill pill-green">Canlı Önizleme</span>
+        </div>
       </div>
-      <p class="lab-help">A ve B aynı kullanıcı görevi için değerlendirilir. Birden fazla öğe değişirse sonuç bütün deneyimin tercihidir. Site adresi tek başına görüntü sağlamaz; HTML veya ekran görüntüsü ekleyin.</p>
-      <div class="lab-artifacts">
-        <article class="lab-artifact" data-side="a"><div class="lab-artifact-head"><strong class="lab-letter">A</strong><span class="lab-help">Mevcut / ilk seçenek</span></div>
-          <label>Başlık veya varyant adı<input id="artifactTitleA" maxlength="150" value="CSV ile veri içe aktarma."></label>
-          <label><span class="lab-content-label">Materyal metni</span><textarea id="artifactContentA" rows="5" maxlength="20000">CSV ile veri içe aktarma. Kurulum kontrol listesi bulunur.</textarea></label>
-          <label>Sonraki adım / CTA (isteğe bağlı)<input id="artifactCtaA" maxlength="80" value="Planı incele"></label>
-          <label>Görseller (PNG, JPEG, WebP; en fazla 3 × 2 MB)<input id="artifactFilesA" type="file" accept="image/png,image/jpeg,image/webp" multiple></label>
-          <div class="lab-preview" id="artifactPreviewA"></div><button type="button" class="btn" data-clear-images="a">Görselleri temizle</button>
-          <label>Referans adresi (isteğe bağlı)<input id="artifactUrlA" type="url" maxlength="2000" placeholder="https://... (otomatik açılmaz)"></label>
-          <iframe class="lab-html-preview lab-hidden" id="artifactHtmlA" title="A HTML önizlemesi" sandbox=""></iframe>
+
+      <!-- Sadeleştirilmiş Test Görevi & Format Çubuğu -->
+      <div class="ab-context-bar">
+        <div class="ab-primary-row">
+          <div class="ab-task-group">
+            <label for="testTask" class="ab-label">Kullanıcı Görevi & Test Amacı <span style="font-weight: 400; color: var(--accent-blue);">(Zorunlu)</span></label>
+            <input id="testTask" class="ab-input-lead" maxlength="1000" value="Ürünün nasıl çalıştığını anlamak ve uygun planı incelemek" placeholder="Örn. Kullanıcı ürünü anlayıp fiyat planını seçecek mi?" />
+          </div>
+          <div class="ab-format-group">
+            <label for="artifactType" class="ab-label">Materyal Formatı</label>
+            <select id="artifactType" class="ab-select-lead">
+              <option value="text" selected>Metin & Reklam Metni</option>
+              <option value="screen">Ekran Görüntüsü / Görsel</option>
+              <option value="flow">Çoklu Ekran Akışı</option>
+              <option value="html">HTML Kaynak Kodu</option>
+            </select>
+          </div>
+        </div>
+
+        <details class="ab-advanced-details">
+          <summary class="ab-advanced-summary">
+            Gelişmiş Deney Parametreleri (Test Hedefi, Yüzey, Değişen Öğe)
+          </summary>
+          <div class="ab-advanced-grid">
+            <label>
+              <span>Test Hedefi</span>
+              <select id="testObjective">
+                <option value="task-completion" selected>Görevi tamamlamayı kolaylaştırma</option>
+                <option value="clarity">Anlaşılabilirlik</option>
+                <option value="trust">Güven</option>
+                <option value="attention">Dikkat ve fark edilebilirlik</option>
+                <option value="consideration">Seçeneği değerlendirme</option>
+                <option value="click-intent">Sonraki adıma yönelme</option>
+              </select>
+            </label>
+            <label>
+              <span>Deneyim Yüzeyi</span>
+              <select id="testSurface">
+                <option value="web" selected>Web sitesi</option>
+                <option value="mobile">Mobil uygulama</option>
+                <option value="content">İçerik / teklif</option>
+                <option value="other">Diğer</option>
+              </select>
+            </label>
+            <label>
+              <span>Değişen Bileşen</span>
+              <select id="testedVariable">
+                <option value="bundle" selected>Bütün konsept / birden fazla öğe</option>
+                <option value="hook">Başlık / açılış</option>
+                <option value="cta">Eylem çağrısı</option>
+                <option value="need-frame">İhtiyacın anlatımı</option>
+                <option value="proof">Açıklama / dayanak</option>
+                <option value="length">Metin uzunluğu</option>
+              </select>
+            </label>
+          </div>
+        </details>
+      </div>
+
+      <!-- Modern A / B Karşılaştırma Arenası -->
+      <div class="ab-arena-grid">
+        <!-- VARYANT A (Kontrol / Orijinal) -->
+        <article class="lab-artifact ab-card side-a" data-side="a">
+          <div class="ab-card-header">
+            <span class="ab-badge-pill ab-badge-a">VARYANT A · ORİJİNAL</span>
+            <span style="font-size: 11px; color: var(--text-muted); font-weight: 500;">Kontrol Seçeneği</span>
+          </div>
+          <div class="ab-card-body">
+            <div class="ab-field-group">
+              <label for="artifactTitleA" style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Başlık & Açılış Kancası</label>
+              <input id="artifactTitleA" class="ab-title-input" maxlength="150" value="CSV ile veri içe aktarma." placeholder="Başlık veya kanca girin" />
+            </div>
+
+            <div class="ab-field-group">
+              <label for="artifactContentA" class="lab-content-label" style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Materyal metni</label>
+              <textarea id="artifactContentA" class="ab-content-textarea" rows="4" maxlength="20000" placeholder="Materyal metni veya ekran açıklamasını buraya yazın...">CSV ile veri içe aktarma. Kurulum kontrol listesi bulunur.</textarea>
+            </div>
+
+            <div class="ab-field-group">
+              <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Eylem Butonu (CTA)</label>
+              <div class="ab-cta-box">
+                <span class="ab-cta-icon">→</span>
+                <input id="artifactCtaA" class="ab-cta-input" maxlength="80" value="Planı incele" placeholder="Örn. Planı İncele, Hemen Başla" />
+              </div>
+            </div>
+
+            <details class="ab-media-tray">
+              <summary class="ab-tray-summary">Görseller, Referans URL ve HTML Önizleme</summary>
+              <div class="ab-tray-content">
+                <label style="font-size: 11px; color: var(--text-muted); display: block;">
+                  Ekran Görüntüleri (En fazla 3 × 2 MB)
+                  <input id="artifactFilesA" type="file" accept="image/png,image/jpeg,image/webp" multiple style="margin-top: 4px; font-size: 11px;" />
+                </label>
+                <div class="lab-preview" id="artifactPreviewA"></div>
+                <button type="button" class="btn" data-clear-images="a" style="font-size: 10px; padding: 3px 8px; align-self: flex-start;">Görselleri Temizle</button>
+                <input id="artifactUrlA" type="url" maxlength="2000" placeholder="Referans URL (https://...)" class="ab-input-lead" style="font-size: 11px; padding: 6px 8px;" />
+                <iframe class="lab-html-preview lab-hidden" id="artifactHtmlA" title="A HTML önizlemesi" sandbox=""></iframe>
+              </div>
+            </details>
+          </div>
         </article>
-        <article class="lab-artifact" data-side="b"><div class="lab-artifact-head"><strong class="lab-letter">B</strong><span class="lab-help">Yeni / alternatif seçenek</span></div>
-          <label>Başlık veya varyant adı<input id="artifactTitleB" maxlength="150" value="Kuruluma nereden başlarsınız?"></label>
-          <label><span class="lab-content-label">Materyal metni</span><textarea id="artifactContentB" rows="5" maxlength="20000">CSV ile veri içe aktarma. Kurulum kontrol listesi bulunur.</textarea></label>
-          <label>Sonraki adım / CTA (isteğe bağlı)<input id="artifactCtaB" maxlength="80" value="Planı incele"></label>
-          <label>Görseller (PNG, JPEG, WebP; en fazla 3 × 2 MB)<input id="artifactFilesB" type="file" accept="image/png,image/jpeg,image/webp" multiple></label>
-          <div class="lab-preview" id="artifactPreviewB"></div><button type="button" class="btn" data-clear-images="b">Görselleri temizle</button>
-          <label>Referans adresi (isteğe bağlı)<input id="artifactUrlB" type="url" maxlength="2000" placeholder="https://... (otomatik açılmaz)"></label>
-          <iframe class="lab-html-preview lab-hidden" id="artifactHtmlB" title="B HTML önizlemesi" sandbox=""></iframe>
+
+        <!-- VARYANT B (Alternatif / Challenger) -->
+        <article class="lab-artifact ab-card side-b" data-side="b">
+          <div class="ab-card-header">
+            <span class="ab-badge-pill ab-badge-b">VARYANT B · ALTERNATİF</span>
+            <div class="ab-ai-derive-box">
+              <select id="deriveAngle" class="ab-derive-select">
+                <option value="concise" selected>Kısa ve doğrudan</option>
+                <option value="problem">Problem odaklı</option>
+                <option value="actionable">Sonraki adımı netleştir</option>
+                <option value="story">Süreç anlatımı</option>
+                <option value="contrarian">Varsayımı sorgula</option>
+              </select>
+              <button type="button" class="btn-derive-action" id="btnDerive">
+                A'dan B Üret
+              </button>
+            </div>
+          </div>
+          <div class="ab-card-body">
+            <div class="ab-field-group">
+              <label for="artifactTitleB" style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Başlık & Açılış Kancası</label>
+              <input id="artifactTitleB" class="ab-title-input" maxlength="150" value="Kuruluma nereden başlarsınız?" placeholder="Başlık veya kanca girin" />
+            </div>
+
+            <div class="ab-field-group">
+              <label for="artifactContentB" class="lab-content-label" style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Materyal metni</label>
+              <textarea id="artifactContentB" class="ab-content-textarea" rows="4" maxlength="20000" placeholder="Alternatif metin veya ekran açıklamasını buraya yazın...">CSV ile veri içe aktarma. Kurulum kontrol listesi bulunur.</textarea>
+            </div>
+
+            <div class="ab-field-group">
+              <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Eylem Butonu (CTA)</label>
+              <div class="ab-cta-box">
+                <span class="ab-cta-icon">→</span>
+                <input id="artifactCtaB" class="ab-cta-input" maxlength="80" value="Planı incele" placeholder="Örn. Planı İncele, Hemen Başla" />
+              </div>
+            </div>
+
+            <details class="ab-media-tray">
+              <summary class="ab-tray-summary">Görseller, Referans URL ve HTML Önizleme</summary>
+              <div class="ab-tray-content">
+                <label style="font-size: 11px; color: var(--text-muted); display: block;">
+                  Ekran Görüntüleri (En fazla 3 × 2 MB)
+                  <input id="artifactFilesB" type="file" accept="image/png,image/jpeg,image/webp" multiple style="margin-top: 4px; font-size: 11px;" />
+                </label>
+                <div class="lab-preview" id="artifactPreviewB"></div>
+                <button type="button" class="btn" data-clear-images="b" style="font-size: 10px; padding: 3px 8px; align-self: flex-start;">Görselleri Temizle</button>
+                <input id="artifactUrlB" type="url" maxlength="2000" placeholder="Referans URL (https://...)" class="ab-input-lead" style="font-size: 11px; padding: 6px 8px;" />
+                <iframe class="lab-html-preview lab-hidden" id="artifactHtmlB" title="B HTML önizlemesi" sandbox=""></iframe>
+              </div>
+            </details>
+          </div>
         </article>
       </div>
-      <div class="lab-actions"><label class="lab-help">Alternatif yaklaşımı <select id="deriveAngle"><option value="concise">Kısa ve doğrudan</option><option value="problem">Problem odaklı</option><option value="actionable">Sonraki adımı netleştir</option><option value="story">Süreç anlatımı</option><option value="contrarian">Varsayımı sorgula</option></select></label><button type="button" class="btn" id="btnDerive">A'dan metin / HTML alternatifi öner</button></div>
-      <p class="lab-help" id="materialNotice">Görsel varsa değerlendirmeye eklenir. Yerel kurallar görüntü okuyamaz. HTML önizlemesinde script ve dış ağ kapalıdır; görünüm analizi için ekran görüntüsü de ekleyebilirsiniz.</p>
+
+      <div class="ab-footer-notice" id="materialNotice">
+        A ve B varyantları aynı kullanıcı görevi için değerlendirilir. A'dan B üretildiğinde ürün gerçekleri korunur.
+      </div>
     </section>
     <section class="panel" id="runPanel">
       <div class="panel-header"><div class="panel-title-group"><span class="step-badge">3</span><div><div class="panel-title">Paneli çalıştır</div><div class="panel-subtitle">Tercih, puan ve gerekçeler; belirsiz sonuçlar korunur</div></div></div></div>
@@ -1872,6 +2353,123 @@ Talk is cheap show me the code prensibi.</textarea>
       if (seed) params.set('seed', seed);
       window.location.href = `/api/demo/export?${params.toString()}`;
     }
+
+    async function quickFillAllSyntheticData() {
+      const btn = document.getElementById('btnQuickSynthetic');
+      if (btn) btn.classList.add('loading');
+      try {
+        const scSelect = document.getElementById('demoScenarioSelect');
+        if (scSelect) scSelect.value = 'software-builders';
+        const sizeSelect = document.getElementById('demoSizeSelect');
+        if (sizeSelect) sizeSelect.value = 'medium';
+
+        // 1. Fetch full demo scenario from server
+        const res = await fetch('/api/demo/load', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            scenarioId: 'software-builders',
+            size: 'medium',
+            seed: 'sunum-v1',
+            mode: 'replace'
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Sentetik demo verisi yuklenemedi.');
+
+        activeDataset = data.dataset;
+        renderAudienceSummary(data.summary, data.panel);
+
+        // 2. Populate Audience Builder fields (for when user flips to synthetic tab in presentation)
+        const descEl = document.getElementById('builderAudienceDesc');
+        if (descEl) descEl.value = 'B2B SaaS ve e-ticaret kuruculari, urun yoneticileri ve dijital buyume liderleri';
+        const regionEl = document.getElementById('builderRegion');
+        if (regionEl) regionEl.value = 'Global';
+        const knowEl = document.getElementById('builderKnowledge');
+        if (knowEl) knowEl.value = 'Advanced';
+        const sliderEl = document.getElementById('builderAgeSlider');
+        if (sliderEl) {
+          sliderEl.value = '42';
+          if (typeof updateAgeRangeDisplay === 'function') updateAgeRangeDisplay('42');
+        }
+
+        // Activate relevant topic pills
+        const topics = ['Technology', 'Crypto & Web3', 'Finance'];
+        document.querySelectorAll('#builderTopicsGroup .builder-pill').forEach(pill => {
+          const val = pill.getAttribute('data-val') || pill.textContent.trim();
+          if (topics.includes(val)) pill.classList.add('active');
+        });
+
+        // 3. Pixel status indicator
+        const pixelEventsEl = document.getElementById('pixelTotalEvents');
+        if (pixelEventsEl) pixelEventsEl.innerText = '243 ziyaretci hareketi (Aktif Canli)';
+
+        // 4. Populate Grok research input
+        const grokInput = document.getElementById('grokReportInput');
+        if (grokInput) {
+          grokInput.value = 'Kitle: SaaS Kuruculari & Buyume Liderleri\\n1. Kurucu (32, Remote): "Reklam harcamasini baslatmadan once hangi kancanin ve CTA\'in daha yuksek donusum getirecegini gormek istiyorum."\\n2. Urun Yoneticisi (28, Istanbul): "Ekibimiz her hafta yeni ozellik cikariyor, kitlemizin cekincelerini onceden modellemek zaman kazandirir."\\n3. Buyume Lideri (36, Londra): "Tahmine dayali butce yonetimi yerine simulasyon ciktisiyla karar almak ROI\'yi katlar."';
+        }
+
+        // 5. Populate Section 2: A/B Arena Context & Creatives
+        const taskEl = document.getElementById('testTask');
+        if (taskEl) taskEl.value = 'Kullanici yeni AI destekli kitle test aracini kesfedip ucretsiz deneme baslatmali';
+        const typeEl = document.getElementById('artifactType');
+        if (typeEl) {
+          typeEl.value = 'social_ad';
+          typeEl.dispatchEvent(new Event('change'));
+        }
+        const objEl = document.getElementById('testObjective');
+        if (objEl) objEl.value = 'conversion';
+        const surfEl = document.getElementById('testSurface');
+        if (surfEl) surfEl.value = 'mobile';
+        const varEl = document.getElementById('testedVariable');
+        if (varEl) varEl.value = 'copy';
+
+        // Variant A (Kontrol)
+        const titleA = document.getElementById('artifactTitleA');
+        if (titleA) titleA.value = 'AI Destekli Kitle Analizi ile Donusumunuzu %40 Artirin';
+        const bodyA = document.getElementById('artifactContentA');
+        if (bodyA) {
+          bodyA.value = 'Gercek zamanli davranissal zeka ve sentetik kitle paneliyle reklam butcenizi riske atmadan en iyi varyanti belirleyin. 14 gun ucretsiz deneyin, kredi karti gerekmez.';
+          bodyA.dispatchEvent(new Event('input'));
+        }
+        const ctaA = document.getElementById('artifactCtaA');
+        if (ctaA) ctaA.value = 'Hemen Ucretsiz Basla';
+
+        // Variant B (Challenger)
+        const titleB = document.getElementById('artifactTitleB');
+        if (titleB) titleB.value = 'Butcenizi Bosa Harcamayin: Yatirimdan Once Test Edin';
+        const bodyB = document.getElementById('artifactContentB');
+        if (bodyB) {
+          bodyB.value = 'Tahmin yurutmeyi birakin. 240+ sentetik simulasyon profiliyle kampanyonuzun kazanip kazanmayacagini yayina girmeden 3 saniyede gorun. Sifir reklam kaybi.';
+          bodyB.dispatchEvent(new Event('input'));
+        }
+        const ctaB = document.getElementById('artifactCtaB');
+        if (ctaB) ctaB.value = 'Simulasyonu Simdi Baslat';
+
+        if (taskEl) taskEl.dispatchEvent(new Event('input'));
+
+        if (window.OctopiqUI) {
+          window.OctopiqUI.renderAudience(data.summary, data.panel, activeDataset);
+        }
+
+        showToast('Sunum modu aktif: Tum sentetik kitle ve A/B materyalleri dolduruldu!', 'success');
+      } catch (err) {
+        showToast('Sentetik Doldurma Hatasi: ' + err.message, 'error');
+      } finally {
+        if (btn) btn.classList.remove('loading');
+      }
+    }
+
+    // Keyboard shortcut: Pressing S triggers quick fill when not typing
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 's' || e.key === 'S') {
+        const tag = (document.activeElement?.tagName || '').toUpperCase();
+        if (!['INPUT', 'TEXTAREA', 'SELECT'].includes(tag) && !document.activeElement?.isContentEditable) {
+          quickFillAllSyntheticData();
+        }
+      }
+    });
 
     function switchAudienceMode(mode) {
       const btnReal = document.getElementById('btnModeReal');
