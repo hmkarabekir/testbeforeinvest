@@ -2,6 +2,8 @@
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
+  const value = (id, fallback='') => { const element=$(id); return element && 'value' in element ? String(element.value ?? fallback) : fallback; };
+  const setValue = (id, next) => { const element=$(id); if(element && 'value' in element) element.value=next; };
   const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const state = { dataset: null, personas: [], selectedPersonaIds: [], images: { a: [], b: [] }, busy: false, revision: 0, uploads: 0, uploadVersion: { a: 0, b: 0 } };
   const labels = { A:'Panel tercihi: A', B:'Panel tercihi: B', mixed:'Panel bölündü · net tercih yok', tie:'Panelde beraberlik', neither:'İki seçenek de tercih edilmedi', 'insufficient-data':'Karar için yeterli bağlam / değerlendirme yok', 'invalid-creative':'Desteklenmeyen iddialar bulundu' };
@@ -12,31 +14,34 @@
   function changed() { state.revision++; $('resultsArea').classList.add('lab-hidden'); updateControls(); }
   function updateControls() {
     if (!$('btnRun')) return;
-    const selectedCount = state.selectedPersonaIds.length || state.personas.length;
-    const count = $('panelMode').value === 'demo' ? Math.min(6,selectedCount) : selectedCount*3;
-    const engine = $('engineSelector').value;
+    const selectedCount = state.selectedPersonaIds.length;
+    const count = value('panelMode','demo') === 'demo' ? Math.min(6,selectedCount) : selectedCount*3;
+    const engine = value('engineSelector','codex');
     const calls = count*6;
     $('runEstimate').textContent = `${count} kimlik · 2 ters sıralı tekrar · ${calls} değerlendirme${engine === 'local' ? ' · model çağrısı yok' : ' · gerçek model kullanımı'}`;
-    $('btnRun').disabled = !state.dataset || state.busy || state.uploads > 0;
-    $('btnRun').textContent = state.busy ? 'İşleniyor…' : !state.dataset ? 'Önce kitle kartları hazırlanıyor…' : engine === 'local' ? 'Yerel kurallarla dene' : `Luna ile değerlendir (${calls} görev)`;
-    $('btnDerive').disabled = !state.dataset || state.busy || state.uploads > 0 || ['screen','flow'].includes($('artifactType').value);
+    $('btnRun').disabled = !state.dataset || !selectedCount || state.busy || state.uploads > 0;
+    $('btnRun').textContent = state.busy ? 'İşleniyor…' : !state.dataset ? 'Önce kitle kartları hazırlanıyor…' : !selectedCount ? 'Bir test kitlesi seçin' : engine === 'local' ? 'Yerel kurallarla dene' : `Luna ile değerlendir (${calls} görev)`;
+    const format=value('artifactType','screen'), visual=['screen','flow'].includes(format);
+    const htmlSourceReady=format==='html' && Boolean(value('artifactContentA').trim());
+    $('btnDerive').disabled = state.busy || state.uploads > 0 || (!visual && (!state.dataset || (format==='html' && !htmlSourceReady)));
+    $('btnDerive').textContent = visual ? 'B görseli yükle' : format==='html' ? 'HTML B varyantı üret' : "A'dan B üret";
   }
   function setBusy(value) { state.busy=value; updateControls(); }
-  function context() { const variable=$('testedVariable'); return { objective:$('testObjective').value, task:$('testTask').value.trim(), surface:$('testSurface').value, changedElement:variable.selectedOptions?.[0]?.textContent || variable.value || 'Bütün konsept' }; }
+  function context() { const variable=$('testedVariable'); return { objective:value('testObjective','task-completion'), task:value('testTask').trim(), surface:value('testSurface','web'), changedElement:variable?.selectedOptions?.[0]?.textContent || value('testedVariable','bundle') || 'Tüm sayfa / deneyim' }; }
   function getVariant(side) {
-    const suffix=side.toUpperCase(), format=$('artifactType').value;
-    const content=$(`artifactContent${suffix}`)?.value.trim() || '';
+    const suffix=side.toUpperCase(), format=value('artifactType','screen');
+    const content=value(`artifactContent${suffix}`).trim();
     const images=state.images[side];
     if (['screen','flow'].includes(format) && !images.length) throw new Error(`${suffix} için ekran görüntüsü yükleyin.`);
     if (format === 'html' && !content) throw new Error(`${suffix} HTML kodunu ekleyin.`);
     if (format === 'text' && !content) throw new Error(`${suffix} materyal metnini ekleyin.`);
     const product=state.dataset.products[0];
     return { id:`variant-${side}`, version:1, productId:product.id, platform:'generic', format,
-      headline:$(`artifactTitle${suffix}`)?.value.trim() || `Varyant ${suffix}`,
+      headline:value(`artifactTitle${suffix}`) || `Varyant ${suffix}`,
       body:format === 'html' ? '' : content, html:format === 'html' ? content : undefined,
-      callToAction:$(`artifactCta${suffix}`)?.value.trim() || '', images,
-      testedVariable:$('testedVariable').value, productFactRefs:product.facts.map(f=>f.id), assumptions:[], generation:'manual', productClaims:[],
-      referenceUrl:$(`artifactUrl${suffix}`)?.value.trim() || undefined };
+      callToAction:value(`artifactCta${suffix}`).trim(), images,
+      testedVariable:value('testedVariable','bundle'), productFactRefs:product.facts.map(f=>f.id), assumptions:[], generation:'manual', productClaims:[],
+      referenceUrl:value(`artifactUrl${suffix}`).trim() || undefined };
   }
   async function post(url, payload) {
     const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
@@ -50,10 +55,10 @@
       if (!state.dataset) throw new Error('Önce kitle bilgisi seçin.');
       if (!context().task) throw new Error('Kullanıcının yapmak istediği görevi yazın.');
       const variantA=getVariant('a'), variantB=getVariant('b');
-      if ($('engineSelector').value==='local' && (variantA.images.length || variantB.images.length)) throw new Error('Yerel kurallar görüntü okuyamaz. Görsel analizi için Luna seçin. Bu işlem model kullanır.');
+      if (value('engineSelector','codex')==='local' && (variantA.images.length || variantB.images.length)) throw new Error('Görsel analizi için Luna motorunu seçin.');
       const revision=state.revision;
       setBusy(true);message('Panel değerlendiriliyor. Sonuç hazır olana kadar bu sayfayı açık tutun.');
-      const result=await post('/api/run-experiment',{dataset:state.dataset,variantA,variantB,context:context(),repeats:2,panelMode:$('panelMode').value,selectedPersonaIds:state.selectedPersonaIds,engine:$('engineSelector').value});
+      const result=await post('/api/run-experiment',{dataset:state.dataset,variantA,variantB,context:context(),repeats:2,panelMode:value('panelMode','demo'),selectedPersonaIds:state.selectedPersonaIds,engine:value('engineSelector','codex')});
       if (revision!==state.revision) { message('Girdiler değiştiği için önceki isteğin sonucu gösterilmedi. Güncel materyalleri yeniden değerlendirin.'); return; }
       renderResults(result);message('Değerlendirme tamamlandı. Tercihler sentetik paneli anlatır; ölçülmüş dönüşüm sonucu değildir.');
     } catch(error) { message(error.message,'error'); }
@@ -62,13 +67,15 @@
   async function derive() {
     if (state.busy) return;
     try {
+      if (['screen','flow'].includes(value('artifactType','screen'))) { $('artifactFilesB')?.click(); return; }
       const source=getVariant('a'), revision=state.revision;
       if (source.images.length || ['screen','flow'].includes(source.format)) throw new Error('B için alternatif görseli yükleyin.');
       setBusy(true);message('Alternatif hazırlanıyor. A materyali korunacak.');
-      const result=await post('/api/derive-b',{dataset:state.dataset,sourceVariantA:source,context:context(),testedVariable:$('testedVariable').value,angle:$('deriveAngle')?.value || 'concise',engine:$('engineSelector').value});
+      const result=await post('/api/derive-b',{dataset:state.dataset,sourceVariantA:source,context:context(),testedVariable:value('testedVariable','bundle'),angle:value('deriveAngle','concise'),engine:value('engineSelector','codex')});
       if (revision!==state.revision) { message('Girdiler değişti; üretilen alternatif güncel B alanının üzerine yazılmadı.'); return; }
       const b=result.variantB;
-      $('artifactTitleB').value=b.headline; $('artifactContentB').value=b.format==='html'?b.html:b.body;
+      if($('artifactTitleB')) $('artifactTitleB').value=b.headline;
+      if($('artifactContentB')) $('artifactContentB').value=b.format==='html'?b.html:b.body;
       changed();previewHtml();
       message(`${result.evaluationMode==='local-rules'?'Yerel örnek':'Model alternatifi'} hazır. Değişen öğeler: ${result.changedElement}. Üretilen B henüz değerlendirilmedi.`);
     } catch(error) { message(error.message,'error'); }
@@ -88,7 +95,7 @@
         const html=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result||''));reader.onerror=()=>reject(new Error('HTML dosyası okunamadı.'));reader.readAsText(file);});
         if(html.length>20000) throw new Error('HTML kaynak kodu en fazla 20.000 karakter olabilir.');
         if(version!==state.uploadVersion[side]) return;
-        state.images[side]=[];$(`artifactContent${side.toUpperCase()}`).value=html;$('artifactType').value='html';changed();renderImages(side);previewHtml();
+        state.images[side]=[];setValue(`artifactContent${side.toUpperCase()}`,html);setValue('artifactType','html');changed();renderImages(side);previewHtml();
         message(`${file.name} HTML materyali olarak yüklendi ve önizlendi.`);return;
       }
       const images=[];
@@ -98,7 +105,7 @@
         images.push({name:file.name,mimeType:file.type,data:String(data).split(',')[1]});
       }
       if (version!==state.uploadVersion[side]) return;
-      state.images[side]=images;$('artifactType').value=images.length>1?'flow':'screen';changed();renderImages(side);previewHtml();message(`${images.length} görsel ${side.toUpperCase()} materyaline eklendi. Görseller değerlendirme isteği sırasında gönderilir.`);
+      state.images[side]=images;setValue('artifactType',images.length>1?'flow':'screen');changed();renderImages(side);previewHtml();message(`${images.length} görsel ${side.toUpperCase()} materyaline eklendi. Görseller değerlendirme isteği sırasında gönderilir.`);
     } catch(error) { input.value='';message(error.message,'error'); }
     finally {state.uploads--;updateControls();}
   }
@@ -111,12 +118,12 @@
     }
   }
   function previewHtml() {
-    const format=$('artifactType').value, html=format==='html', visual=['screen','flow'].includes(format);
+    const format=value('artifactType','screen'), html=format==='html', visual=['screen','flow'].includes(format);
     document.querySelectorAll('[data-requires-copy]').forEach(group=>group.classList.toggle('lab-hidden',visual));
     document.querySelectorAll('.lab-content-label').forEach(label=>{label.textContent=html?'HTML kaynak kodu':'Materyal metni';});
     for(const side of ['A','B']) {
-      const frame=$(`artifactHtml${side}`);frame.classList.toggle('lab-hidden',!html);
-      if(html) frame.srcdoc=`<!doctype html><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; form-action 'none'; base-uri 'none'"><meta charset="utf-8">${$(`artifactContent${side}`).value}`;
+      const frame=$(`artifactHtml${side}`);if(!frame) continue;frame.classList.toggle('lab-hidden',!html);
+      if(html) frame.srcdoc=`<!doctype html><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; form-action 'none'; base-uri 'none'"><meta charset="utf-8">${value(`artifactContent${side}`)}`;
       else frame.srcdoc='';
     }
   }
@@ -277,9 +284,9 @@
   function init() {
     $('btnRun').addEventListener('click',run);$('btnDerive').addEventListener('click',derive);
     for(const side of ['a','b']) $(`artifactFiles${side.toUpperCase()}`).addEventListener('change',event=>upload(side,event.target));
-    document.querySelectorAll('[data-clear-images]').forEach(button=>button.addEventListener('click',()=>{const side=button.dataset.clearImages;state.uploadVersion[side]++;state.images[side]=[];$(`artifactFiles${side.toUpperCase()}`).value='';$(`artifactContent${side.toUpperCase()}`).value='';renderImages(side);previewHtml();changed();}));
-    for(const id of ['testObjective','testTask','testSurface','testedVariable','panelMode','engineSelector','artifactTitleA','artifactTitleB','artifactContentA','artifactContentB','artifactUrlA','artifactUrlB']) $(id).addEventListener('input',()=>{changed();previewHtml();});
-    $('artifactType').addEventListener('change',()=>{document.querySelectorAll('.lab-content-label').forEach(label=>{label.textContent=$('artifactType').value==='html'?'HTML kaynak kodu':'Materyal metni / ekran açıklaması';});changed();previewHtml();});
+    document.querySelectorAll('[data-clear-images]').forEach(button=>button.addEventListener('click',()=>{const side=button.dataset.clearImages;state.uploadVersion[side]++;state.images[side]=[];setValue(`artifactFiles${side.toUpperCase()}`,'');setValue(`artifactContent${side.toUpperCase()}`,'');renderImages(side);previewHtml();changed();}));
+    for(const id of ['testObjective','testTask','testSurface','testedVariable','panelMode','engineSelector','artifactTitleA','artifactTitleB','artifactContentA','artifactContentB','artifactUrlA','artifactUrlB']) $(id)?.addEventListener('input',()=>{changed();previewHtml();});
+    $('artifactType')?.addEventListener('change',()=>{document.querySelectorAll('.lab-content-label').forEach(label=>{label.textContent=value('artifactType')==='html'?'HTML kaynak kodu':'Materyal metni / ekran açıklaması';});changed();previewHtml();});
     updateControls();previewHtml();
   }
   window.OctopiqUI={renderAudience,renderResults,getVariant,context,state,run,derive,renderCards};

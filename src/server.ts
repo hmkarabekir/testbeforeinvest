@@ -670,7 +670,7 @@ const server = createServer(async (req, res) => {
       AUDIENCE_LAB_ENGINE_INVALID: 'Karar motoru auto, codex veya local olmalıdır.',
       AUDIENCE_LAB_VISION_REQUIRES_MODEL: 'Yerel kurallar görüntü okuyamaz. Görsel değerlendirmek için Luna seçin; yerel doğrulama için metin veya HTML kullanın.',
       AUDIENCE_LAB_DERIVATION_INVALID: 'Alternatif seçilen değişiklik sınırlarını sağlamadı. A korunuyor; B alanını elle düzenleyebilir veya yeniden üretebilirsiniz.',
-      AUDIENCE_LAB_IMAGE_GENERATION_UNSUPPORTED: 'Bu yardımcı metin ve HTML alternatifi üretir. Görsel karşılaştırması için A ve B ekran görüntülerini yükleyin.',
+      AUDIENCE_LAB_IMAGE_GENERATION_UNSUPPORTED: 'Görsel varyantları ayrı dosya olarak yükleyin; Luna A ve B görsellerini değerlendirebilir.',
       SOCIAL_TOKEN_REQUIRED: 'Gerçek hesap verisi için Meta bağlantısı gerekir. Demo için örnek veri seçin.',
       X_DIRECT_DISABLED_USE_GROK: 'X için Grok araştırma raporunu içe aktarın.',
       META_REQUEST_FAILED: 'Meta isteği reddedildi. Token, hesap ve izinleri kontrol edin; örnek veriyle değiştirilmedi.',

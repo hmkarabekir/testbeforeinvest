@@ -2485,7 +2485,20 @@ Talk is cheap show me the code prensibi.</textarea>
               <input id="artifactTitleA" class="ab-title-input" maxlength="150" value="CSV ile veri içe aktarma." placeholder="Açılış Başlığı / Kanca" />
             </div>
 
-            <input id="artifactContentA" type="hidden" value="" />
+            <!-- Metin -->
+            <div class="ab-field-group" data-requires-copy>
+              <textarea id="artifactContentA" class="ab-content-textarea" rows="2" maxlength="20000"
+                placeholder="Materyal metni...">CSV ile veri içe aktarma. Kurulum kontrol listesi bulunur.</textarea>
+            </div>
+
+            <!-- Eylem Butonu (CTA) -->
+            <div class="ab-field-group" data-requires-copy>
+              <div class="ab-cta-preview-button">
+                <input id="artifactCtaA" class="ab-cta-input" maxlength="80" value="Planı incele"
+                  placeholder="CTA Butonu (Örn. Hemen Başla)" />
+                <span class="ab-cta-arrow">→</span>
+              </div>
+            </div>
 
             <!-- Gelişmiş Seçenekler & HTML (Kapalı Çekmece) -->
             <details class="ab-media-tray">
@@ -2508,6 +2521,13 @@ Talk is cheap show me the code prensibi.</textarea>
           <div class="ab-card-header">
             <span class="ab-badge-pill ab-badge-b">VARYANT B · ALTERNATİF</span>
             <div class="ab-ai-derive-box">
+              <select id="deriveAngle" class="ab-derive-select" style="display:none;">
+                <option value="concise" selected>Kısa ve doğrudan</option>
+                <option value="problem">Problem odaklı</option>
+                <option value="actionable">Sonraki adımı netleştir</option>
+                <option value="story">Süreç anlatımı</option>
+                <option value="contrarian">Varsayımı sorgula</option>
+              </select>
               <button type="button" class="btn-derive-action" id="btnDerive">A'dan B Üret</button>
             </div>
             <label for="artifactFilesB" class="ab-visual-add-btn">
@@ -2527,7 +2547,20 @@ Talk is cheap show me the code prensibi.</textarea>
               <input id="artifactTitleB" class="ab-title-input" maxlength="150" value="Kuruluma nereden başlarsınız?" placeholder="Alternatif Başlık / Kanca" />
             </div>
 
-            <input id="artifactContentB" type="hidden" value="" />
+            <!-- Metin -->
+            <div class="ab-field-group" data-requires-copy>
+              <textarea id="artifactContentB" class="ab-content-textarea" rows="2" maxlength="20000"
+                placeholder="Alternatif materyal metni...">CSV ile veri içe aktarma. Kurulum kontrol listesi bulunur.</textarea>
+            </div>
+
+            <!-- Eylem Butonu (CTA) -->
+            <div class="ab-field-group" data-requires-copy>
+              <div class="ab-cta-preview-button btn-challenger">
+                <input id="artifactCtaB" class="ab-cta-input" maxlength="80" value="Planı incele"
+                  placeholder="CTA Butonu (Örn. Şimdi Keşfet)" />
+                <span class="ab-cta-arrow">→</span>
+              </div>
+            </div>
 
             <!-- Gelişmiş Seçenekler & HTML (Kapalı Çekmece) -->
             <details class="ab-media-tray">
