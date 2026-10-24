@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OctopIQ Audience Agent Lab — AI Story & Ad A/B Simulator</title>
+  <meta name="description" content="18 izole sanal kimlikle Instagram Story ve reklam A/B testi. Codex CLI GPT-6 Luna ve yerel kurallarla sıfır maliyetli kitle simülasyonu." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #090d16;
+      --card: #0f172a;
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --accent: #14b8a6;
+      --accent-alt: #f43f5e;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); min-height: 100vh; padding: 24px; }
+    h1, h2, h3, .brand { font-family: 'Outfit', sans-serif; }
+    .header { max-width: 1200px; margin: 0 auto 32px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 20px; }
+    .brand { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #a5b4fc, #6366f1, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .engine-badge { background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); color: #c7d2fe; padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+    .engine-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 10px #10b981; }
+    .container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 32px; }
+    @media (min-width: 992px) { .container { grid-template-columns: 1fr 1fr; } }
+    .card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 24px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+    .card-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
+    .story-frame { position: relative; background: #020617; border-radius: 24px; border: 2px solid rgba(255, 255, 255, 0.12); padding: 18px; aspect-ratio: 9/16; max-width: 320px; margin: 0 auto; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+    .story-progress { display: flex; gap: 4px; margin-bottom: 12px; }
+    .story-bar { height: 3px; background: rgba(255, 255, 255, 0.35); flex: 1; border-radius: 2px; }
+    .story-bar.active { background: #fff; }
+    .story-user { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; font-size: 13px; font-weight: 600; }
+    .story-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--primary); display: grid; place-items: center; font-size: 14px; background: rgba(99, 102, 241, 0.3); }
+    .story-visual { flex: 1; border-radius: 14px; background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.4)); border: 1px dashed rgba(255, 255, 255, 0.15); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px; text-align: center; margin-bottom: 16px; }
+    .story-visual-icon { font-size: 38px; margin-bottom: 8px; }
+    .story-visual-desc { font-size: 12px; line-height: 1.4; color: #cbd5e1; font-style: italic; }
+    .story-body { margin-bottom: 16px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+    .story-headline { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+    .story-copy { font-size: 13px; line-height: 1.4; color: #e2e8f0; }
+    .story-cta { background: #fff; color: #000; text-align: center; padding: 10px; border-radius: 999px; font-weight: 700; font-size: 13px; cursor: pointer; transition: 0.2s; }
+    .story-cta:hover { transform: scale(1.02); }
+    .input-group { margin-bottom: 14px; }
+    label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+    input, textarea, select { width: 100%; background: #020617; border: 1px solid var(--card-border); color: #fff; padding: 10px 14px; border-radius: 10px; font-size: 14px; outline: none; }
+    input:focus, textarea:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2); }
+    .btn { background: var(--primary); color: #fff; border: none; padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
+    .btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
+    .btn-secondary { background: rgba(255, 255, 255, 0.08); color: #e2e8f0; border: 1px solid var(--card-border); }
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.14); }
+    .actions { display: flex; gap: 12px; margin-top: 20px; }
+    .results-container { grid-column: 1 / -1; }
+    .winner-banner { background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(20, 184, 166, 0.2)); border: 1px solid rgba(99, 102, 241, 0.4); border-radius: var(--radius); padding: 24px; text-align: center; margin-bottom: 24px; }
+    .winner-title { font-size: 28px; font-weight: 800; color: #a5b4fc; margin-bottom: 8px; }
+    .vote-bar { height: 16px; background: #020617; border-radius: 999px; overflow: hidden; display: flex; margin: 16px 0; border: 1px solid var(--card-border); }
+    .vote-a { background: var(--primary); height: 100%; transition: width 0.6s ease; }
+    .vote-b { background: var(--accent); height: 100%; transition: width 0.6s ease; }
+    .vote-tie { background: #64748b; height: 100%; transition: width 0.6s ease; }
+    .segment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 16px; }
+    .segment-card { background: #020617; border: 1px solid var(--card-border); border-radius: 12px; padding: 16px; }
+    .segment-badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; margin-bottom: 8px; }
+    .badge-a { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; }
+    .badge-b { background: rgba(20, 184, 166, 0.2); color: #5eead4; }
+    .loading-spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="brand">OctopIQ Audience Lab</div>
+    <div class="engine-badge">
+      <div class="engine-dot"></div>
+      <span id="engineStatus">Motor Bağlanıyor...</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Audience Setup -->
+    <section class="card" style="grid-column: 1 / -1;">
+      <div class="card-title">
+        <span>🎯 Hedef Kitle & Simülasyon Paneli</span>
+        <span style="font-size: 13px; color: var(--text-muted); font-weight: normal;">18 Sanal Ajan (3 Bilişsel Senaryo)</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+        <div class="input-group">
+          <label>Kitle Profili</label>
+          <select id="audiencePreset" onchange="onAudienceChange()">
+            <option value="engineers">Mühendisler & Yazılımcılar (Teknik Kanıt & Kod Odaklı)</option>
+            <option value="intellectuals">Entelektüeller & Kültür Meraklıları (Tarih & Derinlik Odaklı)</option>
+            <option value="custom">Özel Sentetik Kitle Beyanı</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Karar Motoru</label>
+          <select id="engineSelector">
+            <option value="codex">Codex CLI (GPT-6 Luna · ChatGPT Plus OAuth · 0₺)</option>
+            <option value="local">Yerel Kural Motoru (100% Offline Heuristic)</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Alternatif B Türetme Açısı</label>
+          <select id="deriveAngle">
+            <option value="authority-hook">Otorite & İkon Kancası (İlber / Linus vb.)</option>
+            <option value="improve-ux">UX ve Basitlik Odaklı (Improve UX)</option>
+            <option value="contrarian">Ezber Bozan / Ters Köşe</option>
+            <option value="story">Hikaye / Süreç Anlatımı</option>
+            <option value="concise">Kısa ve Vurucu</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Variant A: Story A -->
+    <section class="card">
+      <div class="card-title">
+        <span>Varyant A (Instagram Story)</span>
+        <span style="font-size: 12px; color: #a5b4fc; background: rgba(99, 102, 241, 0.15); padding: 2px 8px; border-radius: 6px;">Linus Torvalds Kancası</span>
+      </div>
+      <div class="story-frame">
+        <div>
+          <div class="story-progress"><div class="story-bar active"></div><div class="story-bar"></div></div>
+          <div class="story-user">
+            <div class="story-avatar">A</div>
+            <span>@devstudio · 2s</span>
+          </div>
+          <div class="story-visual">
+            <div class="story-visual-icon">💻</div>
+            <div class="story-visual-desc" id="previewVisualA">Linus Torvalds terminal başında C kodu incelerken, arka planda Linux pengueni var.</div>
+          </div>
+        </div>
+        <div>
+          <div class="story-body">
+            <div class="story-headline" id="previewHeadlineA">Talk is cheap, show me the code</div>
+            <div class="story-copy" id="previewBodyA">Pazarlama laflarını bırak. 18 izole yapay zeka ajanıyla reklam ve içeriklerini yayına almadan test et.</div>
+          </div>
+          <div class="story-cta" id="previewCtaA">Kodu İncele ⚡</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <div class="input-group">
+          <label>Görsel / Sahne Açıklaması</label>
+          <input id="inputVisualA" value="Linus Torvalds terminal başında C kodu incelerken, arka planda Linux pengueni var." oninput="updatePreviews()" />
+        </div>
+        <div class="input-group">
+          <label>Story Başlığı</label>
+          <input id="inputHeadlineA" value="Talk is cheap, show me the code" oninput="updatePreviews()" />
+        </div>
+        <div class="input-group">
+          <label>Story Metni</label>
+          <textarea id="inputBodyA" rows="2" oninput="updatePreviews()">Pazarlama laflarını bırak. 18 izole yapay zeka ajanıyla reklam ve içeriklerini yayına almadan test et.</textarea>
+        </div>
+        <div class="input-group">
+          <label>Eylem Çağrısı (CTA)</label>
+          <input id="inputCtaA" value="Kodu İncele ⚡" oninput="updatePreviews()" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Variant B: Story B -->
+    <section class="card">
+      <div class="card-title">
+        <span>Varyant B (Instagram Story)</span>
+        <button class="btn btn-secondary" style="font-size: 12px; padding: 6px 12px;" onclick="deriveB()">A'dan B'yi Türet ⚡</button>
+      </div>
+      <div class="story-frame">
+        <div>
+          <div class="story-progress"><div class="story-bar active"></div><div class="story-bar"></div></div>
+          <div class="story-user">
+            <div class="story-avatar" style="border-color: var(--accent); background: rgba(20, 184, 166, 0.3);">B</div>
+            <span>@devstudio · 2s</span>
+          </div>
+          <div class="story-visual">
+            <div class="story-visual-icon">📚</div>
+            <div class="story-visual-desc" id="previewVisualB">İlber Ortaylı devasa bir kütüphanede antika ciltli kitapları incelerken kameraya bakıyor.</div>
+          </div>
+        </div>
+        <div>
+          <div class="story-body">
+            <div class="story-headline" id="previewHeadlineB">Cahil kalmayın, mimariyi öğrenin</div>
+            <div class="story-copy" id="previewBodyB">Günübirlik trendler yerine sağlam yazılım mimarisi kurun. Kitle psikolojisini analitik olarak analiz edin.</div>
+          </div>
+          <div class="story-cta" id="previewCtaB">Rehberi Oku 📚</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <div class="input-group">
+          <label>Görsel / Sahne Açıklaması</label>
+          <input id="inputVisualB" value="İlber Ortaylı devasa bir kütüphanede antika ciltli kitapları incelerken kameraya bakıyor." oninput="updatePreviews()" />
+        </div>
+        <div class="input-group">
+          <label>Story Başlığı</label>
+          <input id="inputHeadlineB" value="Cahil kalmayın, mimariyi öğrenin" oninput="updatePreviews()" />
+        </div>
+        <div class="input-group">
+          <label>Story Metni</label>
+          <textarea id="inputBodyB" rows="2" oninput="updatePreviews()">Günübirlik trendler yerine sağlam yazılım mimarisi kurun. Kitle psikolojisini analitik olarak analiz edin.</textarea>
+        </div>
+        <div class="input-group">
+          <label>Eylem Çağrısı (CTA)</label>
+          <input id="inputCtaB" value="Rehberi Oku 📚" oninput="updatePreviews()" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Run Controls -->
+    <div style="grid-column: 1 / -1; text-align: center; margin: 12px 0;">
+      <button id="runBtn" class="btn" style="font-size: 16px; padding: 14px 36px;" onclick="runSimulation()">
+        <span>Deneyi Başlat (18 İzole Ajan) 🚀</span>
+      </button>
+    </div>
+
+    <!-- Results Display -->
+    <section id="resultsSection" class="card results-container" style="display: none;">
+      <div class="winner-banner">
+        <div style="font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 6px;">Simülasyon Tamamlandı</div>
+        <div class="winner-title" id="winnerTitle">Kazanan: Varyant A 🏆</div>
+        <p id="winnerSubtitle" style="color: var(--text-muted); font-size: 14px; max-width: 600px; margin: 0 auto;"></p>
+        
+        <div class="vote-bar">
+          <div id="barA" class="vote-a" style="width: 50%;"></div>
+          <div id="barB" class="vote-b" style="width: 50%;"></div>
+          <div id="barTie" class="vote-tie" style="width: 0%;"></div>
+        </div>
+        <div style="display: flex; justify-content: space-around; font-size: 13px; font-weight: 600;">
+          <span style="color: #a5b4fc;">Varyant A: <span id="countA">0</span> oy</span>
+          <span style="color: #5eead4;">Varyant B: <span id="countB">0</span> oy</span>
+          <span style="color: #94a3b8;">Beraberlik: <span id="countTie">0</span> oy</span>
+        </div>
+      </div>
+
+      <h3 style="margin-bottom: 16px;">Kitle Segmentleri ve Karar Gerekçeleri</h3>
+      <div class="segment-grid" id="segmentContainer"></div>
+    </section>
+  </main>
+
+  <script>
+    function updatePreviews() {
+      document.getElementById('previewVisualA').innerText = document.getElementById('inputVisualA').value;
+      document.getElementById('previewHeadlineA').innerText = document.getElementById('inputHeadlineA').value;
+      document.getElementById('previewBodyA').innerText = document.getElementById('inputBodyA').value;
+      document.getElementById('previewCtaA').innerText = document.getElementById('inputCtaA').value;
+
+      document.getElementById('previewVisualB').innerText = document.getElementById('inputVisualB').value;
+      document.getElementById('previewHeadlineB').innerText = document.getElementById('inputHeadlineB').value;
+      document.getElementById('previewBodyB').innerText = document.getElementById('inputBodyB').value;
+      document.getElementById('previewCtaB').innerText = document.getElementById('inputCtaB').value;
+    }
+
+    async function checkHealth() {
+      try {
+        const res = await fetch('/api/health');
+        const data = await res.json();
+        const prov = data.engine?.provider === 'codex' ? 'Codex (GPT-6 Luna · ChatGPT Plus OAuth)' : 'Yerel Kural Motoru (Offline)';
+        document.getElementById('engineStatus').innerText = prov;
+      } catch {
+        document.getElementById('engineStatus').innerText = 'Offline Mod Aktif';
+      }
+    }
+    checkHealth();
+
+    function onAudienceChange() {
+      const preset = document.getElementById('audiencePreset').value;
+      if (preset === 'engineers') {
+        document.getElementById('inputVisualA').value = "Linus Torvalds terminal başında C kodu incelerken, arka planda Linux pengueni var.";
+        document.getElementById('inputHeadlineA').value = "Talk is cheap, show me the code";
+      } else if (preset === 'intellectuals') {
+        document.getElementById('inputVisualB').value = "İlber Ortaylı devasa bir kütüphanede antika ciltli kitapları incelerken kameraya bakıyor.";
+        document.getElementById('inputHeadlineB').value = "Cahil kalmayın, mimariyi öğrenin";
+      }
+      updatePreviews();
+    }
+
+    async function deriveB() {
+      const angle = document.getElementById('deriveAngle').value;
+      const btn = event.target;
+      const oldText = btn.innerText;
+      btn.innerHTML = '<span class="loading-spinner"></span> Türetiliyor...';
+      btn.disabled = true;
+
+      try {
+        const payload = {
+          dataset: getDataset(),
+          sourceVariantA: getVariantA(),
+          angle: angle,
+          testedVariable: 'hook'
+        };
+        const res = await fetch('/api/derive-b', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.variantB) {
+          document.getElementById('inputHeadlineB').value = data.variantB.headline;
+          document.getElementById('inputBodyB').value = data.variantB.body;
+          document.getElementById('inputCtaB').value = data.variantB.callToAction;
+          if (data.variantB.visualDescription) {
+            document.getElementById('inputVisualB').value = data.variantB.visualDescription;
+          }
+          updatePreviews();
+        }
+      } catch (err) {
+        alert('Türetme hatası: ' + err.message);
+      } finally {
+        btn.innerText = oldText;
+        btn.disabled = false;
+      }
+    }
+
+    async function runSimulation() {
+      const btn = document.getElementById('runBtn');
+      btn.innerHTML = '<span class="loading-spinner"></span> 18 Ajan Değerlendiriyor...';
+      btn.disabled = true;
+
+      try {
+        const payload = {
+          dataset: getDataset(),
+          variantA: getVariantA(),
+          variantB: getVariantB(),
+          repeats: 2
+        };
+        const res = await fetch('/api/run-experiment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        renderResults(data);
+      } catch (err) {
+        alert('Simülasyon hatası: ' + err.message);
+      } finally {
+        btn.innerHTML = 'Deneyi Tekrar Başlat 🚀';
+        btn.disabled = false;
+      }
+    }
+
+    function renderResults(exp) {
+      document.getElementById('resultsSection').style.display = 'block';
+      const winner = exp.summary.winner.toUpperCase();
+      document.getElementById('winnerTitle').innerText = winner === 'A' ? 'Kazanan: Varyant A (Linus Hook) 🏆' : winner === 'B' ? 'Kazanan: Varyant B (İlber Hook) 🏆' : 'Sonuç: Beraberlik / Fark Yok ⚖️';
+      document.getElementById('winnerSubtitle').innerText = `18 izole ajan üzerinden çift kör karşılaştırma yürütüldü. (Motor: ${exp.provider} · ${exp.model})`;
+
+      const total = (exp.summary.votes.a + exp.summary.votes.b + exp.summary.votes.tie + exp.summary.votes.neither) || 1;
+      const pctA = Math.round((exp.summary.votes.a / total) * 100);
+      const pctB = Math.round((exp.summary.votes.b / total) * 100);
+      const pctTie = Math.round(((exp.summary.votes.tie + exp.summary.votes.neither) / total) * 100);
+
+      document.getElementById('barA').style.width = pctA + '%';
+      document.getElementById('barB').style.width = pctB + '%';
+      document.getElementById('barTie').style.width = pctTie + '%';
+
+      document.getElementById('countA').innerText = exp.summary.votes.a;
+      document.getElementById('countB').innerText = exp.summary.votes.b;
+      document.getElementById('countTie').innerText = exp.summary.votes.tie + exp.summary.votes.neither;
+
+      const segBox = document.getElementById('segmentContainer');
+      segBox.innerHTML = '';
+      for (const seg of exp.segmentBreakdown) {
+        const div = document.createElement('div');
+        div.className = 'segment-card';
+        const badgeClass = seg.winner === 'a' ? 'badge-a' : seg.winner === 'b' ? 'badge-b' : '';
+        div.innerHTML = `
+          <div class="segment-badge ${badgeClass}">Tercih: Varyant ${seg.winner.toUpperCase()}</div>
+          <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px;">${seg.personaTitle}</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">İhtiyaç: ${seg.personaNeed}</div>
+          <div style="font-size: 12px; line-height: 1.4; color: #cbd5e1; font-style: italic;">"${seg.pairExplanation}"</div>
+        `;
+        segBox.appendChild(div);
+      }
+
+      document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function getDataset() {
+      const preset = document.getElementById('audiencePreset').value;
+      const category = preset === 'engineers' ? 'personal-brand' : preset === 'intellectuals' ? 'creator' : 'software';
+      return {
+        schemaVersion: 1,
+        label: preset === 'engineers' ? 'Yazılımcılar ve Mühendisler Kitlesi' : 'Entelektüel ve Kültür Kitlesi',
+        synthetic: true,
+        asOf: new Date().toISOString(),
+        window: {
+          from: new Date(Date.now() - 30 * 86400000).toISOString(),
+          to: new Date().toISOString()
+        },
+        brand: {
+          name: 'OctopIQ Studio',
+          category: category,
+          language: 'tr',
+          description: preset === 'engineers'
+            ? 'Kod mimarisi, benchmark testleri ve mühendislik pratikleri sunan açık kaynak stüdyo.'
+            : 'Tarih, felsefe, derinlikli yazarlık ve analitik düşünce platformu.'
+        },
+        products: [
+          {
+            id: 'prod-main',
+            name: 'Audience Lab Simulator',
+            category: 'ai-tool',
+            facts: [
+              { id: 'f1', text: '18 izole sanal kimlikle reklam ve içerik ön testi sunar.' },
+              { id: 'f2', text: 'Codex CLI GPT-6 Luna ve yerel kural motorunu destekler.' },
+              { id: 'f3', text: 'Açık kaynak TypeScript mimarisiyle sıfır API ücreti üretir.' }
+            ],
+            price: null
+          }
+        ],
+        sources: [{ id: 's1', platform: 'instagram', population: 'engaged-audience', sampled: true, complete: false, collectedAt: new Date().toISOString() }],
+        observations: [],
+        content: [],
+        events: [],
+        research: []
+      };
+    }
+
+    function getVariantA() {
+      return {
+        id: 'var-a',
+        version: 1,
+        productId: 'prod-main',
+        platform: 'instagram',
+        format: 'story',
+        headline: document.getElementById('inputHeadlineA').value,
+        body: document.getElementById('inputBodyA').value,
+        callToAction: document.getElementById('inputCtaA').value,
+        testedVariable: 'hook',
+        productFactRefs: ['f1', 'f2'],
+        assumptions: [],
+        generation: 'manual',
+        productClaims: [],
+        claimValidation: 'supported',
+        contentHash: '',
+        visualDescription: document.getElementById('inputVisualA').value
+      };
+    }
+
+    function getVariantB() {
+      return {
+        id: 'var-b',
+        version: 1,
+        productId: 'prod-main',
+        platform: 'instagram',
+        format: 'story',
+        headline: document.getElementById('inputHeadlineB').value,
+        body: document.getElementById('inputBodyB').value,
+        callToAction: document.getElementById('inputCtaB').value,
+        testedVariable: 'hook',
+        productFactRefs: ['f1', 'f2'],
+        assumptions: [],
+        generation: 'manual',
+        productClaims: [],
+        claimValidation: 'supported',
+        contentHash: '',
+        visualDescription: document.getElementById('inputVisualB').value
+      };
+    }
+  </script>
+</body>
+</html>

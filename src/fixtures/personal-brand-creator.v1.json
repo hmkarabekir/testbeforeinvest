@@ -1,0 +1,3217 @@
+{
+  "schemaVersion": 1,
+  "label": "Deniz — Örnek AI Builder — sentetik örnek",
+  "synthetic": true,
+  "asOf": "2026-10-23T12:00:00.000Z",
+  "window": {
+    "from": "2026-09-23T12:00:00.000Z",
+    "to": "2026-10-23T12:00:00.000Z"
+  },
+  "brand": {
+    "name": "Deniz — Örnek AI Builder",
+    "category": "personal-brand",
+    "language": "tr",
+    "description": "Yapay zeka agent sistemleri, modern web mimarisi ve indie hacking deneyimlerini şeffafça paylaşan geliştirici."
+  },
+  "products": [
+    {
+      "id": "product-1",
+      "name": "Octopiq Audience Lab",
+      "category": "ai aracı",
+      "facts": [
+        {
+          "id": "fact-1-1",
+          "text": "18 izole sanal kimlikle reklam ve içerik ön testi yapar."
+        },
+        {
+          "id": "fact-1-2",
+          "text": "API modeli veya yerel kural motoruyla mesaj ön testi sunar."
+        },
+        {
+          "id": "fact-1-3",
+          "text": "İçerik A'dan yola çıkarak zıt psikolojik hipotezlerle Alternatif B'yi üretir."
+        },
+        {
+          "id": "fact-1-4",
+          "text": "Tekil kriter puanları ve kör karşılaştırma gerekçelerini segment bazında raporlar."
+        }
+      ],
+      "price": {
+        "amountMinor": 0,
+        "currency": "TRY"
+      }
+    },
+    {
+      "id": "product-2",
+      "name": "Agentic Coding Rehberi",
+      "category": "açık kaynak rehber",
+      "facts": [
+        {
+          "id": "fact-2-1",
+          "text": "Next.js ve NestJS için fullstack mimari kalıpları içerir."
+        },
+        {
+          "id": "fact-2-2",
+          "text": "GitHub üzerinde açık kaynak kod ve örnek repository bulunur."
+        },
+        {
+          "id": "fact-2-3",
+          "text": "Adım adım prompt mühendisliği ve test güdümlü agent geliştirme yöntemleri."
+        },
+        {
+          "id": "fact-2-4",
+          "text": "Canlı demo ve benchmark kıyaslamaları dokümantasyonda açıklanır."
+        }
+      ],
+      "price": {
+        "amountMinor": 0,
+        "currency": "TRY"
+      }
+    },
+    {
+      "id": "product-3",
+      "name": "Solo Builder Şablonu",
+      "category": "starter kit",
+      "facts": [
+        {
+          "id": "fact-3-1",
+          "text": "Supabase, Redis ve BullMQ entegrasyonuna hazır starter kit."
+        },
+        {
+          "id": "fact-3-2",
+          "text": "Önceden yapılandırılmış kimlik doğrulama ve çok kiracılı mimari."
+        },
+        {
+          "id": "fact-3-3",
+          "text": "Docker compose ve yerel geliştirme ortamı 5 dakikada ayağa kalkar."
+        },
+        {
+          "id": "fact-3-4",
+          "text": "Kurulum ve dağıtım adımları README dosyasında detaylandırılmıştır."
+        }
+      ],
+      "price": {
+        "amountMinor": 49000,
+        "currency": "TRY"
+      }
+    },
+    {
+      "id": "product-4",
+      "name": "Haftalık AI Mimarisi Bülteni",
+      "category": "bülten",
+      "facts": [
+        {
+          "id": "fact-4-1",
+          "text": "Her hafta yapay zeka ve agent sistemlerinden süzülen pratik tecrübeler."
+        },
+        {
+          "id": "fact-4-2",
+          "text": "Hype ve abartıdan uzak, sadece çalışan teknik mimari analizleri."
+        },
+        {
+          "id": "fact-4-3",
+          "text": "Okuyucu soruları ve topluluk tartışmaları bültende yer alır."
+        },
+        {
+          "id": "fact-4-4",
+          "text": "Ücretsiz abone olunabilir ve dilediğiniz an tek tıkla ayrılabilirsiniz."
+        }
+      ],
+      "price": {
+        "amountMinor": 0,
+        "currency": "TRY"
+      }
+    },
+    {
+      "id": "product-5",
+      "name": "Birebir Mimari & Kod Danışmanlığı",
+      "category": "danışmanlık",
+      "facts": [
+        {
+          "id": "fact-5-1",
+          "text": "Teknik mimari ve ölçeklenebilirlik üzerine 60 dakikalık derinlemesine inceleme."
+        },
+        {
+          "id": "fact-5-2",
+          "text": "Kod ve performans darboğazlarının canlı incelenmesi."
+        },
+        {
+          "id": "fact-5-3",
+          "text": "Görüşme öncesi proje kapsamı ve hedefler belirlenir."
+        },
+        {
+          "id": "fact-5-4",
+          "text": "Görüşme sonrası özet aksiyon planı ve kaynak bağlantıları iletilir."
+        }
+      ],
+      "price": {
+        "amountMinor": 149000,
+        "currency": "TRY"
+      }
+    },
+    {
+      "id": "product-6",
+      "name": "Hackathon Demo Kiti",
+      "category": "geliştirici aracı",
+      "facts": [
+        {
+          "id": "fact-6-1",
+          "text": "Hackathon projeleri için hızlı prototip ve sunum şablonları."
+        },
+        {
+          "id": "fact-6-2",
+          "text": "Jüri ve kitle sunumları için hazır görselleştirme bileşenleri."
+        },
+        {
+          "id": "fact-6-3",
+          "text": "Çevrimdışı ve yerel çalışabilen yedek değerlendirme mekanizmaları."
+        },
+        {
+          "id": "fact-6-4",
+          "text": "Örnek test senaryoları ve sentetik veri üreticisi dahildir."
+        }
+      ],
+      "price": {
+        "amountMinor": 0,
+        "currency": "TRY"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "social-main",
+      "platform": "instagram",
+      "population": "engaged-audience",
+      "sampled": true,
+      "complete": false,
+      "collectedAt": "2026-10-23T12:00:00.000Z"
+    },
+    {
+      "id": "website",
+      "platform": "demo-site",
+      "population": "site-visitors",
+      "sampled": true,
+      "complete": false,
+      "collectedAt": "2026-10-23T12:00:00.000Z"
+    },
+    {
+      "id": "research",
+      "platform": "merchant-research",
+      "population": "declared-research",
+      "sampled": true,
+      "complete": false,
+      "collectedAt": "2026-10-23T12:00:00.000Z"
+    }
+  ],
+  "observations": [
+    {
+      "id": "obs-age-25-34",
+      "sourceRef": "social-main",
+      "metric": "viewer-demographics",
+      "dimensions": {
+        "age": "25-34"
+      },
+      "unit": "percent",
+      "value": 44.0,
+      "status": "observed",
+      "denominatorRef": null,
+      "observedAt": "2026-10-23T12:00:00.000Z"
+    },
+    {
+      "id": "obs-age-35-44",
+      "sourceRef": "social-main",
+      "metric": "viewer-demographics",
+      "dimensions": {
+        "age": "35-44"
+      },
+      "unit": "percent",
+      "value": 31.5,
+      "status": "observed",
+      "denominatorRef": null,
+      "observedAt": "2026-10-23T12:00:00.000Z"
+    },
+    {
+      "id": "obs-country-tr",
+      "sourceRef": "social-main",
+      "metric": "viewer-demographics",
+      "dimensions": {
+        "country": "TR"
+      },
+      "unit": "percent",
+      "value": 72.4,
+      "status": "observed",
+      "denominatorRef": null,
+      "observedAt": "2026-10-23T12:00:00.000Z"
+    },
+    {
+      "id": "obs-country-de",
+      "sourceRef": "social-main",
+      "metric": "viewer-demographics",
+      "dimensions": {
+        "country": "DE"
+      },
+      "unit": "percent",
+      "value": 9.2,
+      "status": "observed",
+      "denominatorRef": null,
+      "observedAt": "2026-10-23T12:00:00.000Z"
+    },
+    {
+      "id": "obs-gender-f",
+      "sourceRef": "social-main",
+      "metric": "viewer-demographics",
+      "dimensions": {
+        "gender": "female"
+      },
+      "unit": "percent",
+      "value": 39.8,
+      "status": "observed",
+      "denominatorRef": null,
+      "observedAt": "2026-10-23T12:00:00.000Z"
+    },
+    {
+      "id": "obs-gender-m",
+      "sourceRef": "social-main",
+      "metric": "viewer-demographics",
+      "dimensions": {
+        "gender": "male"
+      },
+      "unit": "percent",
+      "value": 54.1,
+      "status": "observed",
+      "denominatorRef": null,
+      "observedAt": "2026-10-23T12:00:00.000Z"
+    },
+    {
+      "id": "obs-small-city",
+      "sourceRef": "social-main",
+      "metric": "city-demographics",
+      "dimensions": {
+        "city": "suppressed"
+      },
+      "unit": "count",
+      "value": null,
+      "status": "suppressed",
+      "denominatorRef": null,
+      "observedAt": "2026-10-23T12:00:00.000Z"
+    }
+  ],
+  "content": [
+    {
+      "id": "post-001",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-1"
+      ],
+      "text": "Kod mimarisi ve teknik derinlik: GitHub reposu, benchmark ve gerçek implementasyon ayrıntılarını inceleyin. Örnek içerik 1; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-09-27T10:00:00.000Z",
+      "likes": 49,
+      "comments": 2,
+      "themeTags": [
+        "technical-depth"
+      ]
+    },
+    {
+      "id": "post-002",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-2"
+      ],
+      "text": "Kurucu yolculuğu ve build in public: yapılan hatalar, ilk kullanıcılar ve şeffaf büyüme süreci. Örnek içerik 2; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-09-28T10:00:00.000Z",
+      "likes": 86,
+      "comments": 13,
+      "themeTags": [
+        "builder-journey"
+      ]
+    },
+    {
+      "id": "post-003",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-3"
+      ],
+      "text": "Hemen uygulanabilir şablon ve taktik rehberi: karmaşık kavramları basit adımlara bölen çerçeve. Örnek içerik 3; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-09-29T10:00:00.000Z",
+      "likes": 123,
+      "comments": 24,
+      "themeTags": [
+        "actionable-framework"
+      ]
+    },
+    {
+      "id": "post-004",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-4"
+      ],
+      "text": "Ezber bozan mimari bakış açısı: sektördeki yaygın mitler ve aslında doğrusu nedir analizi. Örnek içerik 4; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-09-30T10:00:00.000Z",
+      "likes": 160,
+      "comments": 35,
+      "themeTags": [
+        "contrarian-insight"
+      ]
+    },
+    {
+      "id": "post-005",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-5"
+      ],
+      "text": "Geliştirici zamanından tasarruf sağlayan pratik araçlar ve otomasyon tüyoları. Örnek içerik 5; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-01T10:00:00.000Z",
+      "likes": 197,
+      "comments": 7,
+      "themeTags": [
+        "fast-roi"
+      ]
+    },
+    {
+      "id": "post-006",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-6"
+      ],
+      "text": "Pazarlama abartısından arındırılmış, sınırları ve trade-off'ları dürüstçe açıklayan analiz. Örnek içerik 6; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-02T10:00:00.000Z",
+      "likes": 234,
+      "comments": 18,
+      "themeTags": [
+        "critical-skeptic"
+      ]
+    },
+    {
+      "id": "post-007",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-1"
+      ],
+      "text": "Topluluk tartışması ve karşılıklı soru-cevap: sizin deneyiminiz ve bakış açınız nedir? Örnek içerik 7; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-03T10:00:00.000Z",
+      "likes": 271,
+      "comments": 29,
+      "themeTags": [
+        "community-dialogue"
+      ]
+    },
+    {
+      "id": "post-008",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-2"
+      ],
+      "text": "Sıfırdan adım adım öğrenme rehberi: temel kavramlar ve basit başlangıç adımları. Örnek içerik 8; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-04T10:00:00.000Z",
+      "likes": 308,
+      "comments": 40,
+      "themeTags": [
+        "beginner-curiosity"
+      ]
+    },
+    {
+      "id": "post-009",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-3"
+      ],
+      "text": "Kod mimarisi ve teknik derinlik: GitHub reposu, benchmark ve gerçek implementasyon ayrıntılarını inceleyin. Örnek içerik 9; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-05T10:00:00.000Z",
+      "likes": 345,
+      "comments": 12,
+      "themeTags": [
+        "technical-depth"
+      ]
+    },
+    {
+      "id": "post-010",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-4"
+      ],
+      "text": "Kurucu yolculuğu ve build in public: yapılan hatalar, ilk kullanıcılar ve şeffaf büyüme süreci. Örnek içerik 10; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-06T10:00:00.000Z",
+      "likes": 382,
+      "comments": 23,
+      "themeTags": [
+        "builder-journey"
+      ]
+    },
+    {
+      "id": "post-011",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-5"
+      ],
+      "text": "Hemen uygulanabilir şablon ve taktik rehberi: karmaşık kavramları basit adımlara bölen çerçeve. Örnek içerik 11; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-07T10:00:00.000Z",
+      "likes": 419,
+      "comments": 34,
+      "themeTags": [
+        "actionable-framework"
+      ]
+    },
+    {
+      "id": "post-012",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-6"
+      ],
+      "text": "Ezber bozan mimari bakış açısı: sektördeki yaygın mitler ve aslında doğrusu nedir analizi. Örnek içerik 12; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-08T10:00:00.000Z",
+      "likes": 46,
+      "comments": 6,
+      "themeTags": [
+        "contrarian-insight"
+      ]
+    },
+    {
+      "id": "post-013",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-1"
+      ],
+      "text": "Geliştirici zamanından tasarruf sağlayan pratik araçlar ve otomasyon tüyoları. Örnek içerik 13; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-09T10:00:00.000Z",
+      "likes": 83,
+      "comments": 17,
+      "themeTags": [
+        "fast-roi"
+      ]
+    },
+    {
+      "id": "post-014",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-2"
+      ],
+      "text": "Pazarlama abartısından arındırılmış, sınırları ve trade-off'ları dürüstçe açıklayan analiz. Örnek içerik 14; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-10T10:00:00.000Z",
+      "likes": 120,
+      "comments": 28,
+      "themeTags": [
+        "critical-skeptic"
+      ]
+    },
+    {
+      "id": "post-015",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-3"
+      ],
+      "text": "Topluluk tartışması ve karşılıklı soru-cevap: sizin deneyiminiz ve bakış açınız nedir? Örnek içerik 15; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-11T10:00:00.000Z",
+      "likes": 157,
+      "comments": 39,
+      "themeTags": [
+        "community-dialogue"
+      ]
+    },
+    {
+      "id": "post-016",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-4"
+      ],
+      "text": "Sıfırdan adım adım öğrenme rehberi: temel kavramlar ve basit başlangıç adımları. Örnek içerik 16; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-12T10:00:00.000Z",
+      "likes": 194,
+      "comments": 11,
+      "themeTags": [
+        "beginner-curiosity"
+      ]
+    },
+    {
+      "id": "post-017",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-5"
+      ],
+      "text": "Kod mimarisi ve teknik derinlik: GitHub reposu, benchmark ve gerçek implementasyon ayrıntılarını inceleyin. Örnek içerik 17; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-13T10:00:00.000Z",
+      "likes": 231,
+      "comments": 22,
+      "themeTags": [
+        "technical-depth"
+      ]
+    },
+    {
+      "id": "post-018",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-6"
+      ],
+      "text": "Kurucu yolculuğu ve build in public: yapılan hatalar, ilk kullanıcılar ve şeffaf büyüme süreci. Örnek içerik 18; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-14T10:00:00.000Z",
+      "likes": 268,
+      "comments": 33,
+      "themeTags": [
+        "builder-journey"
+      ]
+    },
+    {
+      "id": "post-019",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-1"
+      ],
+      "text": "Hemen uygulanabilir şablon ve taktik rehberi: karmaşık kavramları basit adımlara bölen çerçeve. Örnek içerik 19; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-15T10:00:00.000Z",
+      "likes": 305,
+      "comments": 5,
+      "themeTags": [
+        "actionable-framework"
+      ]
+    },
+    {
+      "id": "post-020",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-2"
+      ],
+      "text": "Ezber bozan mimari bakış açısı: sektördeki yaygın mitler ve aslında doğrusu nedir analizi. Örnek içerik 20; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-16T10:00:00.000Z",
+      "likes": 342,
+      "comments": 16,
+      "themeTags": [
+        "contrarian-insight"
+      ]
+    },
+    {
+      "id": "post-021",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-3"
+      ],
+      "text": "Geliştirici zamanından tasarruf sağlayan pratik araçlar ve otomasyon tüyoları. Örnek içerik 21; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-17T10:00:00.000Z",
+      "likes": 379,
+      "comments": 27,
+      "themeTags": [
+        "fast-roi"
+      ]
+    },
+    {
+      "id": "post-022",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-4"
+      ],
+      "text": "Pazarlama abartısından arındırılmış, sınırları ve trade-off'ları dürüstçe açıklayan analiz. Örnek içerik 22; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-18T10:00:00.000Z",
+      "likes": 416,
+      "comments": 38,
+      "themeTags": [
+        "critical-skeptic"
+      ]
+    },
+    {
+      "id": "post-023",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-5"
+      ],
+      "text": "Topluluk tartışması ve karşılıklı soru-cevap: sizin deneyiminiz ve bakış açınız nedir? Örnek içerik 23; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-19T10:00:00.000Z",
+      "likes": 43,
+      "comments": 10,
+      "themeTags": [
+        "community-dialogue"
+      ]
+    },
+    {
+      "id": "post-024",
+      "sourceRef": "social-main",
+      "productRefs": [
+        "product-6"
+      ],
+      "text": "Sıfırdan adım adım öğrenme rehberi: temel kavramlar ve basit başlangıç adımları. Örnek içerik 24; bu bir sentetik demo paylaşımıdır.",
+      "publishedAt": "2026-10-20T10:00:00.000Z",
+      "likes": 80,
+      "comments": 21,
+      "themeTags": [
+        "beginner-curiosity"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "event-001-01",
+      "sourceRef": "website",
+      "profileRef": "profile-001",
+      "name": "product_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-01T09:00:00.000Z",
+      "receivedAt": "2026-10-01T09:00:02.000Z"
+    },
+    {
+      "id": "event-001-02",
+      "sourceRef": "website",
+      "profileRef": "profile-001",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-01T09:13:00.000Z",
+      "receivedAt": "2026-10-01T09:13:02.000Z"
+    },
+    {
+      "id": "event-001-03",
+      "sourceRef": "website",
+      "profileRef": "profile-001",
+      "name": "pricing_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-01T09:26:00.000Z",
+      "receivedAt": "2026-10-01T09:26:02.000Z"
+    },
+    {
+      "id": "event-001-04",
+      "sourceRef": "website",
+      "profileRef": "profile-001",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-01T09:39:00.000Z",
+      "receivedAt": "2026-10-01T09:39:02.000Z"
+    },
+    {
+      "id": "event-002-01",
+      "sourceRef": "website",
+      "profileRef": "profile-002",
+      "name": "product_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-02T09:03:00.000Z",
+      "receivedAt": "2026-10-02T09:03:02.000Z"
+    },
+    {
+      "id": "event-002-02",
+      "sourceRef": "website",
+      "profileRef": "profile-002",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-02T09:16:00.000Z",
+      "receivedAt": "2026-10-02T09:16:02.000Z"
+    },
+    {
+      "id": "event-002-03",
+      "sourceRef": "website",
+      "profileRef": "profile-002",
+      "name": "pricing_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-02T09:29:00.000Z",
+      "receivedAt": "2026-10-02T09:29:02.000Z"
+    },
+    {
+      "id": "event-002-04",
+      "sourceRef": "website",
+      "profileRef": "profile-002",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-02T09:42:00.000Z",
+      "receivedAt": "2026-10-02T09:42:02.000Z"
+    },
+    {
+      "id": "event-002-05",
+      "sourceRef": "website",
+      "profileRef": "profile-002",
+      "name": "trial_requested",
+      "productRef": "product-2",
+      "eventTime": "2026-10-02T09:55:00.000Z",
+      "receivedAt": "2026-10-02T09:55:02.000Z"
+    },
+    {
+      "id": "event-003-01",
+      "sourceRef": "website",
+      "profileRef": "profile-003",
+      "name": "product_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-03T09:06:00.000Z",
+      "receivedAt": "2026-10-03T09:06:02.000Z"
+    },
+    {
+      "id": "event-003-02",
+      "sourceRef": "website",
+      "profileRef": "profile-003",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-03T09:19:00.000Z",
+      "receivedAt": "2026-10-03T09:19:02.000Z"
+    },
+    {
+      "id": "event-003-03",
+      "sourceRef": "website",
+      "profileRef": "profile-003",
+      "name": "pricing_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-03T09:32:00.000Z",
+      "receivedAt": "2026-10-03T09:32:02.000Z"
+    },
+    {
+      "id": "event-003-04",
+      "sourceRef": "website",
+      "profileRef": "profile-003",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-03T09:45:00.000Z",
+      "receivedAt": "2026-10-03T09:45:02.000Z"
+    },
+    {
+      "id": "event-003-05",
+      "sourceRef": "website",
+      "profileRef": "profile-003",
+      "name": "trial_requested",
+      "productRef": "product-3",
+      "eventTime": "2026-10-03T09:58:00.000Z",
+      "receivedAt": "2026-10-03T09:58:02.000Z"
+    },
+    {
+      "id": "event-004-01",
+      "sourceRef": "website",
+      "profileRef": "profile-004",
+      "name": "product_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-04T09:09:00.000Z",
+      "receivedAt": "2026-10-04T09:09:02.000Z"
+    },
+    {
+      "id": "event-004-02",
+      "sourceRef": "website",
+      "profileRef": "profile-004",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-04T09:22:00.000Z",
+      "receivedAt": "2026-10-04T09:22:02.000Z"
+    },
+    {
+      "id": "event-004-03",
+      "sourceRef": "website",
+      "profileRef": "profile-004",
+      "name": "pricing_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-04T09:35:00.000Z",
+      "receivedAt": "2026-10-04T09:35:02.000Z"
+    },
+    {
+      "id": "event-004-04",
+      "sourceRef": "website",
+      "profileRef": "profile-004",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-04T09:48:00.000Z",
+      "receivedAt": "2026-10-04T09:48:02.000Z"
+    },
+    {
+      "id": "event-005-01",
+      "sourceRef": "website",
+      "profileRef": "profile-005",
+      "name": "product_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-05T09:12:00.000Z",
+      "receivedAt": "2026-10-05T09:12:02.000Z"
+    },
+    {
+      "id": "event-005-02",
+      "sourceRef": "website",
+      "profileRef": "profile-005",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-05T09:25:00.000Z",
+      "receivedAt": "2026-10-05T09:25:02.000Z"
+    },
+    {
+      "id": "event-005-03",
+      "sourceRef": "website",
+      "profileRef": "profile-005",
+      "name": "pricing_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-05T09:38:00.000Z",
+      "receivedAt": "2026-10-05T09:38:02.000Z"
+    },
+    {
+      "id": "event-005-04",
+      "sourceRef": "website",
+      "profileRef": "profile-005",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-05T09:51:00.000Z",
+      "receivedAt": "2026-10-05T09:51:02.000Z"
+    },
+    {
+      "id": "event-005-05",
+      "sourceRef": "website",
+      "profileRef": "profile-005",
+      "name": "trial_requested",
+      "productRef": "product-5",
+      "eventTime": "2026-10-05T10:04:00.000Z",
+      "receivedAt": "2026-10-05T10:04:02.000Z"
+    },
+    {
+      "id": "event-006-01",
+      "sourceRef": "website",
+      "profileRef": "profile-006",
+      "name": "product_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-06T09:15:00.000Z",
+      "receivedAt": "2026-10-06T09:15:02.000Z"
+    },
+    {
+      "id": "event-006-02",
+      "sourceRef": "website",
+      "profileRef": "profile-006",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-06T09:28:00.000Z",
+      "receivedAt": "2026-10-06T09:28:02.000Z"
+    },
+    {
+      "id": "event-006-03",
+      "sourceRef": "website",
+      "profileRef": "profile-006",
+      "name": "pricing_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-06T09:41:00.000Z",
+      "receivedAt": "2026-10-06T09:41:02.000Z"
+    },
+    {
+      "id": "event-006-04",
+      "sourceRef": "website",
+      "profileRef": "profile-006",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-06T09:54:00.000Z",
+      "receivedAt": "2026-10-06T09:54:02.000Z"
+    },
+    {
+      "id": "event-006-05",
+      "sourceRef": "website",
+      "profileRef": "profile-006",
+      "name": "trial_requested",
+      "productRef": "product-6",
+      "eventTime": "2026-10-06T10:07:00.000Z",
+      "receivedAt": "2026-10-06T10:07:02.000Z"
+    },
+    {
+      "id": "event-007-01",
+      "sourceRef": "website",
+      "profileRef": "profile-007",
+      "name": "product_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-07T09:18:00.000Z",
+      "receivedAt": "2026-10-07T09:18:02.000Z"
+    },
+    {
+      "id": "event-007-02",
+      "sourceRef": "website",
+      "profileRef": "profile-007",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-07T09:31:00.000Z",
+      "receivedAt": "2026-10-07T09:31:02.000Z"
+    },
+    {
+      "id": "event-007-03",
+      "sourceRef": "website",
+      "profileRef": "profile-007",
+      "name": "pricing_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-07T09:44:00.000Z",
+      "receivedAt": "2026-10-07T09:44:02.000Z"
+    },
+    {
+      "id": "event-007-04",
+      "sourceRef": "website",
+      "profileRef": "profile-007",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-07T09:57:00.000Z",
+      "receivedAt": "2026-10-07T09:57:02.000Z"
+    },
+    {
+      "id": "event-008-01",
+      "sourceRef": "website",
+      "profileRef": "profile-008",
+      "name": "product_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-08T09:21:00.000Z",
+      "receivedAt": "2026-10-08T09:21:02.000Z"
+    },
+    {
+      "id": "event-008-02",
+      "sourceRef": "website",
+      "profileRef": "profile-008",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-08T09:34:00.000Z",
+      "receivedAt": "2026-10-08T09:34:02.000Z"
+    },
+    {
+      "id": "event-008-03",
+      "sourceRef": "website",
+      "profileRef": "profile-008",
+      "name": "pricing_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-08T09:47:00.000Z",
+      "receivedAt": "2026-10-08T09:47:02.000Z"
+    },
+    {
+      "id": "event-008-04",
+      "sourceRef": "website",
+      "profileRef": "profile-008",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-08T10:00:00.000Z",
+      "receivedAt": "2026-10-08T10:00:02.000Z"
+    },
+    {
+      "id": "event-008-05",
+      "sourceRef": "website",
+      "profileRef": "profile-008",
+      "name": "trial_requested",
+      "productRef": "product-2",
+      "eventTime": "2026-10-08T10:13:00.000Z",
+      "receivedAt": "2026-10-08T10:13:02.000Z"
+    },
+    {
+      "id": "event-009-01",
+      "sourceRef": "website",
+      "profileRef": "profile-009",
+      "name": "product_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-09T09:24:00.000Z",
+      "receivedAt": "2026-10-09T09:24:02.000Z"
+    },
+    {
+      "id": "event-009-02",
+      "sourceRef": "website",
+      "profileRef": "profile-009",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-09T09:37:00.000Z",
+      "receivedAt": "2026-10-09T09:37:02.000Z"
+    },
+    {
+      "id": "event-009-03",
+      "sourceRef": "website",
+      "profileRef": "profile-009",
+      "name": "pricing_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-09T09:50:00.000Z",
+      "receivedAt": "2026-10-09T09:50:02.000Z"
+    },
+    {
+      "id": "event-009-04",
+      "sourceRef": "website",
+      "profileRef": "profile-009",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-09T10:03:00.000Z",
+      "receivedAt": "2026-10-09T10:03:02.000Z"
+    },
+    {
+      "id": "event-009-05",
+      "sourceRef": "website",
+      "profileRef": "profile-009",
+      "name": "trial_requested",
+      "productRef": "product-3",
+      "eventTime": "2026-10-09T10:16:00.000Z",
+      "receivedAt": "2026-10-09T10:16:02.000Z"
+    },
+    {
+      "id": "event-010-01",
+      "sourceRef": "website",
+      "profileRef": "profile-010",
+      "name": "product_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-10T09:27:00.000Z",
+      "receivedAt": "2026-10-10T09:27:02.000Z"
+    },
+    {
+      "id": "event-010-02",
+      "sourceRef": "website",
+      "profileRef": "profile-010",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-10T09:40:00.000Z",
+      "receivedAt": "2026-10-10T09:40:02.000Z"
+    },
+    {
+      "id": "event-010-03",
+      "sourceRef": "website",
+      "profileRef": "profile-010",
+      "name": "pricing_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-10T09:53:00.000Z",
+      "receivedAt": "2026-10-10T09:53:02.000Z"
+    },
+    {
+      "id": "event-010-04",
+      "sourceRef": "website",
+      "profileRef": "profile-010",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-10T10:06:00.000Z",
+      "receivedAt": "2026-10-10T10:06:02.000Z"
+    },
+    {
+      "id": "event-011-01",
+      "sourceRef": "website",
+      "profileRef": "profile-011",
+      "name": "product_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-11T09:30:00.000Z",
+      "receivedAt": "2026-10-11T09:30:02.000Z"
+    },
+    {
+      "id": "event-011-02",
+      "sourceRef": "website",
+      "profileRef": "profile-011",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-11T09:43:00.000Z",
+      "receivedAt": "2026-10-11T09:43:02.000Z"
+    },
+    {
+      "id": "event-011-03",
+      "sourceRef": "website",
+      "profileRef": "profile-011",
+      "name": "pricing_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-11T09:56:00.000Z",
+      "receivedAt": "2026-10-11T09:56:02.000Z"
+    },
+    {
+      "id": "event-011-04",
+      "sourceRef": "website",
+      "profileRef": "profile-011",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-11T10:09:00.000Z",
+      "receivedAt": "2026-10-11T10:09:02.000Z"
+    },
+    {
+      "id": "event-011-05",
+      "sourceRef": "website",
+      "profileRef": "profile-011",
+      "name": "trial_requested",
+      "productRef": "product-5",
+      "eventTime": "2026-10-11T10:22:00.000Z",
+      "receivedAt": "2026-10-11T10:22:02.000Z"
+    },
+    {
+      "id": "event-012-01",
+      "sourceRef": "website",
+      "profileRef": "profile-012",
+      "name": "product_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-12T09:33:00.000Z",
+      "receivedAt": "2026-10-12T09:33:02.000Z"
+    },
+    {
+      "id": "event-012-02",
+      "sourceRef": "website",
+      "profileRef": "profile-012",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-12T09:46:00.000Z",
+      "receivedAt": "2026-10-12T09:46:02.000Z"
+    },
+    {
+      "id": "event-012-03",
+      "sourceRef": "website",
+      "profileRef": "profile-012",
+      "name": "pricing_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-12T09:59:00.000Z",
+      "receivedAt": "2026-10-12T09:59:02.000Z"
+    },
+    {
+      "id": "event-012-04",
+      "sourceRef": "website",
+      "profileRef": "profile-012",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-12T10:12:00.000Z",
+      "receivedAt": "2026-10-12T10:12:02.000Z"
+    },
+    {
+      "id": "event-012-05",
+      "sourceRef": "website",
+      "profileRef": "profile-012",
+      "name": "trial_requested",
+      "productRef": "product-6",
+      "eventTime": "2026-10-12T10:25:00.000Z",
+      "receivedAt": "2026-10-12T10:25:02.000Z"
+    },
+    {
+      "id": "event-013-01",
+      "sourceRef": "website",
+      "profileRef": "profile-013",
+      "name": "product_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-13T09:36:00.000Z",
+      "receivedAt": "2026-10-13T09:36:02.000Z"
+    },
+    {
+      "id": "event-013-02",
+      "sourceRef": "website",
+      "profileRef": "profile-013",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-13T09:49:00.000Z",
+      "receivedAt": "2026-10-13T09:49:02.000Z"
+    },
+    {
+      "id": "event-013-03",
+      "sourceRef": "website",
+      "profileRef": "profile-013",
+      "name": "pricing_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-13T10:02:00.000Z",
+      "receivedAt": "2026-10-13T10:02:02.000Z"
+    },
+    {
+      "id": "event-013-04",
+      "sourceRef": "website",
+      "profileRef": "profile-013",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-13T10:15:00.000Z",
+      "receivedAt": "2026-10-13T10:15:02.000Z"
+    },
+    {
+      "id": "event-014-01",
+      "sourceRef": "website",
+      "profileRef": "profile-014",
+      "name": "product_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-14T09:39:00.000Z",
+      "receivedAt": "2026-10-14T09:39:02.000Z"
+    },
+    {
+      "id": "event-014-02",
+      "sourceRef": "website",
+      "profileRef": "profile-014",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-14T09:52:00.000Z",
+      "receivedAt": "2026-10-14T09:52:02.000Z"
+    },
+    {
+      "id": "event-014-03",
+      "sourceRef": "website",
+      "profileRef": "profile-014",
+      "name": "pricing_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-14T10:05:00.000Z",
+      "receivedAt": "2026-10-14T10:05:02.000Z"
+    },
+    {
+      "id": "event-014-04",
+      "sourceRef": "website",
+      "profileRef": "profile-014",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-14T10:18:00.000Z",
+      "receivedAt": "2026-10-14T10:18:02.000Z"
+    },
+    {
+      "id": "event-014-05",
+      "sourceRef": "website",
+      "profileRef": "profile-014",
+      "name": "trial_requested",
+      "productRef": "product-2",
+      "eventTime": "2026-10-14T10:31:00.000Z",
+      "receivedAt": "2026-10-14T10:31:02.000Z"
+    },
+    {
+      "id": "event-015-01",
+      "sourceRef": "website",
+      "profileRef": "profile-015",
+      "name": "product_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-15T09:42:00.000Z",
+      "receivedAt": "2026-10-15T09:42:02.000Z"
+    },
+    {
+      "id": "event-015-02",
+      "sourceRef": "website",
+      "profileRef": "profile-015",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-15T09:55:00.000Z",
+      "receivedAt": "2026-10-15T09:55:02.000Z"
+    },
+    {
+      "id": "event-015-03",
+      "sourceRef": "website",
+      "profileRef": "profile-015",
+      "name": "pricing_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-15T10:08:00.000Z",
+      "receivedAt": "2026-10-15T10:08:02.000Z"
+    },
+    {
+      "id": "event-015-04",
+      "sourceRef": "website",
+      "profileRef": "profile-015",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-15T10:21:00.000Z",
+      "receivedAt": "2026-10-15T10:21:02.000Z"
+    },
+    {
+      "id": "event-015-05",
+      "sourceRef": "website",
+      "profileRef": "profile-015",
+      "name": "trial_requested",
+      "productRef": "product-3",
+      "eventTime": "2026-10-15T10:34:00.000Z",
+      "receivedAt": "2026-10-15T10:34:02.000Z"
+    },
+    {
+      "id": "event-016-01",
+      "sourceRef": "website",
+      "profileRef": "profile-016",
+      "name": "product_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-16T09:45:00.000Z",
+      "receivedAt": "2026-10-16T09:45:02.000Z"
+    },
+    {
+      "id": "event-016-02",
+      "sourceRef": "website",
+      "profileRef": "profile-016",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-16T09:58:00.000Z",
+      "receivedAt": "2026-10-16T09:58:02.000Z"
+    },
+    {
+      "id": "event-016-03",
+      "sourceRef": "website",
+      "profileRef": "profile-016",
+      "name": "pricing_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-16T10:11:00.000Z",
+      "receivedAt": "2026-10-16T10:11:02.000Z"
+    },
+    {
+      "id": "event-016-04",
+      "sourceRef": "website",
+      "profileRef": "profile-016",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-16T10:24:00.000Z",
+      "receivedAt": "2026-10-16T10:24:02.000Z"
+    },
+    {
+      "id": "event-017-01",
+      "sourceRef": "website",
+      "profileRef": "profile-017",
+      "name": "product_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-17T09:48:00.000Z",
+      "receivedAt": "2026-10-17T09:48:02.000Z"
+    },
+    {
+      "id": "event-017-02",
+      "sourceRef": "website",
+      "profileRef": "profile-017",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-17T10:01:00.000Z",
+      "receivedAt": "2026-10-17T10:01:02.000Z"
+    },
+    {
+      "id": "event-017-03",
+      "sourceRef": "website",
+      "profileRef": "profile-017",
+      "name": "pricing_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-17T10:14:00.000Z",
+      "receivedAt": "2026-10-17T10:14:02.000Z"
+    },
+    {
+      "id": "event-017-04",
+      "sourceRef": "website",
+      "profileRef": "profile-017",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-17T10:27:00.000Z",
+      "receivedAt": "2026-10-17T10:27:02.000Z"
+    },
+    {
+      "id": "event-017-05",
+      "sourceRef": "website",
+      "profileRef": "profile-017",
+      "name": "trial_requested",
+      "productRef": "product-5",
+      "eventTime": "2026-10-17T10:40:00.000Z",
+      "receivedAt": "2026-10-17T10:40:02.000Z"
+    },
+    {
+      "id": "event-018-01",
+      "sourceRef": "website",
+      "profileRef": "profile-018",
+      "name": "product_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-18T09:51:00.000Z",
+      "receivedAt": "2026-10-18T09:51:02.000Z"
+    },
+    {
+      "id": "event-018-02",
+      "sourceRef": "website",
+      "profileRef": "profile-018",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-18T10:04:00.000Z",
+      "receivedAt": "2026-10-18T10:04:02.000Z"
+    },
+    {
+      "id": "event-018-03",
+      "sourceRef": "website",
+      "profileRef": "profile-018",
+      "name": "pricing_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-18T10:17:00.000Z",
+      "receivedAt": "2026-10-18T10:17:02.000Z"
+    },
+    {
+      "id": "event-018-04",
+      "sourceRef": "website",
+      "profileRef": "profile-018",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-18T10:30:00.000Z",
+      "receivedAt": "2026-10-18T10:30:02.000Z"
+    },
+    {
+      "id": "event-018-05",
+      "sourceRef": "website",
+      "profileRef": "profile-018",
+      "name": "trial_requested",
+      "productRef": "product-6",
+      "eventTime": "2026-10-18T10:43:00.000Z",
+      "receivedAt": "2026-10-18T10:43:02.000Z"
+    },
+    {
+      "id": "event-019-01",
+      "sourceRef": "website",
+      "profileRef": "profile-019",
+      "name": "product_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-19T09:54:00.000Z",
+      "receivedAt": "2026-10-19T09:54:02.000Z"
+    },
+    {
+      "id": "event-019-02",
+      "sourceRef": "website",
+      "profileRef": "profile-019",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-19T10:07:00.000Z",
+      "receivedAt": "2026-10-19T10:07:02.000Z"
+    },
+    {
+      "id": "event-019-03",
+      "sourceRef": "website",
+      "profileRef": "profile-019",
+      "name": "pricing_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-19T10:20:00.000Z",
+      "receivedAt": "2026-10-19T10:20:02.000Z"
+    },
+    {
+      "id": "event-019-04",
+      "sourceRef": "website",
+      "profileRef": "profile-019",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-19T10:33:00.000Z",
+      "receivedAt": "2026-10-19T10:33:02.000Z"
+    },
+    {
+      "id": "event-020-01",
+      "sourceRef": "website",
+      "profileRef": "profile-020",
+      "name": "product_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-20T09:57:00.000Z",
+      "receivedAt": "2026-10-20T09:57:02.000Z"
+    },
+    {
+      "id": "event-020-02",
+      "sourceRef": "website",
+      "profileRef": "profile-020",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-20T10:10:00.000Z",
+      "receivedAt": "2026-10-20T10:10:02.000Z"
+    },
+    {
+      "id": "event-020-03",
+      "sourceRef": "website",
+      "profileRef": "profile-020",
+      "name": "pricing_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-20T10:23:00.000Z",
+      "receivedAt": "2026-10-20T10:23:02.000Z"
+    },
+    {
+      "id": "event-020-04",
+      "sourceRef": "website",
+      "profileRef": "profile-020",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-20T10:36:00.000Z",
+      "receivedAt": "2026-10-20T10:36:02.000Z"
+    },
+    {
+      "id": "event-020-05",
+      "sourceRef": "website",
+      "profileRef": "profile-020",
+      "name": "trial_requested",
+      "productRef": "product-2",
+      "eventTime": "2026-10-20T10:49:00.000Z",
+      "receivedAt": "2026-10-20T10:49:02.000Z"
+    },
+    {
+      "id": "event-021-01",
+      "sourceRef": "website",
+      "profileRef": "profile-021",
+      "name": "product_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-01T10:00:00.000Z",
+      "receivedAt": "2026-10-01T10:00:02.000Z"
+    },
+    {
+      "id": "event-021-02",
+      "sourceRef": "website",
+      "profileRef": "profile-021",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-01T10:13:00.000Z",
+      "receivedAt": "2026-10-01T10:13:02.000Z"
+    },
+    {
+      "id": "event-021-03",
+      "sourceRef": "website",
+      "profileRef": "profile-021",
+      "name": "pricing_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-01T10:26:00.000Z",
+      "receivedAt": "2026-10-01T10:26:02.000Z"
+    },
+    {
+      "id": "event-021-04",
+      "sourceRef": "website",
+      "profileRef": "profile-021",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-01T10:39:00.000Z",
+      "receivedAt": "2026-10-01T10:39:02.000Z"
+    },
+    {
+      "id": "event-021-05",
+      "sourceRef": "website",
+      "profileRef": "profile-021",
+      "name": "trial_requested",
+      "productRef": "product-3",
+      "eventTime": "2026-10-01T10:52:00.000Z",
+      "receivedAt": "2026-10-01T10:52:02.000Z"
+    },
+    {
+      "id": "event-022-01",
+      "sourceRef": "website",
+      "profileRef": "profile-022",
+      "name": "product_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-02T10:03:00.000Z",
+      "receivedAt": "2026-10-02T10:03:02.000Z"
+    },
+    {
+      "id": "event-022-02",
+      "sourceRef": "website",
+      "profileRef": "profile-022",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-02T10:16:00.000Z",
+      "receivedAt": "2026-10-02T10:16:02.000Z"
+    },
+    {
+      "id": "event-022-03",
+      "sourceRef": "website",
+      "profileRef": "profile-022",
+      "name": "pricing_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-02T10:29:00.000Z",
+      "receivedAt": "2026-10-02T10:29:02.000Z"
+    },
+    {
+      "id": "event-022-04",
+      "sourceRef": "website",
+      "profileRef": "profile-022",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-02T10:42:00.000Z",
+      "receivedAt": "2026-10-02T10:42:02.000Z"
+    },
+    {
+      "id": "event-023-01",
+      "sourceRef": "website",
+      "profileRef": "profile-023",
+      "name": "product_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-03T10:06:00.000Z",
+      "receivedAt": "2026-10-03T10:06:02.000Z"
+    },
+    {
+      "id": "event-023-02",
+      "sourceRef": "website",
+      "profileRef": "profile-023",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-03T10:19:00.000Z",
+      "receivedAt": "2026-10-03T10:19:02.000Z"
+    },
+    {
+      "id": "event-023-03",
+      "sourceRef": "website",
+      "profileRef": "profile-023",
+      "name": "pricing_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-03T10:32:00.000Z",
+      "receivedAt": "2026-10-03T10:32:02.000Z"
+    },
+    {
+      "id": "event-023-04",
+      "sourceRef": "website",
+      "profileRef": "profile-023",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-03T10:45:00.000Z",
+      "receivedAt": "2026-10-03T10:45:02.000Z"
+    },
+    {
+      "id": "event-023-05",
+      "sourceRef": "website",
+      "profileRef": "profile-023",
+      "name": "trial_requested",
+      "productRef": "product-5",
+      "eventTime": "2026-10-03T10:58:00.000Z",
+      "receivedAt": "2026-10-03T10:58:02.000Z"
+    },
+    {
+      "id": "event-024-01",
+      "sourceRef": "website",
+      "profileRef": "profile-024",
+      "name": "product_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-04T10:09:00.000Z",
+      "receivedAt": "2026-10-04T10:09:02.000Z"
+    },
+    {
+      "id": "event-024-02",
+      "sourceRef": "website",
+      "profileRef": "profile-024",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-04T10:22:00.000Z",
+      "receivedAt": "2026-10-04T10:22:02.000Z"
+    },
+    {
+      "id": "event-024-03",
+      "sourceRef": "website",
+      "profileRef": "profile-024",
+      "name": "pricing_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-04T10:35:00.000Z",
+      "receivedAt": "2026-10-04T10:35:02.000Z"
+    },
+    {
+      "id": "event-024-04",
+      "sourceRef": "website",
+      "profileRef": "profile-024",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-04T10:48:00.000Z",
+      "receivedAt": "2026-10-04T10:48:02.000Z"
+    },
+    {
+      "id": "event-024-05",
+      "sourceRef": "website",
+      "profileRef": "profile-024",
+      "name": "trial_requested",
+      "productRef": "product-6",
+      "eventTime": "2026-10-04T11:01:00.000Z",
+      "receivedAt": "2026-10-04T11:01:02.000Z"
+    },
+    {
+      "id": "event-025-01",
+      "sourceRef": "website",
+      "profileRef": "profile-025",
+      "name": "product_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-05T10:12:00.000Z",
+      "receivedAt": "2026-10-05T10:12:02.000Z"
+    },
+    {
+      "id": "event-025-02",
+      "sourceRef": "website",
+      "profileRef": "profile-025",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-05T10:25:00.000Z",
+      "receivedAt": "2026-10-05T10:25:02.000Z"
+    },
+    {
+      "id": "event-025-03",
+      "sourceRef": "website",
+      "profileRef": "profile-025",
+      "name": "pricing_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-05T10:38:00.000Z",
+      "receivedAt": "2026-10-05T10:38:02.000Z"
+    },
+    {
+      "id": "event-025-04",
+      "sourceRef": "website",
+      "profileRef": "profile-025",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-05T10:51:00.000Z",
+      "receivedAt": "2026-10-05T10:51:02.000Z"
+    },
+    {
+      "id": "event-026-01",
+      "sourceRef": "website",
+      "profileRef": "profile-026",
+      "name": "product_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-06T10:15:00.000Z",
+      "receivedAt": "2026-10-06T10:15:02.000Z"
+    },
+    {
+      "id": "event-026-02",
+      "sourceRef": "website",
+      "profileRef": "profile-026",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-06T10:28:00.000Z",
+      "receivedAt": "2026-10-06T10:28:02.000Z"
+    },
+    {
+      "id": "event-026-03",
+      "sourceRef": "website",
+      "profileRef": "profile-026",
+      "name": "pricing_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-06T10:41:00.000Z",
+      "receivedAt": "2026-10-06T10:41:02.000Z"
+    },
+    {
+      "id": "event-026-04",
+      "sourceRef": "website",
+      "profileRef": "profile-026",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-06T10:54:00.000Z",
+      "receivedAt": "2026-10-06T10:54:02.000Z"
+    },
+    {
+      "id": "event-026-05",
+      "sourceRef": "website",
+      "profileRef": "profile-026",
+      "name": "trial_requested",
+      "productRef": "product-2",
+      "eventTime": "2026-10-06T11:07:00.000Z",
+      "receivedAt": "2026-10-06T11:07:02.000Z"
+    },
+    {
+      "id": "event-027-01",
+      "sourceRef": "website",
+      "profileRef": "profile-027",
+      "name": "product_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-07T10:18:00.000Z",
+      "receivedAt": "2026-10-07T10:18:02.000Z"
+    },
+    {
+      "id": "event-027-02",
+      "sourceRef": "website",
+      "profileRef": "profile-027",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-07T10:31:00.000Z",
+      "receivedAt": "2026-10-07T10:31:02.000Z"
+    },
+    {
+      "id": "event-027-03",
+      "sourceRef": "website",
+      "profileRef": "profile-027",
+      "name": "pricing_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-07T10:44:00.000Z",
+      "receivedAt": "2026-10-07T10:44:02.000Z"
+    },
+    {
+      "id": "event-027-04",
+      "sourceRef": "website",
+      "profileRef": "profile-027",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-07T10:57:00.000Z",
+      "receivedAt": "2026-10-07T10:57:02.000Z"
+    },
+    {
+      "id": "event-027-05",
+      "sourceRef": "website",
+      "profileRef": "profile-027",
+      "name": "trial_requested",
+      "productRef": "product-3",
+      "eventTime": "2026-10-07T11:10:00.000Z",
+      "receivedAt": "2026-10-07T11:10:02.000Z"
+    },
+    {
+      "id": "event-028-01",
+      "sourceRef": "website",
+      "profileRef": "profile-028",
+      "name": "product_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-08T10:21:00.000Z",
+      "receivedAt": "2026-10-08T10:21:02.000Z"
+    },
+    {
+      "id": "event-028-02",
+      "sourceRef": "website",
+      "profileRef": "profile-028",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-08T10:34:00.000Z",
+      "receivedAt": "2026-10-08T10:34:02.000Z"
+    },
+    {
+      "id": "event-028-03",
+      "sourceRef": "website",
+      "profileRef": "profile-028",
+      "name": "pricing_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-08T10:47:00.000Z",
+      "receivedAt": "2026-10-08T10:47:02.000Z"
+    },
+    {
+      "id": "event-028-04",
+      "sourceRef": "website",
+      "profileRef": "profile-028",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-08T11:00:00.000Z",
+      "receivedAt": "2026-10-08T11:00:02.000Z"
+    },
+    {
+      "id": "event-029-01",
+      "sourceRef": "website",
+      "profileRef": "profile-029",
+      "name": "product_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-09T10:24:00.000Z",
+      "receivedAt": "2026-10-09T10:24:02.000Z"
+    },
+    {
+      "id": "event-029-02",
+      "sourceRef": "website",
+      "profileRef": "profile-029",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-09T10:37:00.000Z",
+      "receivedAt": "2026-10-09T10:37:02.000Z"
+    },
+    {
+      "id": "event-029-03",
+      "sourceRef": "website",
+      "profileRef": "profile-029",
+      "name": "pricing_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-09T10:50:00.000Z",
+      "receivedAt": "2026-10-09T10:50:02.000Z"
+    },
+    {
+      "id": "event-029-04",
+      "sourceRef": "website",
+      "profileRef": "profile-029",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-09T11:03:00.000Z",
+      "receivedAt": "2026-10-09T11:03:02.000Z"
+    },
+    {
+      "id": "event-029-05",
+      "sourceRef": "website",
+      "profileRef": "profile-029",
+      "name": "trial_requested",
+      "productRef": "product-5",
+      "eventTime": "2026-10-09T11:16:00.000Z",
+      "receivedAt": "2026-10-09T11:16:02.000Z"
+    },
+    {
+      "id": "event-030-01",
+      "sourceRef": "website",
+      "profileRef": "profile-030",
+      "name": "product_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-10T10:27:00.000Z",
+      "receivedAt": "2026-10-10T10:27:02.000Z"
+    },
+    {
+      "id": "event-030-02",
+      "sourceRef": "website",
+      "profileRef": "profile-030",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-10T10:40:00.000Z",
+      "receivedAt": "2026-10-10T10:40:02.000Z"
+    },
+    {
+      "id": "event-030-03",
+      "sourceRef": "website",
+      "profileRef": "profile-030",
+      "name": "pricing_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-10T10:53:00.000Z",
+      "receivedAt": "2026-10-10T10:53:02.000Z"
+    },
+    {
+      "id": "event-030-04",
+      "sourceRef": "website",
+      "profileRef": "profile-030",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-10T11:06:00.000Z",
+      "receivedAt": "2026-10-10T11:06:02.000Z"
+    },
+    {
+      "id": "event-030-05",
+      "sourceRef": "website",
+      "profileRef": "profile-030",
+      "name": "trial_requested",
+      "productRef": "product-6",
+      "eventTime": "2026-10-10T11:19:00.000Z",
+      "receivedAt": "2026-10-10T11:19:02.000Z"
+    },
+    {
+      "id": "event-031-01",
+      "sourceRef": "website",
+      "profileRef": "profile-031",
+      "name": "product_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-11T10:30:00.000Z",
+      "receivedAt": "2026-10-11T10:30:02.000Z"
+    },
+    {
+      "id": "event-031-02",
+      "sourceRef": "website",
+      "profileRef": "profile-031",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-11T10:43:00.000Z",
+      "receivedAt": "2026-10-11T10:43:02.000Z"
+    },
+    {
+      "id": "event-031-03",
+      "sourceRef": "website",
+      "profileRef": "profile-031",
+      "name": "pricing_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-11T10:56:00.000Z",
+      "receivedAt": "2026-10-11T10:56:02.000Z"
+    },
+    {
+      "id": "event-031-04",
+      "sourceRef": "website",
+      "profileRef": "profile-031",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-11T11:09:00.000Z",
+      "receivedAt": "2026-10-11T11:09:02.000Z"
+    },
+    {
+      "id": "event-032-01",
+      "sourceRef": "website",
+      "profileRef": "profile-032",
+      "name": "product_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-12T10:33:00.000Z",
+      "receivedAt": "2026-10-12T10:33:02.000Z"
+    },
+    {
+      "id": "event-032-02",
+      "sourceRef": "website",
+      "profileRef": "profile-032",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-12T10:46:00.000Z",
+      "receivedAt": "2026-10-12T10:46:02.000Z"
+    },
+    {
+      "id": "event-032-03",
+      "sourceRef": "website",
+      "profileRef": "profile-032",
+      "name": "pricing_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-12T10:59:00.000Z",
+      "receivedAt": "2026-10-12T10:59:02.000Z"
+    },
+    {
+      "id": "event-032-04",
+      "sourceRef": "website",
+      "profileRef": "profile-032",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-12T11:12:00.000Z",
+      "receivedAt": "2026-10-12T11:12:02.000Z"
+    },
+    {
+      "id": "event-032-05",
+      "sourceRef": "website",
+      "profileRef": "profile-032",
+      "name": "trial_requested",
+      "productRef": "product-2",
+      "eventTime": "2026-10-12T11:25:00.000Z",
+      "receivedAt": "2026-10-12T11:25:02.000Z"
+    },
+    {
+      "id": "event-033-01",
+      "sourceRef": "website",
+      "profileRef": "profile-033",
+      "name": "product_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-13T10:36:00.000Z",
+      "receivedAt": "2026-10-13T10:36:02.000Z"
+    },
+    {
+      "id": "event-033-02",
+      "sourceRef": "website",
+      "profileRef": "profile-033",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-13T10:49:00.000Z",
+      "receivedAt": "2026-10-13T10:49:02.000Z"
+    },
+    {
+      "id": "event-033-03",
+      "sourceRef": "website",
+      "profileRef": "profile-033",
+      "name": "pricing_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-13T11:02:00.000Z",
+      "receivedAt": "2026-10-13T11:02:02.000Z"
+    },
+    {
+      "id": "event-033-04",
+      "sourceRef": "website",
+      "profileRef": "profile-033",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-13T11:15:00.000Z",
+      "receivedAt": "2026-10-13T11:15:02.000Z"
+    },
+    {
+      "id": "event-033-05",
+      "sourceRef": "website",
+      "profileRef": "profile-033",
+      "name": "trial_requested",
+      "productRef": "product-3",
+      "eventTime": "2026-10-13T11:28:00.000Z",
+      "receivedAt": "2026-10-13T11:28:02.000Z"
+    },
+    {
+      "id": "event-034-01",
+      "sourceRef": "website",
+      "profileRef": "profile-034",
+      "name": "product_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-14T10:39:00.000Z",
+      "receivedAt": "2026-10-14T10:39:02.000Z"
+    },
+    {
+      "id": "event-034-02",
+      "sourceRef": "website",
+      "profileRef": "profile-034",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-14T10:52:00.000Z",
+      "receivedAt": "2026-10-14T10:52:02.000Z"
+    },
+    {
+      "id": "event-034-03",
+      "sourceRef": "website",
+      "profileRef": "profile-034",
+      "name": "pricing_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-14T11:05:00.000Z",
+      "receivedAt": "2026-10-14T11:05:02.000Z"
+    },
+    {
+      "id": "event-034-04",
+      "sourceRef": "website",
+      "profileRef": "profile-034",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-14T11:18:00.000Z",
+      "receivedAt": "2026-10-14T11:18:02.000Z"
+    },
+    {
+      "id": "event-035-01",
+      "sourceRef": "website",
+      "profileRef": "profile-035",
+      "name": "product_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-15T10:42:00.000Z",
+      "receivedAt": "2026-10-15T10:42:02.000Z"
+    },
+    {
+      "id": "event-035-02",
+      "sourceRef": "website",
+      "profileRef": "profile-035",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-15T10:55:00.000Z",
+      "receivedAt": "2026-10-15T10:55:02.000Z"
+    },
+    {
+      "id": "event-035-03",
+      "sourceRef": "website",
+      "profileRef": "profile-035",
+      "name": "pricing_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-15T11:08:00.000Z",
+      "receivedAt": "2026-10-15T11:08:02.000Z"
+    },
+    {
+      "id": "event-035-04",
+      "sourceRef": "website",
+      "profileRef": "profile-035",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-15T11:21:00.000Z",
+      "receivedAt": "2026-10-15T11:21:02.000Z"
+    },
+    {
+      "id": "event-035-05",
+      "sourceRef": "website",
+      "profileRef": "profile-035",
+      "name": "trial_requested",
+      "productRef": "product-5",
+      "eventTime": "2026-10-15T11:34:00.000Z",
+      "receivedAt": "2026-10-15T11:34:02.000Z"
+    },
+    {
+      "id": "event-036-01",
+      "sourceRef": "website",
+      "profileRef": "profile-036",
+      "name": "product_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-16T10:45:00.000Z",
+      "receivedAt": "2026-10-16T10:45:02.000Z"
+    },
+    {
+      "id": "event-036-02",
+      "sourceRef": "website",
+      "profileRef": "profile-036",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-16T10:58:00.000Z",
+      "receivedAt": "2026-10-16T10:58:02.000Z"
+    },
+    {
+      "id": "event-036-03",
+      "sourceRef": "website",
+      "profileRef": "profile-036",
+      "name": "pricing_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-16T11:11:00.000Z",
+      "receivedAt": "2026-10-16T11:11:02.000Z"
+    },
+    {
+      "id": "event-036-04",
+      "sourceRef": "website",
+      "profileRef": "profile-036",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-16T11:24:00.000Z",
+      "receivedAt": "2026-10-16T11:24:02.000Z"
+    },
+    {
+      "id": "event-036-05",
+      "sourceRef": "website",
+      "profileRef": "profile-036",
+      "name": "trial_requested",
+      "productRef": "product-6",
+      "eventTime": "2026-10-16T11:37:00.000Z",
+      "receivedAt": "2026-10-16T11:37:02.000Z"
+    },
+    {
+      "id": "event-037-01",
+      "sourceRef": "website",
+      "profileRef": "profile-037",
+      "name": "product_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-17T10:48:00.000Z",
+      "receivedAt": "2026-10-17T10:48:02.000Z"
+    },
+    {
+      "id": "event-037-02",
+      "sourceRef": "website",
+      "profileRef": "profile-037",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-17T11:01:00.000Z",
+      "receivedAt": "2026-10-17T11:01:02.000Z"
+    },
+    {
+      "id": "event-037-03",
+      "sourceRef": "website",
+      "profileRef": "profile-037",
+      "name": "pricing_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-17T11:14:00.000Z",
+      "receivedAt": "2026-10-17T11:14:02.000Z"
+    },
+    {
+      "id": "event-037-04",
+      "sourceRef": "website",
+      "profileRef": "profile-037",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-17T11:27:00.000Z",
+      "receivedAt": "2026-10-17T11:27:02.000Z"
+    },
+    {
+      "id": "event-038-01",
+      "sourceRef": "website",
+      "profileRef": "profile-038",
+      "name": "product_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-18T10:51:00.000Z",
+      "receivedAt": "2026-10-18T10:51:02.000Z"
+    },
+    {
+      "id": "event-038-02",
+      "sourceRef": "website",
+      "profileRef": "profile-038",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-18T11:04:00.000Z",
+      "receivedAt": "2026-10-18T11:04:02.000Z"
+    },
+    {
+      "id": "event-038-03",
+      "sourceRef": "website",
+      "profileRef": "profile-038",
+      "name": "pricing_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-18T11:17:00.000Z",
+      "receivedAt": "2026-10-18T11:17:02.000Z"
+    },
+    {
+      "id": "event-038-04",
+      "sourceRef": "website",
+      "profileRef": "profile-038",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-18T11:30:00.000Z",
+      "receivedAt": "2026-10-18T11:30:02.000Z"
+    },
+    {
+      "id": "event-038-05",
+      "sourceRef": "website",
+      "profileRef": "profile-038",
+      "name": "trial_requested",
+      "productRef": "product-2",
+      "eventTime": "2026-10-18T11:43:00.000Z",
+      "receivedAt": "2026-10-18T11:43:02.000Z"
+    },
+    {
+      "id": "event-039-01",
+      "sourceRef": "website",
+      "profileRef": "profile-039",
+      "name": "product_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-19T10:54:00.000Z",
+      "receivedAt": "2026-10-19T10:54:02.000Z"
+    },
+    {
+      "id": "event-039-02",
+      "sourceRef": "website",
+      "profileRef": "profile-039",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-19T11:07:00.000Z",
+      "receivedAt": "2026-10-19T11:07:02.000Z"
+    },
+    {
+      "id": "event-039-03",
+      "sourceRef": "website",
+      "profileRef": "profile-039",
+      "name": "pricing_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-19T11:20:00.000Z",
+      "receivedAt": "2026-10-19T11:20:02.000Z"
+    },
+    {
+      "id": "event-039-04",
+      "sourceRef": "website",
+      "profileRef": "profile-039",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-19T11:33:00.000Z",
+      "receivedAt": "2026-10-19T11:33:02.000Z"
+    },
+    {
+      "id": "event-039-05",
+      "sourceRef": "website",
+      "profileRef": "profile-039",
+      "name": "trial_requested",
+      "productRef": "product-3",
+      "eventTime": "2026-10-19T11:46:00.000Z",
+      "receivedAt": "2026-10-19T11:46:02.000Z"
+    },
+    {
+      "id": "event-040-01",
+      "sourceRef": "website",
+      "profileRef": "profile-040",
+      "name": "product_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-20T10:57:00.000Z",
+      "receivedAt": "2026-10-20T10:57:02.000Z"
+    },
+    {
+      "id": "event-040-02",
+      "sourceRef": "website",
+      "profileRef": "profile-040",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-20T11:10:00.000Z",
+      "receivedAt": "2026-10-20T11:10:02.000Z"
+    },
+    {
+      "id": "event-040-03",
+      "sourceRef": "website",
+      "profileRef": "profile-040",
+      "name": "pricing_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-20T11:23:00.000Z",
+      "receivedAt": "2026-10-20T11:23:02.000Z"
+    },
+    {
+      "id": "event-040-04",
+      "sourceRef": "website",
+      "profileRef": "profile-040",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-20T11:36:00.000Z",
+      "receivedAt": "2026-10-20T11:36:02.000Z"
+    },
+    {
+      "id": "event-041-01",
+      "sourceRef": "website",
+      "profileRef": "profile-041",
+      "name": "product_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-01T11:00:00.000Z",
+      "receivedAt": "2026-10-01T11:00:02.000Z"
+    },
+    {
+      "id": "event-041-02",
+      "sourceRef": "website",
+      "profileRef": "profile-041",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-01T11:13:00.000Z",
+      "receivedAt": "2026-10-01T11:13:02.000Z"
+    },
+    {
+      "id": "event-041-03",
+      "sourceRef": "website",
+      "profileRef": "profile-041",
+      "name": "pricing_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-01T11:26:00.000Z",
+      "receivedAt": "2026-10-01T11:26:02.000Z"
+    },
+    {
+      "id": "event-041-04",
+      "sourceRef": "website",
+      "profileRef": "profile-041",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-01T11:39:00.000Z",
+      "receivedAt": "2026-10-01T11:39:02.000Z"
+    },
+    {
+      "id": "event-041-05",
+      "sourceRef": "website",
+      "profileRef": "profile-041",
+      "name": "trial_requested",
+      "productRef": "product-5",
+      "eventTime": "2026-10-01T11:52:00.000Z",
+      "receivedAt": "2026-10-01T11:52:02.000Z"
+    },
+    {
+      "id": "event-042-01",
+      "sourceRef": "website",
+      "profileRef": "profile-042",
+      "name": "product_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-02T11:03:00.000Z",
+      "receivedAt": "2026-10-02T11:03:02.000Z"
+    },
+    {
+      "id": "event-042-02",
+      "sourceRef": "website",
+      "profileRef": "profile-042",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-02T11:16:00.000Z",
+      "receivedAt": "2026-10-02T11:16:02.000Z"
+    },
+    {
+      "id": "event-042-03",
+      "sourceRef": "website",
+      "profileRef": "profile-042",
+      "name": "pricing_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-02T11:29:00.000Z",
+      "receivedAt": "2026-10-02T11:29:02.000Z"
+    },
+    {
+      "id": "event-042-04",
+      "sourceRef": "website",
+      "profileRef": "profile-042",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-02T11:42:00.000Z",
+      "receivedAt": "2026-10-02T11:42:02.000Z"
+    },
+    {
+      "id": "event-042-05",
+      "sourceRef": "website",
+      "profileRef": "profile-042",
+      "name": "trial_requested",
+      "productRef": "product-6",
+      "eventTime": "2026-10-02T11:55:00.000Z",
+      "receivedAt": "2026-10-02T11:55:02.000Z"
+    },
+    {
+      "id": "event-043-01",
+      "sourceRef": "website",
+      "profileRef": "profile-043",
+      "name": "product_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-03T11:06:00.000Z",
+      "receivedAt": "2026-10-03T11:06:02.000Z"
+    },
+    {
+      "id": "event-043-02",
+      "sourceRef": "website",
+      "profileRef": "profile-043",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-03T11:19:00.000Z",
+      "receivedAt": "2026-10-03T11:19:02.000Z"
+    },
+    {
+      "id": "event-043-03",
+      "sourceRef": "website",
+      "profileRef": "profile-043",
+      "name": "pricing_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-03T11:32:00.000Z",
+      "receivedAt": "2026-10-03T11:32:02.000Z"
+    },
+    {
+      "id": "event-043-04",
+      "sourceRef": "website",
+      "profileRef": "profile-043",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-03T11:45:00.000Z",
+      "receivedAt": "2026-10-03T11:45:02.000Z"
+    },
+    {
+      "id": "event-044-01",
+      "sourceRef": "website",
+      "profileRef": "profile-044",
+      "name": "product_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-04T11:09:00.000Z",
+      "receivedAt": "2026-10-04T11:09:02.000Z"
+    },
+    {
+      "id": "event-044-02",
+      "sourceRef": "website",
+      "profileRef": "profile-044",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-04T11:22:00.000Z",
+      "receivedAt": "2026-10-04T11:22:02.000Z"
+    },
+    {
+      "id": "event-044-03",
+      "sourceRef": "website",
+      "profileRef": "profile-044",
+      "name": "pricing_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-04T11:35:00.000Z",
+      "receivedAt": "2026-10-04T11:35:02.000Z"
+    },
+    {
+      "id": "event-044-04",
+      "sourceRef": "website",
+      "profileRef": "profile-044",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-04T11:48:00.000Z",
+      "receivedAt": "2026-10-04T11:48:02.000Z"
+    },
+    {
+      "id": "event-044-05",
+      "sourceRef": "website",
+      "profileRef": "profile-044",
+      "name": "trial_requested",
+      "productRef": "product-2",
+      "eventTime": "2026-10-04T12:01:00.000Z",
+      "receivedAt": "2026-10-04T12:01:02.000Z"
+    },
+    {
+      "id": "event-045-01",
+      "sourceRef": "website",
+      "profileRef": "profile-045",
+      "name": "product_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-05T11:12:00.000Z",
+      "receivedAt": "2026-10-05T11:12:02.000Z"
+    },
+    {
+      "id": "event-045-02",
+      "sourceRef": "website",
+      "profileRef": "profile-045",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-05T11:25:00.000Z",
+      "receivedAt": "2026-10-05T11:25:02.000Z"
+    },
+    {
+      "id": "event-045-03",
+      "sourceRef": "website",
+      "profileRef": "profile-045",
+      "name": "pricing_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-05T11:38:00.000Z",
+      "receivedAt": "2026-10-05T11:38:02.000Z"
+    },
+    {
+      "id": "event-045-04",
+      "sourceRef": "website",
+      "profileRef": "profile-045",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-05T11:51:00.000Z",
+      "receivedAt": "2026-10-05T11:51:02.000Z"
+    },
+    {
+      "id": "event-045-05",
+      "sourceRef": "website",
+      "profileRef": "profile-045",
+      "name": "trial_requested",
+      "productRef": "product-3",
+      "eventTime": "2026-10-05T12:04:00.000Z",
+      "receivedAt": "2026-10-05T12:04:02.000Z"
+    },
+    {
+      "id": "event-046-01",
+      "sourceRef": "website",
+      "profileRef": "profile-046",
+      "name": "product_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-06T11:15:00.000Z",
+      "receivedAt": "2026-10-06T11:15:02.000Z"
+    },
+    {
+      "id": "event-046-02",
+      "sourceRef": "website",
+      "profileRef": "profile-046",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-06T11:28:00.000Z",
+      "receivedAt": "2026-10-06T11:28:02.000Z"
+    },
+    {
+      "id": "event-046-03",
+      "sourceRef": "website",
+      "profileRef": "profile-046",
+      "name": "pricing_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-06T11:41:00.000Z",
+      "receivedAt": "2026-10-06T11:41:02.000Z"
+    },
+    {
+      "id": "event-046-04",
+      "sourceRef": "website",
+      "profileRef": "profile-046",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-06T11:54:00.000Z",
+      "receivedAt": "2026-10-06T11:54:02.000Z"
+    },
+    {
+      "id": "event-047-01",
+      "sourceRef": "website",
+      "profileRef": "profile-047",
+      "name": "product_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-07T11:18:00.000Z",
+      "receivedAt": "2026-10-07T11:18:02.000Z"
+    },
+    {
+      "id": "event-047-02",
+      "sourceRef": "website",
+      "profileRef": "profile-047",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-07T11:31:00.000Z",
+      "receivedAt": "2026-10-07T11:31:02.000Z"
+    },
+    {
+      "id": "event-047-03",
+      "sourceRef": "website",
+      "profileRef": "profile-047",
+      "name": "pricing_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-07T11:44:00.000Z",
+      "receivedAt": "2026-10-07T11:44:02.000Z"
+    },
+    {
+      "id": "event-047-04",
+      "sourceRef": "website",
+      "profileRef": "profile-047",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-07T11:57:00.000Z",
+      "receivedAt": "2026-10-07T11:57:02.000Z"
+    },
+    {
+      "id": "event-047-05",
+      "sourceRef": "website",
+      "profileRef": "profile-047",
+      "name": "trial_requested",
+      "productRef": "product-5",
+      "eventTime": "2026-10-07T12:10:00.000Z",
+      "receivedAt": "2026-10-07T12:10:02.000Z"
+    },
+    {
+      "id": "event-048-01",
+      "sourceRef": "website",
+      "profileRef": "profile-048",
+      "name": "product_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-08T11:21:00.000Z",
+      "receivedAt": "2026-10-08T11:21:02.000Z"
+    },
+    {
+      "id": "event-048-02",
+      "sourceRef": "website",
+      "profileRef": "profile-048",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-08T11:34:00.000Z",
+      "receivedAt": "2026-10-08T11:34:02.000Z"
+    },
+    {
+      "id": "event-048-03",
+      "sourceRef": "website",
+      "profileRef": "profile-048",
+      "name": "pricing_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-08T11:47:00.000Z",
+      "receivedAt": "2026-10-08T11:47:02.000Z"
+    },
+    {
+      "id": "event-048-04",
+      "sourceRef": "website",
+      "profileRef": "profile-048",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-08T12:00:00.000Z",
+      "receivedAt": "2026-10-08T12:00:02.000Z"
+    },
+    {
+      "id": "event-048-05",
+      "sourceRef": "website",
+      "profileRef": "profile-048",
+      "name": "trial_requested",
+      "productRef": "product-6",
+      "eventTime": "2026-10-08T12:13:00.000Z",
+      "receivedAt": "2026-10-08T12:13:02.000Z"
+    },
+    {
+      "id": "event-049-01",
+      "sourceRef": "website",
+      "profileRef": "profile-049",
+      "name": "product_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-09T11:24:00.000Z",
+      "receivedAt": "2026-10-09T11:24:02.000Z"
+    },
+    {
+      "id": "event-049-02",
+      "sourceRef": "website",
+      "profileRef": "profile-049",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-09T11:37:00.000Z",
+      "receivedAt": "2026-10-09T11:37:02.000Z"
+    },
+    {
+      "id": "event-049-03",
+      "sourceRef": "website",
+      "profileRef": "profile-049",
+      "name": "pricing_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-09T11:50:00.000Z",
+      "receivedAt": "2026-10-09T11:50:02.000Z"
+    },
+    {
+      "id": "event-049-04",
+      "sourceRef": "website",
+      "profileRef": "profile-049",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-09T12:03:00.000Z",
+      "receivedAt": "2026-10-09T12:03:02.000Z"
+    },
+    {
+      "id": "event-050-01",
+      "sourceRef": "website",
+      "profileRef": "profile-050",
+      "name": "product_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-10T11:27:00.000Z",
+      "receivedAt": "2026-10-10T11:27:02.000Z"
+    },
+    {
+      "id": "event-050-02",
+      "sourceRef": "website",
+      "profileRef": "profile-050",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-10T11:40:00.000Z",
+      "receivedAt": "2026-10-10T11:40:02.000Z"
+    },
+    {
+      "id": "event-050-03",
+      "sourceRef": "website",
+      "profileRef": "profile-050",
+      "name": "pricing_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-10T11:53:00.000Z",
+      "receivedAt": "2026-10-10T11:53:02.000Z"
+    },
+    {
+      "id": "event-050-04",
+      "sourceRef": "website",
+      "profileRef": "profile-050",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-10T12:06:00.000Z",
+      "receivedAt": "2026-10-10T12:06:02.000Z"
+    },
+    {
+      "id": "event-050-05",
+      "sourceRef": "website",
+      "profileRef": "profile-050",
+      "name": "trial_requested",
+      "productRef": "product-2",
+      "eventTime": "2026-10-10T12:19:00.000Z",
+      "receivedAt": "2026-10-10T12:19:02.000Z"
+    },
+    {
+      "id": "event-051-01",
+      "sourceRef": "website",
+      "profileRef": "profile-051",
+      "name": "product_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-11T11:30:00.000Z",
+      "receivedAt": "2026-10-11T11:30:02.000Z"
+    },
+    {
+      "id": "event-051-02",
+      "sourceRef": "website",
+      "profileRef": "profile-051",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-11T11:43:00.000Z",
+      "receivedAt": "2026-10-11T11:43:02.000Z"
+    },
+    {
+      "id": "event-051-03",
+      "sourceRef": "website",
+      "profileRef": "profile-051",
+      "name": "pricing_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-11T11:56:00.000Z",
+      "receivedAt": "2026-10-11T11:56:02.000Z"
+    },
+    {
+      "id": "event-051-04",
+      "sourceRef": "website",
+      "profileRef": "profile-051",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-11T12:09:00.000Z",
+      "receivedAt": "2026-10-11T12:09:02.000Z"
+    },
+    {
+      "id": "event-051-05",
+      "sourceRef": "website",
+      "profileRef": "profile-051",
+      "name": "trial_requested",
+      "productRef": "product-3",
+      "eventTime": "2026-10-11T12:22:00.000Z",
+      "receivedAt": "2026-10-11T12:22:02.000Z"
+    },
+    {
+      "id": "event-052-01",
+      "sourceRef": "website",
+      "profileRef": "profile-052",
+      "name": "product_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-12T11:33:00.000Z",
+      "receivedAt": "2026-10-12T11:33:02.000Z"
+    },
+    {
+      "id": "event-052-02",
+      "sourceRef": "website",
+      "profileRef": "profile-052",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-12T11:46:00.000Z",
+      "receivedAt": "2026-10-12T11:46:02.000Z"
+    },
+    {
+      "id": "event-052-03",
+      "sourceRef": "website",
+      "profileRef": "profile-052",
+      "name": "pricing_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-12T11:59:00.000Z",
+      "receivedAt": "2026-10-12T11:59:02.000Z"
+    },
+    {
+      "id": "event-052-04",
+      "sourceRef": "website",
+      "profileRef": "profile-052",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-12T12:12:00.000Z",
+      "receivedAt": "2026-10-12T12:12:02.000Z"
+    },
+    {
+      "id": "event-053-01",
+      "sourceRef": "website",
+      "profileRef": "profile-053",
+      "name": "product_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-13T11:36:00.000Z",
+      "receivedAt": "2026-10-13T11:36:02.000Z"
+    },
+    {
+      "id": "event-053-02",
+      "sourceRef": "website",
+      "profileRef": "profile-053",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-13T11:49:00.000Z",
+      "receivedAt": "2026-10-13T11:49:02.000Z"
+    },
+    {
+      "id": "event-053-03",
+      "sourceRef": "website",
+      "profileRef": "profile-053",
+      "name": "pricing_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-13T12:02:00.000Z",
+      "receivedAt": "2026-10-13T12:02:02.000Z"
+    },
+    {
+      "id": "event-053-04",
+      "sourceRef": "website",
+      "profileRef": "profile-053",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-13T12:15:00.000Z",
+      "receivedAt": "2026-10-13T12:15:02.000Z"
+    },
+    {
+      "id": "event-053-05",
+      "sourceRef": "website",
+      "profileRef": "profile-053",
+      "name": "trial_requested",
+      "productRef": "product-5",
+      "eventTime": "2026-10-13T12:28:00.000Z",
+      "receivedAt": "2026-10-13T12:28:02.000Z"
+    },
+    {
+      "id": "event-054-01",
+      "sourceRef": "website",
+      "profileRef": "profile-054",
+      "name": "product_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-14T11:39:00.000Z",
+      "receivedAt": "2026-10-14T11:39:02.000Z"
+    },
+    {
+      "id": "event-054-02",
+      "sourceRef": "website",
+      "profileRef": "profile-054",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-14T11:52:00.000Z",
+      "receivedAt": "2026-10-14T11:52:02.000Z"
+    },
+    {
+      "id": "event-054-03",
+      "sourceRef": "website",
+      "profileRef": "profile-054",
+      "name": "pricing_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-14T12:05:00.000Z",
+      "receivedAt": "2026-10-14T12:05:02.000Z"
+    },
+    {
+      "id": "event-054-04",
+      "sourceRef": "website",
+      "profileRef": "profile-054",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-14T12:18:00.000Z",
+      "receivedAt": "2026-10-14T12:18:02.000Z"
+    },
+    {
+      "id": "event-054-05",
+      "sourceRef": "website",
+      "profileRef": "profile-054",
+      "name": "trial_requested",
+      "productRef": "product-6",
+      "eventTime": "2026-10-14T12:31:00.000Z",
+      "receivedAt": "2026-10-14T12:31:02.000Z"
+    },
+    {
+      "id": "event-055-01",
+      "sourceRef": "website",
+      "profileRef": "profile-055",
+      "name": "product_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-15T11:42:00.000Z",
+      "receivedAt": "2026-10-15T11:42:02.000Z"
+    },
+    {
+      "id": "event-055-02",
+      "sourceRef": "website",
+      "profileRef": "profile-055",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-15T11:55:00.000Z",
+      "receivedAt": "2026-10-15T11:55:02.000Z"
+    },
+    {
+      "id": "event-055-03",
+      "sourceRef": "website",
+      "profileRef": "profile-055",
+      "name": "pricing_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-15T12:08:00.000Z",
+      "receivedAt": "2026-10-15T12:08:02.000Z"
+    },
+    {
+      "id": "event-055-04",
+      "sourceRef": "website",
+      "profileRef": "profile-055",
+      "name": "integration_docs_view",
+      "productRef": "product-1",
+      "eventTime": "2026-10-15T12:21:00.000Z",
+      "receivedAt": "2026-10-15T12:21:02.000Z"
+    },
+    {
+      "id": "event-056-01",
+      "sourceRef": "website",
+      "profileRef": "profile-056",
+      "name": "product_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-16T11:45:00.000Z",
+      "receivedAt": "2026-10-16T11:45:02.000Z"
+    },
+    {
+      "id": "event-056-02",
+      "sourceRef": "website",
+      "profileRef": "profile-056",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-16T11:58:00.000Z",
+      "receivedAt": "2026-10-16T11:58:02.000Z"
+    },
+    {
+      "id": "event-056-03",
+      "sourceRef": "website",
+      "profileRef": "profile-056",
+      "name": "pricing_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-16T12:11:00.000Z",
+      "receivedAt": "2026-10-16T12:11:02.000Z"
+    },
+    {
+      "id": "event-056-04",
+      "sourceRef": "website",
+      "profileRef": "profile-056",
+      "name": "integration_docs_view",
+      "productRef": "product-2",
+      "eventTime": "2026-10-16T12:24:00.000Z",
+      "receivedAt": "2026-10-16T12:24:02.000Z"
+    },
+    {
+      "id": "event-056-05",
+      "sourceRef": "website",
+      "profileRef": "profile-056",
+      "name": "trial_requested",
+      "productRef": "product-2",
+      "eventTime": "2026-10-16T12:37:00.000Z",
+      "receivedAt": "2026-10-16T12:37:02.000Z"
+    },
+    {
+      "id": "event-057-01",
+      "sourceRef": "website",
+      "profileRef": "profile-057",
+      "name": "product_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-17T11:48:00.000Z",
+      "receivedAt": "2026-10-17T11:48:02.000Z"
+    },
+    {
+      "id": "event-057-02",
+      "sourceRef": "website",
+      "profileRef": "profile-057",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-17T12:01:00.000Z",
+      "receivedAt": "2026-10-17T12:01:02.000Z"
+    },
+    {
+      "id": "event-057-03",
+      "sourceRef": "website",
+      "profileRef": "profile-057",
+      "name": "pricing_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-17T12:14:00.000Z",
+      "receivedAt": "2026-10-17T12:14:02.000Z"
+    },
+    {
+      "id": "event-057-04",
+      "sourceRef": "website",
+      "profileRef": "profile-057",
+      "name": "integration_docs_view",
+      "productRef": "product-3",
+      "eventTime": "2026-10-17T12:27:00.000Z",
+      "receivedAt": "2026-10-17T12:27:02.000Z"
+    },
+    {
+      "id": "event-057-05",
+      "sourceRef": "website",
+      "profileRef": "profile-057",
+      "name": "trial_requested",
+      "productRef": "product-3",
+      "eventTime": "2026-10-17T12:40:00.000Z",
+      "receivedAt": "2026-10-17T12:40:02.000Z"
+    },
+    {
+      "id": "event-058-01",
+      "sourceRef": "website",
+      "profileRef": "profile-058",
+      "name": "product_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-18T11:51:00.000Z",
+      "receivedAt": "2026-10-18T11:51:02.000Z"
+    },
+    {
+      "id": "event-058-02",
+      "sourceRef": "website",
+      "profileRef": "profile-058",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-18T12:04:00.000Z",
+      "receivedAt": "2026-10-18T12:04:02.000Z"
+    },
+    {
+      "id": "event-058-03",
+      "sourceRef": "website",
+      "profileRef": "profile-058",
+      "name": "pricing_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-18T12:17:00.000Z",
+      "receivedAt": "2026-10-18T12:17:02.000Z"
+    },
+    {
+      "id": "event-058-04",
+      "sourceRef": "website",
+      "profileRef": "profile-058",
+      "name": "integration_docs_view",
+      "productRef": "product-4",
+      "eventTime": "2026-10-18T12:30:00.000Z",
+      "receivedAt": "2026-10-18T12:30:02.000Z"
+    },
+    {
+      "id": "event-059-01",
+      "sourceRef": "website",
+      "profileRef": "profile-059",
+      "name": "product_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-19T11:54:00.000Z",
+      "receivedAt": "2026-10-19T11:54:02.000Z"
+    },
+    {
+      "id": "event-059-02",
+      "sourceRef": "website",
+      "profileRef": "profile-059",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-19T12:07:00.000Z",
+      "receivedAt": "2026-10-19T12:07:02.000Z"
+    },
+    {
+      "id": "event-059-03",
+      "sourceRef": "website",
+      "profileRef": "profile-059",
+      "name": "pricing_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-19T12:20:00.000Z",
+      "receivedAt": "2026-10-19T12:20:02.000Z"
+    },
+    {
+      "id": "event-059-04",
+      "sourceRef": "website",
+      "profileRef": "profile-059",
+      "name": "integration_docs_view",
+      "productRef": "product-5",
+      "eventTime": "2026-10-19T12:33:00.000Z",
+      "receivedAt": "2026-10-19T12:33:02.000Z"
+    },
+    {
+      "id": "event-059-05",
+      "sourceRef": "website",
+      "profileRef": "profile-059",
+      "name": "trial_requested",
+      "productRef": "product-5",
+      "eventTime": "2026-10-19T12:46:00.000Z",
+      "receivedAt": "2026-10-19T12:46:02.000Z"
+    },
+    {
+      "id": "event-060-01",
+      "sourceRef": "website",
+      "profileRef": "profile-060",
+      "name": "product_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-20T11:57:00.000Z",
+      "receivedAt": "2026-10-20T11:57:02.000Z"
+    },
+    {
+      "id": "event-060-02",
+      "sourceRef": "website",
+      "profileRef": "profile-060",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-20T12:10:00.000Z",
+      "receivedAt": "2026-10-20T12:10:02.000Z"
+    },
+    {
+      "id": "event-060-03",
+      "sourceRef": "website",
+      "profileRef": "profile-060",
+      "name": "pricing_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-20T12:23:00.000Z",
+      "receivedAt": "2026-10-20T12:23:02.000Z"
+    },
+    {
+      "id": "event-060-04",
+      "sourceRef": "website",
+      "profileRef": "profile-060",
+      "name": "integration_docs_view",
+      "productRef": "product-6",
+      "eventTime": "2026-10-20T12:36:00.000Z",
+      "receivedAt": "2026-10-20T12:36:02.000Z"
+    },
+    {
+      "id": "event-060-05",
+      "sourceRef": "website",
+      "profileRef": "profile-060",
+      "name": "trial_requested",
+      "productRef": "product-6",
+      "eventTime": "2026-10-20T12:49:00.000Z",
+      "receivedAt": "2026-10-20T12:49:02.000Z"
+    }
+  ],
+  "research": [
+    {
+      "id": "research-01",
+      "sourceRef": "research",
+      "statement": "Sentetik araştırma beyanı: örnek katılımcı technical-depth konusunu açıklığa kavuşturmak istiyor. Kod mimarisi ve teknik derinlik: GitHub reposu, benchmark ve gerçek implementasyon ayrıntılarını inceleyin.",
+      "theme": "technical-depth",
+      "sampleSize": 12
+    },
+    {
+      "id": "research-02",
+      "sourceRef": "research",
+      "statement": "Sentetik araştırma beyanı: örnek katılımcı builder-journey konusunu açıklığa kavuşturmak istiyor. Kurucu yolculuğu ve build in public: yapılan hatalar, ilk kullanıcılar ve şeffaf büyüme süreci.",
+      "theme": "builder-journey",
+      "sampleSize": 13
+    },
+    {
+      "id": "research-03",
+      "sourceRef": "research",
+      "statement": "Sentetik araştırma beyanı: örnek katılımcı actionable-framework konusunu açıklığa kavuşturmak istiyor. Hemen uygulanabilir şablon ve taktik rehberi: karmaşık kavramları basit adımlara bölen çerçeve.",
+      "theme": "actionable-framework",
+      "sampleSize": 14
+    },
+    {
+      "id": "research-04",
+      "sourceRef": "research",
+      "statement": "Sentetik araştırma beyanı: örnek katılımcı contrarian-insight konusunu açıklığa kavuşturmak istiyor. Ezber bozan mimari bakış açısı: sektördeki yaygın mitler ve aslında doğrusu nedir analizi.",
+      "theme": "contrarian-insight",
+      "sampleSize": 15
+    },
+    {
+      "id": "research-05",
+      "sourceRef": "research",
+      "statement": "Sentetik araştırma beyanı: örnek katılımcı fast-roi konusunu açıklığa kavuşturmak istiyor. Geliştirici zamanından tasarruf sağlayan pratik araçlar ve otomasyon tüyoları.",
+      "theme": "fast-roi",
+      "sampleSize": 16
+    },
+    {
+      "id": "research-06",
+      "sourceRef": "research",
+      "statement": "Sentetik araştırma beyanı: örnek katılımcı critical-skeptic konusunu açıklığa kavuşturmak istiyor. Pazarlama abartısından arındırılmış, sınırları ve trade-off'ları dürüstçe açıklayan analiz.",
+      "theme": "critical-skeptic",
+      "sampleSize": 17
+    },
+    {
+      "id": "research-07",
+      "sourceRef": "research",
+      "statement": "Sentetik araştırma beyanı: örnek katılımcı community-dialogue konusunu açıklığa kavuşturmak istiyor. Topluluk tartışması ve karşılıklı soru-cevap: sizin deneyiminiz ve bakış açınız nedir?",
+      "theme": "community-dialogue",
+      "sampleSize": 18
+    },
+    {
+      "id": "research-08",
+      "sourceRef": "research",
+      "statement": "Sentetik araştırma beyanı: örnek katılımcı beginner-curiosity konusunu açıklığa kavuşturmak istiyor. Sıfırdan adım adım öğrenme rehberi: temel kavramlar ve basit başlangıç adımları.",
+      "theme": "beginner-curiosity",
+      "sampleSize": 19
+    }
+  ]
+}
