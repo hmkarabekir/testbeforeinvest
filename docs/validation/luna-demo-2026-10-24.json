@@ -1,0 +1,839 @@
+{
+  "recordedAt": "2026-10-24",
+  "command": "node scripts/smoke-luna.cjs --demo",
+  "cliVersion": "0.164.0",
+  "fixture": "src/fixtures/b2b-software.v1.json",
+  "fixtureSha256": "feca0d358903b3398c50325884dc52987f022cca6fcd973ebc61bef25421c714",
+  "variantA": {
+    "version": 1,
+    "productId": "product-1",
+    "platform": "instagram",
+    "format": "text-ad",
+    "body": "CSV ile veri içe aktarma. Kurulum kontrol listesi bulunur.",
+    "callToAction": "Planı incele",
+    "testedVariable": "hook",
+    "productFactRefs": [
+      "fact-1-1",
+      "fact-1-2",
+      "fact-1-3",
+      "fact-1-4"
+    ],
+    "assumptions": [],
+    "generation": "manual",
+    "productClaims": [],
+    "claimValidation": "supported",
+    "contentHash": "",
+    "id": "smoke-a",
+    "headline": "CSV ile veri içe aktarma."
+  },
+  "variantB": {
+    "version": 1,
+    "productId": "product-1",
+    "platform": "instagram",
+    "format": "text-ad",
+    "body": "CSV ile veri içe aktarma. Kurulum kontrol listesi bulunur.",
+    "callToAction": "Planı incele",
+    "testedVariable": "hook",
+    "productFactRefs": [
+      "fact-1-1",
+      "fact-1-2",
+      "fact-1-3",
+      "fact-1-4"
+    ],
+    "assumptions": [],
+    "generation": "manual",
+    "productClaims": [],
+    "claimValidation": "supported",
+    "contentHash": "",
+    "id": "smoke-b",
+    "headline": "Kuruluma nereden başlarsınız?"
+  },
+  "panelMode": "demo",
+  "panelSize": 6,
+  "repeats": 2,
+  "evaluationMode": "model-inference",
+  "provenance": {
+    "datasetSynthetic": true,
+    "panelSynthetic": true,
+    "weightBasis": "equal-scenario",
+    "sources": [
+      {
+        "id": "research",
+        "platform": "merchant-research",
+        "population": "declared-research",
+        "sampled": true,
+        "complete": false
+      },
+      {
+        "id": "social-main",
+        "platform": "youtube",
+        "population": "viewers",
+        "sampled": true,
+        "complete": false
+      },
+      {
+        "id": "website",
+        "platform": "demo-site",
+        "population": "site-visitors",
+        "sampled": true,
+        "complete": false
+      }
+    ]
+  },
+  "requestedModel": "gpt-6-luna",
+  "returnedModel": null,
+  "modelIdentityNote": "CLI accepted the requested model; no separate returned-model identity was reported.",
+  "summary": {
+    "decision": "mixed",
+    "winner": "mixed",
+    "votes": {
+      "a": 0,
+      "b": 41.6667,
+      "tie": 50,
+      "neither": 8.3333,
+      "insufficientContext": 0,
+      "missing": 0,
+      "unrepresented": 0
+    },
+    "averageScores": {
+      "a": 62.7083,
+      "b": 65.625
+    }
+  },
+  "completion": {
+    "expectedTasks": 36,
+    "validTasks": 36,
+    "failedOrMissingTasks": 0,
+    "ratio": 1,
+    "expectedPairJudgments": 12,
+    "validPairJudgments": 12
+  },
+  "orderStability": {
+    "comparablePairs": 6,
+    "consistentPairs": 4,
+    "consistency": 0.6667,
+    "coverage": 1
+  },
+  "warnings": [
+    "ORDER_STABILITY_UNPROVEN"
+  ],
+  "totalMs": 174224,
+  "concurrency": 2,
+  "callLatencyMs": {
+    "minimum": 6452,
+    "mean": 9460,
+    "maximum": 12141
+  },
+  "calls": [
+    {
+      "agentId": "agent-015ae20863622364b6fa4f00",
+      "repeatIndex": 0,
+      "assessment": "a",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 10625,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18763,
+        "cachedInputTokens": 0,
+        "outputTokens": 739,
+        "reasoningTokens": null,
+        "totalTokens": 19502
+      }
+    },
+    {
+      "agentId": "agent-2f1e8285de6786596944d12d",
+      "repeatIndex": 0,
+      "assessment": "a",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 10958,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18896,
+        "cachedInputTokens": 0,
+        "outputTokens": 711,
+        "reasoningTokens": null,
+        "totalTokens": 19607
+      }
+    },
+    {
+      "agentId": "agent-015ae20863622364b6fa4f00",
+      "repeatIndex": 0,
+      "assessment": "b",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 9866,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18790,
+        "cachedInputTokens": 0,
+        "outputTokens": 611,
+        "reasoningTokens": null,
+        "totalTokens": 19401
+      }
+    },
+    {
+      "agentId": "agent-2f1e8285de6786596944d12d",
+      "repeatIndex": 0,
+      "assessment": "b",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 11066,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18923,
+        "cachedInputTokens": 0,
+        "outputTokens": 736,
+        "reasoningTokens": null,
+        "totalTokens": 19659
+      }
+    },
+    {
+      "agentId": "agent-015ae20863622364b6fa4f00",
+      "repeatIndex": 0,
+      "assessment": "pair",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 9653,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18622,
+        "cachedInputTokens": 0,
+        "outputTokens": 415,
+        "reasoningTokens": null,
+        "totalTokens": 19037
+      }
+    },
+    {
+      "agentId": "agent-2f1e8285de6786596944d12d",
+      "repeatIndex": 0,
+      "assessment": "pair",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 8796,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18759,
+        "cachedInputTokens": 0,
+        "outputTokens": 217,
+        "reasoningTokens": null,
+        "totalTokens": 18976
+      }
+    },
+    {
+      "agentId": "agent-015ae20863622364b6fa4f00",
+      "repeatIndex": 1,
+      "assessment": "b",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 10814,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18788,
+        "cachedInputTokens": 0,
+        "outputTokens": 682,
+        "reasoningTokens": null,
+        "totalTokens": 19470
+      }
+    },
+    {
+      "agentId": "agent-2f1e8285de6786596944d12d",
+      "repeatIndex": 1,
+      "assessment": "b",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 11355,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18921,
+        "cachedInputTokens": 0,
+        "outputTokens": 731,
+        "reasoningTokens": null,
+        "totalTokens": 19652
+      }
+    },
+    {
+      "agentId": "agent-015ae20863622364b6fa4f00",
+      "repeatIndex": 1,
+      "assessment": "a",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 9751,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18759,
+        "cachedInputTokens": 0,
+        "outputTokens": 648,
+        "reasoningTokens": null,
+        "totalTokens": 19407
+      }
+    },
+    {
+      "agentId": "agent-2f1e8285de6786596944d12d",
+      "repeatIndex": 1,
+      "assessment": "a",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 9950,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18898,
+        "cachedInputTokens": 0,
+        "outputTokens": 652,
+        "reasoningTokens": null,
+        "totalTokens": 19550
+      }
+    },
+    {
+      "agentId": "agent-2f1e8285de6786596944d12d",
+      "repeatIndex": 1,
+      "assessment": "pair",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 6799,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18757,
+        "cachedInputTokens": 0,
+        "outputTokens": 232,
+        "reasoningTokens": null,
+        "totalTokens": 18989
+      }
+    },
+    {
+      "agentId": "agent-015ae20863622364b6fa4f00",
+      "repeatIndex": 1,
+      "assessment": "pair",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 12141,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18622,
+        "cachedInputTokens": 0,
+        "outputTokens": 303,
+        "reasoningTokens": null,
+        "totalTokens": 18925
+      }
+    },
+    {
+      "agentId": "agent-e13ca90035769ff50c6935a7",
+      "repeatIndex": 0,
+      "assessment": "a",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 10340,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18817,
+        "cachedInputTokens": 0,
+        "outputTokens": 649,
+        "reasoningTokens": null,
+        "totalTokens": 19466
+      }
+    },
+    {
+      "agentId": "agent-3725f1ca4d6698173ea5231e",
+      "repeatIndex": 0,
+      "assessment": "a",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 10362,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18672,
+        "cachedInputTokens": 0,
+        "outputTokens": 588,
+        "reasoningTokens": null,
+        "totalTokens": 19260
+      }
+    },
+    {
+      "agentId": "agent-e13ca90035769ff50c6935a7",
+      "repeatIndex": 0,
+      "assessment": "b",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 9705,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18848,
+        "cachedInputTokens": 0,
+        "outputTokens": 554,
+        "reasoningTokens": null,
+        "totalTokens": 19402
+      }
+    },
+    {
+      "agentId": "agent-3725f1ca4d6698173ea5231e",
+      "repeatIndex": 0,
+      "assessment": "b",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 9531,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18703,
+        "cachedInputTokens": 0,
+        "outputTokens": 593,
+        "reasoningTokens": null,
+        "totalTokens": 19296
+      }
+    },
+    {
+      "agentId": "agent-e13ca90035769ff50c6935a7",
+      "repeatIndex": 0,
+      "assessment": "pair",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 7594,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18682,
+        "cachedInputTokens": 0,
+        "outputTokens": 291,
+        "reasoningTokens": null,
+        "totalTokens": 18973
+      }
+    },
+    {
+      "agentId": "agent-3725f1ca4d6698173ea5231e",
+      "repeatIndex": 0,
+      "assessment": "pair",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 6452,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18535,
+        "cachedInputTokens": 0,
+        "outputTokens": 170,
+        "reasoningTokens": null,
+        "totalTokens": 18705
+      }
+    },
+    {
+      "agentId": "agent-e13ca90035769ff50c6935a7",
+      "repeatIndex": 1,
+      "assessment": "b",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 10072,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18846,
+        "cachedInputTokens": 0,
+        "outputTokens": 632,
+        "reasoningTokens": null,
+        "totalTokens": 19478
+      }
+    },
+    {
+      "agentId": "agent-3725f1ca4d6698173ea5231e",
+      "repeatIndex": 1,
+      "assessment": "b",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 9936,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18701,
+        "cachedInputTokens": 0,
+        "outputTokens": 581,
+        "reasoningTokens": null,
+        "totalTokens": 19282
+      }
+    },
+    {
+      "agentId": "agent-e13ca90035769ff50c6935a7",
+      "repeatIndex": 1,
+      "assessment": "a",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 9576,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18819,
+        "cachedInputTokens": 0,
+        "outputTokens": 580,
+        "reasoningTokens": null,
+        "totalTokens": 19399
+      }
+    },
+    {
+      "agentId": "agent-3725f1ca4d6698173ea5231e",
+      "repeatIndex": 1,
+      "assessment": "a",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 9542,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18123,
+        "cachedInputTokens": 0,
+        "outputTokens": 563,
+        "reasoningTokens": null,
+        "totalTokens": 18686
+      }
+    },
+    {
+      "agentId": "agent-e13ca90035769ff50c6935a7",
+      "repeatIndex": 1,
+      "assessment": "pair",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 7808,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18133,
+        "cachedInputTokens": 0,
+        "outputTokens": 251,
+        "reasoningTokens": null,
+        "totalTokens": 18384
+      }
+    },
+    {
+      "agentId": "agent-3725f1ca4d6698173ea5231e",
+      "repeatIndex": 1,
+      "assessment": "pair",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 9109,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18539,
+        "cachedInputTokens": 0,
+        "outputTokens": 402,
+        "reasoningTokens": null,
+        "totalTokens": 18941
+      }
+    },
+    {
+      "agentId": "agent-801eb8bba9fc55e3cea5558d",
+      "repeatIndex": 0,
+      "assessment": "a",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 9466,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18755,
+        "cachedInputTokens": 0,
+        "outputTokens": 641,
+        "reasoningTokens": null,
+        "totalTokens": 19396
+      }
+    },
+    {
+      "agentId": "agent-a23b81921b0cc7811efc3f80",
+      "repeatIndex": 0,
+      "assessment": "a",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 10098,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18683,
+        "cachedInputTokens": 0,
+        "outputTokens": 537,
+        "reasoningTokens": null,
+        "totalTokens": 19220
+      }
+    },
+    {
+      "agentId": "agent-801eb8bba9fc55e3cea5558d",
+      "repeatIndex": 0,
+      "assessment": "b",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 9672,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18778,
+        "cachedInputTokens": 0,
+        "outputTokens": 555,
+        "reasoningTokens": null,
+        "totalTokens": 19333
+      }
+    },
+    {
+      "agentId": "agent-a23b81921b0cc7811efc3f80",
+      "repeatIndex": 0,
+      "assessment": "b",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 11901,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18712,
+        "cachedInputTokens": 0,
+        "outputTokens": 682,
+        "reasoningTokens": null,
+        "totalTokens": 19394
+      }
+    },
+    {
+      "agentId": "agent-801eb8bba9fc55e3cea5558d",
+      "repeatIndex": 0,
+      "assessment": "pair",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 7652,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18616,
+        "cachedInputTokens": 0,
+        "outputTokens": 285,
+        "reasoningTokens": null,
+        "totalTokens": 18901
+      }
+    },
+    {
+      "agentId": "agent-a23b81921b0cc7811efc3f80",
+      "repeatIndex": 0,
+      "assessment": "pair",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 7833,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18548,
+        "cachedInputTokens": 0,
+        "outputTokens": 364,
+        "reasoningTokens": null,
+        "totalTokens": 18912
+      }
+    },
+    {
+      "agentId": "agent-801eb8bba9fc55e3cea5558d",
+      "repeatIndex": 1,
+      "assessment": "b",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 10214,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18786,
+        "cachedInputTokens": 0,
+        "outputTokens": 604,
+        "reasoningTokens": null,
+        "totalTokens": 19390
+      }
+    },
+    {
+      "agentId": "agent-a23b81921b0cc7811efc3f80",
+      "repeatIndex": 1,
+      "assessment": "b",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 9477,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18714,
+        "cachedInputTokens": 0,
+        "outputTokens": 587,
+        "reasoningTokens": null,
+        "totalTokens": 19301
+      }
+    },
+    {
+      "agentId": "agent-801eb8bba9fc55e3cea5558d",
+      "repeatIndex": 1,
+      "assessment": "a",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 8763,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18751,
+        "cachedInputTokens": 0,
+        "outputTokens": 579,
+        "reasoningTokens": null,
+        "totalTokens": 19330
+      }
+    },
+    {
+      "agentId": "agent-801eb8bba9fc55e3cea5558d",
+      "repeatIndex": 1,
+      "assessment": "pair",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 6563,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18616,
+        "cachedInputTokens": 0,
+        "outputTokens": 212,
+        "reasoningTokens": null,
+        "totalTokens": 18828
+      }
+    },
+    {
+      "agentId": "agent-a23b81921b0cc7811efc3f80",
+      "repeatIndex": 1,
+      "assessment": "a",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 10628,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18681,
+        "cachedInputTokens": 0,
+        "outputTokens": 591,
+        "reasoningTokens": null,
+        "totalTokens": 19272
+      }
+    },
+    {
+      "agentId": "agent-a23b81921b0cc7811efc3f80",
+      "repeatIndex": 1,
+      "assessment": "pair",
+      "attempt": 1,
+      "status": "completed",
+      "latencyMs": 6482,
+      "provider": "codex",
+      "requestedModel": "gpt-6-luna",
+      "returnedModel": null,
+      "usageState": "reported",
+      "usage": {
+        "inputTokens": 18544,
+        "cachedInputTokens": 0,
+        "outputTokens": 134,
+        "reasoningTokens": null,
+        "totalTokens": 18678
+      }
+    }
+  ],
+  "scope": "Transport, contract validation, and latency only; not behavioral accuracy or a live human A/B test.",
+  "smallCheck": {
+    "checkedAt": "2026-10-24T09:11:05.908Z",
+    "totalMs": 26740,
+    "attempts": [
+      {
+        "task": "single-evaluation",
+        "attempt": 1,
+        "latencyMs": 9287,
+        "status": "completed"
+      },
+      {
+        "task": "single-evaluation",
+        "attempt": 1,
+        "latencyMs": 10075,
+        "status": "completed"
+      },
+      {
+        "task": "pair-evaluation",
+        "attempt": 1,
+        "latencyMs": 7374,
+        "status": "completed"
+      }
+    ],
+    "validAssessments": 3
+  }
+}

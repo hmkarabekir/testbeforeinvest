@@ -1,0 +1,145 @@
+{
+  "contract": "octopiq-xgboost-persona-model-v1",
+  "status": "trained",
+  "engine": "xgboost-3.4.1",
+  "trainedAt": "2026-10-24T08:28:41Z",
+  "trainingDurationSec": 1.162,
+  "dataset": {
+    "totalSamples": 3000,
+    "trainSamples": 2400,
+    "testSamples": 600,
+    "featuresCount": 16,
+    "featureNames": [
+      "ig_followers_log",
+      "ig_engagement_rate",
+      "ig_male_ratio",
+      "ig_top_age_idx",
+      "ig_story_interaction_rate",
+      "x_followers_log",
+      "x_tech_density",
+      "x_retweet_ratio",
+      "x_critique_ratio",
+      "pixel_events_log",
+      "pixel_cta_ratio",
+      "pixel_avg_dwell_sec",
+      "pixel_scroll_depth",
+      "category_idx",
+      "has_proof_facts",
+      "has_code_snippet"
+    ]
+  },
+  "metrics": {
+    "testAccuracy": 0.8833,
+    "testLogLoss": 0.3125,
+    "topFeature": "has_code_snippet"
+  },
+  "featureImportances": [
+    {
+      "feature": "has_code_snippet",
+      "importance": 0.2919
+    },
+    {
+      "feature": "category_idx",
+      "importance": 0.1511
+    },
+    {
+      "feature": "pixel_avg_dwell_sec",
+      "importance": 0.0889
+    },
+    {
+      "feature": "has_proof_facts",
+      "importance": 0.0762
+    },
+    {
+      "feature": "pixel_cta_ratio",
+      "importance": 0.0723
+    },
+    {
+      "feature": "ig_engagement_rate",
+      "importance": 0.0513
+    },
+    {
+      "feature": "ig_top_age_idx",
+      "importance": 0.044
+    },
+    {
+      "feature": "ig_male_ratio",
+      "importance": 0.0431
+    },
+    {
+      "feature": "ig_story_interaction_rate",
+      "importance": 0.0386
+    },
+    {
+      "feature": "x_tech_density",
+      "importance": 0.0362
+    },
+    {
+      "feature": "pixel_events_log",
+      "importance": 0.0312
+    },
+    {
+      "feature": "pixel_scroll_depth",
+      "importance": 0.0178
+    },
+    {
+      "feature": "x_critique_ratio",
+      "importance": 0.0165
+    },
+    {
+      "feature": "ig_followers_log",
+      "importance": 0.0142
+    },
+    {
+      "feature": "x_retweet_ratio",
+      "importance": 0.0137
+    },
+    {
+      "feature": "x_followers_log",
+      "importance": 0.0132
+    }
+  ],
+  "personaBreakdown": [
+    {
+      "index": 0,
+      "label": "Teknik Mimar",
+      "support": 58,
+      "accuracy": 0.966
+    },
+    {
+      "index": 1,
+      "label": "Solo Builder",
+      "support": 185,
+      "accuracy": 0.881
+    },
+    {
+      "index": 2,
+      "label": "Taktik & Şablon",
+      "support": 15,
+      "accuracy": 0.267
+    },
+    {
+      "index": 3,
+      "label": "Fiyat & Değer Odaklı",
+      "support": 165,
+      "accuracy": 0.861
+    },
+    {
+      "index": 4,
+      "label": "Şüpheci & Kanıt Arayan",
+      "support": 2,
+      "accuracy": 0.0
+    },
+    {
+      "index": 5,
+      "label": "Kitle Gözlemcisi",
+      "support": 175,
+      "accuracy": 0.943
+    }
+  ],
+  "artifact": {
+    "filename": "xgboost_persona_model.json",
+    "sha256": "46bfbbaefb12cd09e1ded65e5a364d7f2f36bc8c8beee32864fcb614b81fba6c",
+    "sizeBytes": 1212085
+  }
+}

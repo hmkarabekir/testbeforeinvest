@@ -7,7 +7,8 @@ import {
   rubricScore,
   CRITERIA,
 } from '../core/evaluation-contract.js';
-import type { InferenceResult, InferenceReceipt } from '../core/types.js';
+import type { InferenceResult, InferenceReceipt, InferenceImage } from '../core/types.js';
+import { LAB_PROMPT_VERSION } from '../core/prompts.js';
 
 export class LabInferenceError extends Error {
   constructor(public code: string, public receipt: any) {
@@ -21,6 +22,7 @@ export type LabInferenceRequest = {
   prompt: string;
   maxOutputTokens?: number;
   requestId?: string;
+  images?: InferenceImage[];
 };
 
 export const LOCAL_RULES_MODEL = 'local-rules-v1';
@@ -192,6 +194,7 @@ const clamp = (n: number) => Math.min(4, Math.max(0, Math.round(n)));
 /** Transparent lexical and feature rules. No trained model, human forecast or network request. */
 export class LocalAgentEvaluator {
   infer(request: LabInferenceRequest): InferenceResult {
+    if (request.images?.length) throw new Error('AUDIENCE_LAB_VISION_REQUIRES_MODEL');
     const started = performance.now(),
       task = request.task || 'single-evaluation';
     const receipt: InferenceReceipt = {
@@ -202,7 +205,7 @@ export class LocalAgentEvaluator {
       providerRequestId: null,
       responseId: null,
       task,
-      promptVersion: 'audience-lab-prompts-1',
+      promptVersion: LAB_PROMPT_VERSION,
       schemaVersion: 1,
       inputHash: createHash('sha256')
         .update(
@@ -321,34 +324,28 @@ export class LocalAgentEvaluator {
     sourceA: Row,
     facts: Fact[],
     testedVariable: string,
-    angle:
-      | 'contrarian'
-      | 'story'
-      | 'concise'
-      | 'problem'
-      | 'actionable' = 'contrarian',
+    angle: string = 'contrarian',
   ) {
     if (
       !row(sourceA) ||
       !str(sourceA.headline).trim() ||
-      !str(sourceA.body).trim() ||
-      !str(sourceA.callToAction).trim()
+      typeof sourceA.body !== 'string' ||
+      typeof sourceA.callToAction !== 'string'
     )
       throw new Error('AUDIENCE_LAB_INFERENCE_INPUT_INVALID');
-    const prefixes = {
+    const prefixes: Record<string, string> = {
       contrarian: 'Başka bir yol mümkün mü?',
       story: 'Bu yaklaşımın arkasındaki süreç:',
       concise: 'Kısaca:',
       problem: 'Çözmek istediğin sorun bu mu?',
       actionable: 'Nasıl uygulanır?',
+      'authority-hook': 'Mimari ve otorite kancası:',
+      'improve-ux': 'Daha hızlı ve kolay kullanım:',
     };
-    if (
-      !Object.hasOwn(prefixes, angle) ||
-      !['hook', 'need-frame', 'proof', 'cta', 'length', 'bundle'].includes(
-        testedVariable,
-      )
-    )
-      throw new Error('AUDIENCE_LAB_INFERENCE_INPUT_INVALID');
+    const validAngle = Object.hasOwn(prefixes, angle) ? angle : 'contrarian';
+    const validVariable = ['hook', 'need-frame', 'proof', 'cta', 'length', 'bundle'].includes(testedVariable)
+      ? testedVariable
+      : 'hook';
     const text = [sourceA.headline, sourceA.body, sourceA.callToAction].join(
       '\n',
     );
@@ -380,9 +377,9 @@ export class LocalAgentEvaluator {
     };
     if (['hook', 'need-frame', 'bundle'].includes(testedVariable)) {
       const words = sourceA.headline.trim().split(/\s+/);
-      b.headline = angle === 'concise'
+      b.headline = validAngle === 'concise'
         ? words.slice(0, Math.min(6, Math.max(1, words.length - 1))).join(' ')
-        : `${prefixes[angle]} ${sourceA.headline}`.slice(0, 150);
+        : `${prefixes[validAngle]} ${sourceA.headline}`.slice(0, 150);
     }
     if (testedVariable === 'cta' || testedVariable === 'bundle')
       b.callToAction =

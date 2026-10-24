@@ -1,6 +1,6 @@
 import { CodexCliEvaluator, CODEX_DEFAULT_MODEL } from './codex-cli.js';
 import { LocalAgentEvaluator, LOCAL_RULES_MODEL } from './local-evaluator.js';
-import type { InferencePort, InferenceResult } from '../core/types.js';
+import type { InferencePort, InferenceResult, InferenceImage } from '../core/types.js';
 
 export { CodexCliEvaluator, CODEX_DEFAULT_MODEL } from './codex-cli.js';
 export { LocalAgentEvaluator, LOCAL_RULES_MODEL } from './local-evaluator.js';
@@ -14,7 +14,13 @@ export class AudienceLabEngine implements InferencePort {
   constructor(private readonly preferredEngine: EngineMode = 'auto') {}
 
   configuration() {
-    const envEngine = (process.env.AUDIENCE_LAB_ENGINE?.trim() || this.preferredEngine) as EngineMode;
+    // Explicit selections (including deterministic tests) take precedence over auto configuration.
+    const envEngine = this.preferredEngine === 'auto'
+      ? process.env.AUDIENCE_LAB_ENGINE?.trim() || 'auto'
+      : this.preferredEngine;
+    if (!['auto', 'codex', 'local'].includes(envEngine)) {
+      throw new Error('AUDIENCE_LAB_ENGINE_INVALID');
+    }
 
     if (envEngine === 'codex' || (envEngine === 'auto' && this.codex.isAvailable())) {
       const model = process.env.AUDIENCE_LAB_MODEL?.trim() || CODEX_DEFAULT_MODEL;
@@ -38,9 +44,10 @@ export class AudienceLabEngine implements InferencePort {
     prompt: string;
     maxOutputTokens?: number;
     requestId?: string;
+    images?: InferenceImage[];
   }): Promise<InferenceResult> {
     const config = this.configuration();
-    if (config.provider === 'codex' && config.ready) {
+    if (config.provider === 'codex') {
       return this.codex.infer(request as any);
     }
     return this.local.infer(request as any);

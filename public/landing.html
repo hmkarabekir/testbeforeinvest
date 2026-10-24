@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>OctopIQ Audience Lab — Gerçek ve Sentetik Kitle ile A/B Reklam Simülatörü</title>
+ <meta name="description" content="Meta, X ve Web Pixel verilerinizden XGBoost destekli sentetik kitle modelleri ve 18 izole yapay zeka ajanıyla reklamlarınızı yayına almadan önce test edin." />
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+ <style>
+ :root {
+ --bg: #fafafa;
+ --surface: #ffffff;
+ --surface-subtle: #f8fafc;
+ --surface-muted: #f1f5f9;
+ --border: #e2e8f0;
+ --border-focus: #cbd5e1;
+ --text-main: #0f172a;
+ --text-body: #334155;
+ --text-muted: #64748b;
+ --accent-blue: #2563eb;
+ --accent-blue-subtle: #eff6ff;
+ --accent-green: #059669;
+ --accent-green-subtle: #ecfdf5;
+ --accent-purple: #7c3aed;
+ --accent-amber: #d97706;
+ --radius: 8px;
+ }
+
+ * { box-sizing: border-box; margin: 0; padding: 0; }
+ body {
+ background-color: var(--bg);
+ color: var(--text-body);
+ font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+ line-height: 1.6;
+ -webkit-font-smoothing: antialiased;
+ }
+
+ a { color: inherit; text-decoration: none; }
+
+ /* Top Nav */
+ .nav {
+ position: sticky;
+ top: 0;
+ z-index: 50;
+ background: rgba(255, 255, 255, 0.92);
+ backdrop-filter: blur(8px);
+ border-bottom: 1px solid var(--border);
+ padding: 0 24px;
+ }
+ .nav-inner {
+ max-width: 1200px;
+ margin: 0 auto;
+ height: 64px;
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ }
+ .brand {
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ font-weight: 800;
+ font-size: 17px;
+ color: var(--text-main);
+ letter-spacing: -0.3px;
+ }
+ .brand-badge {
+ font-size: 10px;
+ font-weight: 700;
+ background: var(--surface-muted);
+ color: var(--text-muted);
+ padding: 2px 7px;
+ border-radius: 4px;
+ border: 1px solid var(--border);
+ }
+ .nav-links {
+ display: flex;
+ align-items: center;
+ gap: 20px;
+ font-size: 13px;
+ font-weight: 600;
+ color: var(--text-muted);
+ }
+ .nav-links a:hover { color: var(--text-main); }
+ .btn {
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ gap: 6px;
+ font-size: 13px;
+ font-weight: 600;
+ padding: 8px 16px;
+ border-radius: 6px;
+ border: 1px solid var(--border);
+ background: var(--surface);
+ color: var(--text-main);
+ cursor: pointer;
+ transition: all 0.15s ease;
+ }
+ .btn:hover { background: var(--surface-subtle); border-color: var(--border-focus); }
+ .btn-primary {
+ background: var(--text-main);
+ color: #ffffff;
+ border-color: var(--text-main);
+ }
+ .btn-primary:hover {
+ background: #1e293b;
+ border-color: #1e293b;
+ }
+
+ /* Container */
+ .container {
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 0 24px;
+ }
+
+ /* Hero */
+ .hero {
+ padding: 72px 0 56px;
+ text-align: center;
+ }
+ .hero-badge {
+ display: inline-flex;
+ align-items: center;
+ gap: 6px;
+ background: var(--accent-blue-subtle);
+ border: 1px solid rgba(37, 99, 235, 0.2);
+ color: var(--accent-blue);
+ font-size: 12px;
+ font-weight: 700;
+ padding: 4px 12px;
+ border-radius: 20px;
+ margin-bottom: 20px;
+ }
+ .hero h1 {
+ font-size: 44px;
+ font-weight: 800;
+ color: var(--text-main);
+ line-height: 1.18;
+ letter-spacing: -1px;
+ max-width: 840px;
+ margin: 0 auto 18px;
+ }
+ .hero p {
+ font-size: 17px;
+ color: var(--text-muted);
+ max-width: 680px;
+ margin: 0 auto 32px;
+ line-height: 1.55;
+ }
+ .hero-actions {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ gap: 12px;
+ flex-wrap: wrap;
+ margin-bottom: 48px;
+ }
+
+ /* Teaser Live Mockup */
+ .hero-mockup-wrapper {
+ max-width: 980px;
+ margin: 0 auto;
+ background: var(--surface);
+ border: 1px solid var(--border);
+ border-radius: 12px;
+ padding: 24px;
+ box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+ text-align: left;
+ }
+ .mockup-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ border-bottom: 1px solid var(--border);
+ padding-bottom: 14px;
+ margin-bottom: 18px;
+ }
+ .mockup-grid {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 20px;
+ }
+ @media (max-width: 768px) {
+ .mockup-grid { grid-template-columns: 1fr; }
+ .hero h1 { font-size: 32px; }
+ }
+
+ .variant-card {
+ background: var(--surface-subtle);
+ border: 1px solid var(--border);
+ border-radius: 8px;
+ padding: 16px;
+ }
+ .variant-badge {
+ display: inline-block;
+ font-size: 11px;
+ font-weight: 700;
+ padding: 2px 8px;
+ border-radius: 4px;
+ margin-bottom: 8px;
+ }
+
+ /* 3 Features Grid */
+ .section {
+ padding: 64px 0;
+ border-top: 1px solid var(--border);
+ }
+ .section-header {
+ text-align: center;
+ max-width: 640px;
+ margin: 0 auto 40px;
+ }
+ .section-title {
+ font-size: 28px;
+ font-weight: 800;
+ color: var(--text-main);
+ letter-spacing: -0.5px;
+ margin-bottom: 10px;
+ }
+ .section-desc {
+ font-size: 15px;
+ color: var(--text-muted);
+ }
+
+ .feature-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+ gap: 20px;
+ }
+ .feature-card {
+ background: var(--surface);
+ border: 1px solid var(--border);
+ border-radius: var(--radius);
+ padding: 24px;
+ transition: all 0.2s ease;
+ }
+ .feature-card:hover {
+ border-color: var(--border-focus);
+ box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+ }
+ .feature-num {
+ width: 28px;
+ height: 28px;
+ border-radius: 6px;
+ background: var(--surface-muted);
+ color: var(--text-main);
+ font-weight: 800;
+ font-size: 12px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ margin-bottom: 14px;
+ }
+ .feature-title {
+ font-size: 17px;
+ font-weight: 700;
+ color: var(--text-main);
+ margin-bottom: 8px;
+ }
+ .feature-text {
+ font-size: 13px;
+ color: var(--text-muted);
+ line-height: 1.5;
+ }
+
+ /* XGBoost Section */
+ .xgboost-panel {
+ background: var(--surface);
+ border: 1px solid var(--border);
+ border-radius: 12px;
+ padding: 28px;
+ margin-top: 24px;
+ }
+ .bar-row {
+ display: flex;
+ align-items: center;
+ gap: 12px;
+ margin-bottom: 10px;
+ font-size: 12px;
+ }
+ .bar-label {
+ width: 180px;
+ font-family: 'JetBrains Mono', monospace;
+ color: var(--text-body);
+ font-weight: 600;
+ }
+ .bar-track {
+ flex: 1;
+ height: 8px;
+ background: var(--surface-muted);
+ border-radius: 4px;
+ overflow: hidden;
+ }
+ .bar-fill {
+ height: 100%;
+ background: var(--accent-blue);
+ border-radius: 4px;
+ }
+ .bar-pct {
+ width: 48px;
+ text-align: right;
+ font-weight: 700;
+ color: var(--text-main);
+ }
+
+ /* Footer */
+ .footer {
+ border-top: 1px solid var(--border);
+ padding: 36px 0;
+ font-size: 12px;
+ color: var(--text-muted);
+ background: var(--surface);
+ }
+ .footer-inner {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ flex-wrap: wrap;
+ gap: 16px;
+ }
+ </style>
+</head>
+<body>
+
+ <!-- Navigation -->
+ <header class="nav">
+ <div class="nav-inner">
+ <div class="brand">
+ <span>OctopIQ Audience Lab</span>
+ <span class="brand-badge">ML & Agentic v1.2</span>
+ </div>
+
+ <div class="nav-links">
+ <a href="#nasil-calisir">Nasıl Çalışır?</a>
+ <a href="#xgboost">XGBoost Sentetik Model</a>
+ <a href="#ozellikler">Özellikler</a>
+ <a href="/" class="btn btn-primary" style="padding: 7px 14px;">Laboratuvara Git </a>
+ </div>
+ </div>
+ </header>
+
+ <main>
+
+ <!-- Hero -->
+ <section class="hero container">
+ <div class="hero-badge">
+ <span> 18 Ajanlı Çift Kör A/B Simülasyonu & XGBoost Telemetri Modeli</span>
+ </div>
+
+ <h1>Reklam Bütçenizi Boşa Harcamayın.<br>Yayına Almadan Önce Sanal Kitlenizle Test Edin.</h1>
+
+ <p>
+ Instagram, X ve Web Pixel davranışlarınızdan beslenen, <b>XGBoost</b> ile kalibre edilmiş sentetik kitle modelleri ve 18 izole sanal ajanla reklam varyantlarınızı saniyeler içinde çift kör test edin.
+ </p>
+
+ <div class="hero-actions">
+ <a href="/" class="btn btn-primary" style="padding: 12px 28px; font-size: 14px;">
+ Audience Lab Çalışma Alanını Aç 
+ </a>
+ <a href="#xgboost" class="btn" style="padding: 12px 24px; font-size: 14px;">
+ XGBoost Sentetik Modeli İncele
+ </a>
+ </div>
+
+ <!-- Live Teaser Preview Card -->
+ <div class="hero-mockup-wrapper">
+ <div class="mockup-header">
+ <div>
+ <span style="font-weight: 700; font-size: 14px; color: var(--text-main);">Örnek Simülasyon Teaser'ı: Geliştirici Kitlesi vs Kültür Kitlesi</span>
+ <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">18 izole sanal katılımcı üzerinden çift kör test sonucu</div>
+ </div>
+ <span style="background: var(--accent-green-subtle); color: var(--accent-green); font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 4px;">Kazanan: Varyant A (%68)</span>
+ </div>
+
+ <div class="mockup-grid">
+ <!-- Varyant A -->
+ <div class="variant-card">
+ <span class="variant-badge" style="background: var(--accent-blue-subtle); color: var(--accent-blue);">Varyant A (Teknik Kanıt)</span>
+ <div style="font-weight: 700; font-size: 14px; color: var(--text-main); margin-bottom: 4px;">Talk is cheap, show me the code</div>
+ <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+ Pazarlama laflarını bırak. 18 izole sanal yapay zeka ajanıyla reklamlarını yayına almadan test et.
+ </p>
+ <div style="background: #ffffff; border: 1px solid var(--border); padding: 8px 10px; border-radius: 6px; font-size: 11px; font-style: italic;">
+ “Teknik detay ve doğrulanmış mimari sunuyor. Boş pazarlama jargonu yok.” — <b>Teknik Mimar (%97 Tercih)</b>
+ </div>
+ </div>
+
+ <!-- Varyant B -->
+ <div class="variant-card">
+ <span class="variant-badge" style="background: var(--accent-green-subtle); color: var(--accent-green);">Varyant B (Kavramsal Temel)</span>
+ <div style="font-weight: 700; font-size: 14px; color: var(--text-main); margin-bottom: 4px;">Cahil kalmayın, mimariyi öğrenin</div>
+ <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+ Günübirlik trendler yerine sağlam yazılım mimarisi kurun. Kitle psikolojisini analitik olarak analiz edin.
+ </p>
+ <div style="background: #ffffff; border: 1px solid var(--border); padding: 8px 10px; border-radius: 6px; font-size: 11px; font-style: italic;">
+ “Tarihi ve kavramsal bakış derin ama kod örneği eksik.” — <b>Kitle Gözlemcisi (%54 Tercih)</b>
+ </div>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- 3 Kolonlu Mimari -->
+ <section id="ozellikler" class="section container">
+ <div class="section-header">
+ <h2 class="section-title">Reklam Validasyonunda Neler Değişiyor?</h2>
+ <p class="section-desc">Geleneksel kör reklam harcamaları yerine, kanıtlanmış kitle verileri ve sentetik ajan panelleriyle tahmin edilebilir büyüme.</p>
+ </div>
+
+ <div class="feature-grid">
+ <div class="feature-card">
+ <div class="feature-num">01</div>
+ <h3 class="feature-title">Çok Kaynaklı Kitle Füzyonu</h3>
+ <p class="feature-text">
+ Meta Graph API, X topluluk sinyalleri ve sitenize eklenen Octopiq Web Pixel davranışlarını tek havuzda birleştirin. Takipçi sayısı değil, gerçek etkileşim ve sayfa hareketleri kitle modeline aktarılır.
+ </p>
+ </div>
+
+ <div class="feature-card">
+ <div class="feature-num">02</div>
+ <h3 class="feature-title">XGBoost Sentetik Modelleme</h3>
+ <p class="feature-text">
+ Henüz canlı kitleniz yoksa veya yeni geliştirdiğiniz bir ürünü test ediyorsanız; 16 boyutlu özellik uzayında eğitilen XGBoost modeli, hedef hipotezinizi 6 temel persona sınıfına dağıtır.
+ </p>
+ </div>
+
+ <div class="feature-card">
+ <div class="feature-num">03</div>
+ <h3 class="feature-title">18 Ajanlı Çift Kör Simülasyon</h3>
+ <p class="feature-text">
+ Her biri farklı dikkat, şüphecilik ve bütçe duyarlılığına sahip 18 izole sanal katılımcı reklamlarınızı körlemesine değerlendirir. Hangi kreatifin kime neden hitap ettiği somut raporlanır.
+ </p>
+ </div>
+ </div>
+ </section>
+
+ <!-- XGBoost Panel -->
+ <section id="xgboost" class="section container">
+ <div class="section-header">
+ <h2 class="section-title">XGBoost Destekli Sentetik Kitle Makinesi</h2>
+ <p class="section-desc">Sosyal medya sinyalleri, web telemetrisi ve ürün hipotezlerini işleyen gradient-boosted karar ağaçları.</p>
+ </div>
+
+ <div class="xgboost-panel">
+ <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; border-bottom: 1px solid var(--border); padding-bottom: 18px; margin-bottom: 20px;">
+ <div>
+ <span style="font-weight: 700; font-size: 15px; color: var(--text-main);">Aktif Model: XGBoost v3.4.1 (multi:softprob)</span>
+ <div id="mlModelInfo" style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+ Yükleniyor...
+ </div>
+ </div>
+
+ <div style="display: flex; gap: 8px;">
+ <button id="btnTrainXGBoost" class="btn btn-primary" onclick="triggerTrainModel()">
+ Modeli Sentetik Veriyle Eğit
+ </button>
+ <a href="/" class="btn">Laboratuvarı Test Et</a>
+ </div>
+ </div>
+
+ <div style="font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 14px;">
+ XGBoost Karar Ağırlıkları (Feature Importance):
+ </div>
+
+ <div id="featureImportanceList">
+ <div class="bar-row">
+ <span class="bar-label">has_code_snippet</span>
+ <div class="bar-track"><div class="bar-fill" style="width: 29.2%;"></div></div>
+ <span class="bar-pct">%29.2</span>
+ </div>
+ <div class="bar-row">
+ <span class="bar-label">category_idx</span>
+ <div class="bar-track"><div class="bar-fill" style="width: 15.1%;"></div></div>
+ <span class="bar-pct">%15.1</span>
+ </div>
+ <div class="bar-row">
+ <span class="bar-label">pixel_avg_dwell_sec</span>
+ <div class="bar-track"><div class="bar-fill" style="width: 8.9%;"></div></div>
+ <span class="bar-pct">%8.9</span>
+ </div>
+ <div class="bar-row">
+ <span class="bar-label">has_proof_facts</span>
+ <div class="bar-track"><div class="bar-fill" style="width: 7.6%;"></div></div>
+ <span class="bar-pct">%7.6</span>
+ </div>
+ <div class="bar-row">
+ <span class="bar-label">pixel_cta_ratio</span>
+ <div class="bar-track"><div class="bar-fill" style="width: 7.2%;"></div></div>
+ <span class="bar-pct">%7.2</span>
+ </div>
+ <div class="bar-row">
+ <span class="bar-label">ig_engagement_rate</span>
+ <div class="bar-track"><div class="bar-fill" style="width: 5.1%;"></div></div>
+ <span class="bar-pct">%5.1</span>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- Nasıl Çalışır Adımları -->
+ <section id="nasil-calisir" class="section container">
+ <div class="section-header">
+ <h2 class="section-title">3 Kolay Adımda Doğrulama</h2>
+ <p class="section-desc">Kod yazmadan, saniyeler içinde simülasyon başlatın.</p>
+ </div>
+
+ <div class="feature-grid">
+ <div class="feature-card">
+ <div style="font-size: 12px; font-weight: 700; color: var(--accent-blue); text-transform: uppercase; margin-bottom: 6px;">Adım 1</div>
+ <h3 class="feature-title">Kitleyi Tanımlayın</h3>
+ <p class="feature-text">İster Instagram ve X hesaplarınızı bağlayın, ister henüz çıkmamış projeniz için ürün kartı ve kitle hipotezi oluşturun.</p>
+ </div>
+ <div class="feature-card">
+ <div style="font-size: 12px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase; margin-bottom: 6px;">Adım 2</div>
+ <h3 class="feature-title">Varyantları Hazırlayın</h3>
+ <p class="feature-text">Instagram Story (9:16), Feed Görseli veya Özel HTML kodunuzu ekleyin. İsterseniz "A'dan B Türet" butonuyla yapay zekadan farklı bir açı isteyin.</p>
+ </div>
+ <div class="feature-card">
+ <div style="font-size: 12px; font-weight: 700; color: var(--accent-green); text-transform: uppercase; margin-bottom: 6px;">Adım 3</div>
+ <h3 class="feature-title">Simülasyonu İzleyin</h3>
+ <p class="feature-text">18 izole sanal kimliğin oy dağılımını, segment bazlı gerekçelerini ve öne çıkan itirazları yayına girmeden önce okuyun.</p>
+ </div>
+ </div>
+
+ <div style="text-align: center; margin-top: 48px;">
+ <a href="/" class="btn btn-primary" style="padding: 14px 32px; font-size: 15px;">
+ Audience Lab Çalışma Alanını Başlat 
+ </a>
+ </div>
+ </section>
+
+ </main>
+
+ <!-- Footer -->
+ <footer class="footer">
+ <div class="container footer-inner">
+ <div>
+ <b>OctopIQ Audience Agent Lab</b> - Açık Kaynak Kitle ve Reklam Doğrulama Altyapısı
+ </div>
+ <div style="display: flex; gap: 14px;">
+ <a href="/">Laboratuvar</a>
+ <a href="#xgboost">XGBoost Modeli</a>
+ <a href="https://github.com" target="_blank" rel="noreferrer">GitHub</a>
+ </div>
+ </div>
+ </footer>
+
+ <script>
+ async function loadModelStatus() {
+ try {
+ const res = await fetch('/api/ml/status');
+ const data = await res.json();
+ const infoEl = document.getElementById('mlModelInfo');
+
+ if (data.receipt) {
+ const r = data.receipt;
+ infoEl.innerHTML = `Doğruluk: <b>%${Math.round(r.metrics.testAccuracy * 100)}</b> - Log-Loss: <b>${r.metrics.testLogLoss}</b> - Eğitim Verisi: <b>${r.dataset.totalSamples} sentetik profil</b> - Tarih: ${new Date(r.trainedAt).toLocaleDateString()}`;
+
+ if (r.featureImportances && r.featureImportances.length > 0) {
+ const listEl = document.getElementById('featureImportanceList');
+ listEl.innerHTML = '';
+ r.featureImportances.slice(0, 8).forEach(fi => {
+ const pct = (fi.importance * 100).toFixed(1);
+ const row = document.createElement('div');
+ row.className = 'bar-row';
+ row.innerHTML = `
+ <span class="bar-label">${fi.feature}</span>
+ <div class="bar-track"><div class="bar-fill" style="width: ${pct}%;"></div></div>
+ <span class="bar-pct">%${pct}</span>
+ `;
+ listEl.appendChild(row);
+ });
+ }
+ } else {
+ infoEl.innerText = 'Model henüz eğitilmedi. Aşağıdaki butondan ilk eğitimi başlatabilirsiniz.';
+ }
+ } catch (err) {
+ console.error('Model status fetch error:', err);
+ }
+ }
+
+ async function triggerTrainModel() {
+ const btn = document.getElementById('btnTrainXGBoost');
+ const originalText = btn.innerText;
+ btn.innerText = 'Sentetik Veri Üretiliyor & Eğitiliyor...';
+ btn.disabled = true;
+
+ try {
+ const res = await fetch('/api/ml/train', {
+ method: 'POST',
+ headers: { 'Content-Type': 'application/json' },
+ body: JSON.stringify({ numSamples: 3500 })
+ });
+ const data = await res.json();
+ if (!res.ok) throw new Error(data.error || 'Eğitim başarısız');
+
+ alert(`XGBoost Modeli Başarıyla Eğitildi!\nTest Doğruluğu: %${Math.round(data.metrics.testAccuracy * 100)}\nÖrnek Sayısı: ${data.dataset.totalSamples} sentetik profil`);
+ loadModelStatus();
+ } catch (err) {
+ alert('Eğitim Hatası: ' + err.message);
+ } finally {
+ btn.innerText = originalText;
+ btn.disabled = false;
+ }
+ }
+
+ loadModelStatus();
+ </script>
+</body>
+</html>

@@ -71,7 +71,8 @@ export type AudienceDatasetV1 = {
       | 'verified_purchase'
       | 'trial_requested'
       | 'pricing_view'
-      | 'integration_docs_view';
+      | 'integration_docs_view'
+      | 'page_view' | 'cta_click' | 'scroll_depth' | 'time_on_page';
     productRef: string;
     eventTime: string;
     receivedAt: string;
@@ -144,7 +145,7 @@ export type CreativeVariantV1 = {
   version: number;
   productId: string;
   platform: 'instagram' | 'facebook' | 'generic';
-  format: 'text-ad' | 'story' | 'image-ad' | 'html';
+  format: 'text-ad' | 'story' | 'image-ad' | 'html' | 'text' | 'screen' | 'web-page' | 'flow';
   headline: string;
   body: string;
   callToAction: string;
@@ -158,6 +159,8 @@ export type CreativeVariantV1 = {
   mediaUrl?: string;
   visualDescription?: string;
   html?: string;
+  images?: Array<{ name: string; mimeType: 'image/png' | 'image/jpeg' | 'image/webp'; data: string }>;
+  referenceUrl?: string;
 };
 
 export class AudienceLabValidationError extends Error {
@@ -633,6 +636,7 @@ export function parseAudienceDataset(raw: unknown): AudienceDatasetV1 {
             'trial_requested',
             'pricing_view',
             'integration_docs_view',
+            'page_view', 'cta_click', 'scroll_depth', 'time_on_page',
           ],
           `${path}.name`,
         ),

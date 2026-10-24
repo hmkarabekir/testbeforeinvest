@@ -1,12 +1,19 @@
 import { spawn, spawnSync } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
-import { existsSync, unlinkSync, readFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, rmSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import type { InferenceResult, InferenceReceipt } from '../core/types.js';
+import type { InferenceResult, InferenceReceipt, InferenceUsage, InferenceImage } from '../core/types.js';
+import { validateImages } from '../core/experiment-input.js';
+import { evaluationOutputSchema } from './output-schema.js';
+import { LAB_PROMPT_VERSION } from '../core/prompts.js';
 
 export class LabInferenceError extends Error {
-  constructor(public code: string, public receipt: any) {
+  constructor(
+    public code: string,
+    public receipt: InferenceReceipt,
+    public retryable = false,
+  ) {
     super(code);
   }
 }
@@ -17,6 +24,7 @@ export type LabInferenceRequest = {
   prompt: string;
   maxOutputTokens?: number;
   requestId?: string;
+  images?: InferenceImage[];
 };
 
 export const CODEX_DEFAULT_MODEL = 'gpt-6-luna';
@@ -27,35 +35,25 @@ function parseJsonOutput(raw: string): unknown {
   try {
     return JSON.parse(trimmed);
   } catch {
-    const codeBlockMatch = trimmed.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
-    if (codeBlockMatch) {
-      try {
-        return JSON.parse(codeBlockMatch[1]);
-      } catch {}
-    }
-    const firstBrace = trimmed.indexOf('{');
-    const lastBrace = trimmed.lastIndexOf('}');
-    if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
-      return JSON.parse(trimmed.slice(firstBrace, lastBrace + 1));
-    }
+    const block = trimmed.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/);
+    if (block) return JSON.parse(block[1]);
     throw new Error('CODEX_JSON_PARSE_FAILED');
   }
 }
 
-/**
- * An inference adapter that invokes the local Codex CLI (`codex exec`)
- * using the developer's authenticated ChatGPT Plus OAuth session.
- * Requires 0 API keys and generates 0 billable token charges.
- */
+/** Runs the existing authenticated CLI. Billing and returned-model identity are not inferred. */
 export class CodexCliEvaluator {
   private binaryPath: string | null = null;
   private checked = false;
 
+  constructor(private readonly options: { timeoutMs?: number } = {}) {}
+
+  /** Checks the executable only; a successful live call is needed to verify model access. */
   isAvailable(): boolean {
     if (this.checked) return this.binaryPath !== null;
     this.checked = true;
     try {
-      const result = spawnSync('which', ['codex'], { encoding: 'utf8' });
+      const result = spawnSync('which', ['codex'], { encoding: 'utf8', timeout: 2000 });
       if (result.status === 0 && result.stdout.trim()) {
         this.binaryPath = result.stdout.trim();
         return true;
@@ -69,188 +67,160 @@ export class CodexCliEvaluator {
   }
 
   async infer(request: LabInferenceRequest): Promise<InferenceResult> {
-    if (!this.isAvailable()) {
-      throw new LabInferenceError('AUDIENCE_LAB_PROVIDER_NOT_CONFIGURED', {
-        provider: 'codex',
-        requestedModel: CODEX_DEFAULT_MODEL,
-        returnedModel: null,
-        requestId: request.requestId || randomUUID(),
-        providerRequestId: null,
-        responseId: null,
-        task: request.task || 'single-evaluation',
-        promptVersion: 'audience-lab-prompts-1',
-        schemaVersion: 1,
-        inputHash: '',
-        latencyMs: 0,
-        dispatchState: 'not-dispatched',
-        outcome: 'rejected',
-        httpStatus: null,
-        usage: null,
-        usageState: 'missing',
-        cost: {
-          state: 'not-billed',
-          reason: 'codex-cli-missing',
-          providerChargeNanoUsd: 0,
-          currency: 'USD',
-          invoice: false,
-        },
-      });
-    }
-
+    if (process.env.AUDIENCE_LAB_DISABLE_LIVE === '1') throw new Error('AUDIENCE_LAB_LIVE_DISABLED');
     const started = performance.now();
     const task = request.task || 'single-evaluation';
     const model = process.env.AUDIENCE_LAB_MODEL?.trim() || CODEX_DEFAULT_MODEL;
-    const effort =
-      process.env.AUDIENCE_LAB_REASONING_EFFORT?.trim() ||
-      (task === 'variant-generation' ? 'high' : CODEX_DEFAULT_REASONING_EFFORT);
-    const requestId = request.requestId || randomUUID();
-    const tmpFile = join(tmpdir(), `codex_eval_${randomUUID()}.json`);
-
-    const inputHash = createHash('sha256')
-      .update(
-        JSON.stringify({
-          task,
-          system: request.system,
-          prompt: request.prompt,
-          model,
-          effort,
-        }),
-      )
-      .digest('hex');
-
+    const effort = process.env.AUDIENCE_LAB_REASONING_EFFORT?.trim()
+      || (task === 'variant-generation' ? 'high' : CODEX_DEFAULT_REASONING_EFFORT);
+    const timeoutMs = this.options.timeoutMs ?? Number(process.env.AUDIENCE_LAB_TIMEOUT_MS || 75_000);
+    if (!Number.isFinite(timeoutMs) || timeoutMs <= 0 || timeoutMs > 120_000) {
+      throw new Error('AUDIENCE_LAB_TIMEOUT_INVALID');
+    }
+    const schema = evaluationOutputSchema(task, request.prompt);
+    if ((request.images?.length || 0) > 6) throw new Error('AUDIENCE_LAB_EXPERIMENT_INVALID');
+    const images = [...validateImages(request.images?.slice(0, 3)), ...validateImages(request.images?.slice(3))];
     const receipt: InferenceReceipt = {
       provider: 'codex',
       requestedModel: model,
-      returnedModel: model,
-      requestId,
+      returnedModel: null,
+      requestId: request.requestId || randomUUID(),
       providerRequestId: null,
       responseId: null,
       task,
-      promptVersion: 'audience-lab-prompts-1',
+      promptVersion: LAB_PROMPT_VERSION,
       schemaVersion: 1,
-      inputHash,
+      inputHash: createHash('sha256').update(JSON.stringify({ task, system: request.system, prompt: request.prompt, schema, images, model, effort })).digest('hex'),
       latencyMs: 0,
-      dispatchState: 'dispatched',
-      outcome: 'completed',
-      httpStatus: 200,
-      usage: {
-        inputTokens: Math.max(10, Math.round(request.prompt.length / 4)),
-        cachedInputTokens: 0,
-        outputTokens: 300,
-        reasoningTokens: 0,
-        totalTokens: Math.max(10, Math.round(request.prompt.length / 4)) + 300,
-      },
-      usageState: 'reported',
+      dispatchState: 'not-dispatched',
+      outcome: 'unknown',
+      httpStatus: null,
+      usage: null,
+      usageState: 'missing',
       cost: {
-        state: 'not-billed',
-        reason: 'chatgpt-plus-oauth',
-        providerChargeNanoUsd: 0,
-        currency: 'USD',
-        invoice: false,
+        state: 'unknown', reason: 'cli-does-not-report-billing',
+        providerChargeNanoUsd: null, currency: 'USD', invoice: false,
       },
     };
+    if (!this.isAvailable()) {
+      receipt.outcome = 'rejected';
+      throw new LabInferenceError('AUDIENCE_LAB_PROVIDER_NOT_CONFIGURED', receipt);
+    }
+
+    // A separate working directory avoids loading this project's agent/development instructions.
+    const workDir = mkdtempSync(join(tmpdir(), 'audience-lab-'));
+    const outputFile = join(workDir, 'answer.json');
+    const imageFiles = images.map((image, index) => {
+      const file = join(workDir, `attachment-${index + 1}.${image.mimeType === 'image/png' ? 'png' : image.mimeType === 'image/jpeg' ? 'jpg' : 'webp'}`);
+      writeFileSync(file, Buffer.from(image.data, 'base64'), { mode: 0o600 });
+      return file;
+    });
+    const schemaFile = join(workDir, 'schema.json');
+    if (schema) writeFileSync(schemaFile, JSON.stringify(schema), { mode: 0o600 });
 
     return new Promise<InferenceResult>((resolve, reject) => {
-      const bin = this.binaryPath || 'codex';
-      const args = [
-        'exec',
-        '--skip-git-repo-check',
-        '--ephemeral',
-        '-s',
-        'read-only',
-        '-m',
-        model,
-        '-c',
-        `model_reasoning_effort=${effort}`,
-        '-o',
-        tmpFile,
-        '-',
-      ];
-
-      const child = spawn(bin, args, {
-        stdio: ['pipe', 'pipe', 'pipe'],
-      });
-
+      let settled = false;
+      let timer: ReturnType<typeof setTimeout> | undefined;
       let stderr = '';
-      child.stderr.on('data', (chunk) => {
-        stderr += chunk.toString();
-      });
-
-      // Write system prompt and user prompt via stdin
-      const input = `SYSTEM INSTRUCTIONS:\n${request.system}\n\nUSER PROMPT:\n${request.prompt}\n`;
-      child.stdin.write(input);
-      child.stdin.end();
-
-      const timeout = setTimeout(() => {
-        try {
-          child.kill('SIGKILL');
-        } catch {}
-        if (existsSync(tmpFile)) {
-          try {
-            unlinkSync(tmpFile);
-          } catch {}
-        }
-        reject(
-          new LabInferenceError('AUDIENCE_LAB_PROVIDER_UNAVAILABLE', {
-            ...receipt,
-            outcome: 'unknown',
-            latencyMs: Math.round(performance.now() - started),
-          }),
-        );
-      }, 75_000);
-
-      child.on('close', (code) => {
-        clearTimeout(timeout);
-        const latencyMs = Math.max(1, Math.round(performance.now() - started));
-        receipt.latencyMs = latencyMs;
-
-        let rawOutput = '';
-        if (existsSync(tmpFile)) {
-          try {
-            rawOutput = readFileSync(tmpFile, 'utf8');
-            unlinkSync(tmpFile);
-          } catch {}
-        }
-
-        if (code !== 0 || !rawOutput.trim()) {
-          console.error('[CODEX CLI FAILED]:', stderr, 'code:', code);
-          return reject(
-            new LabInferenceError('AUDIENCE_LAB_PROVIDER_REJECTED', {
-              ...receipt,
-              outcome: 'rejected',
-              httpStatus: 500,
-            }),
-          );
-        }
-
-        try {
-          const value = parseJsonOutput(rawOutput);
+      let pending = '';
+      let usage: InferenceUsage | null = null;
+      let eventError = '';
+      const finish = (error?: LabInferenceError, value?: unknown) => {
+        if (settled) return;
+        settled = true;
+        if (timer) clearTimeout(timer);
+        receipt.latencyMs = Math.max(1, Math.round(performance.now() - started));
+        receipt.usage = usage;
+        receipt.usageState = usage ? 'reported' : 'missing';
+        rmSync(workDir, { recursive: true, force: true });
+        if (error) reject(error);
+        else {
+          receipt.outcome = 'completed';
           resolve({ value, receipt });
-        } catch {
-          reject(
-            new LabInferenceError('AUDIENCE_LAB_PROVIDER_RESPONSE_INVALID', {
-              ...receipt,
-              outcome: 'rejected',
-            }),
-          );
+        }
+      };
+      const failure = (code: string, retryable = false) => {
+        receipt.outcome = receipt.dispatchState === 'dispatched'
+          && ['AUDIENCE_LAB_PROVIDER_TIMEOUT', 'AUDIENCE_LAB_PROVIDER_UNAVAILABLE'].includes(code) ? 'unknown' : 'rejected';
+        finish(new LabInferenceError(code, receipt, retryable));
+      };
+      const event = (line: string) => {
+        try {
+          const parsed = JSON.parse(line);
+          if (parsed.type === 'turn.completed' && parsed.usage) {
+            const u = parsed.usage;
+            if ([u.input_tokens, u.cached_input_tokens, u.output_tokens].every((n) => Number.isInteger(n) && n >= 0)) {
+              usage = {
+                inputTokens: u.input_tokens, cachedInputTokens: u.cached_input_tokens,
+                outputTokens: u.output_tokens, reasoningTokens: null,
+                totalTokens: u.input_tokens + u.output_tokens,
+              };
+            }
+          }
+          if (parsed.type === 'error' || parsed.type === 'turn.failed') {
+            eventError = String(parsed.message || parsed.error?.message || '').slice(0, 4000);
+          }
+        } catch { /* Ignore non-event diagnostics; the final response is validated separately. */ }
+      };
+      const args = [
+        'exec', '--skip-git-repo-check', '--ephemeral', '-s', 'read-only',
+        '-m', model, '-c', `model_reasoning_effort=${JSON.stringify(effort)}`,
+        '--json', ...(schema ? ['--output-schema', schemaFile] : []),
+        ...imageFiles.flatMap((file) => ['--image', file]),
+        '-o', outputFile, '-',
+      ];
+      let child: ReturnType<typeof spawn>;
+      try {
+        child = spawn(this.binaryPath || 'codex', args, {
+          cwd: workDir, stdio: ['pipe', 'pipe', 'pipe'],
+        });
+        receipt.dispatchState = 'dispatched';
+      } catch {
+        failure('AUDIENCE_LAB_PROVIDER_UNAVAILABLE', true);
+        return;
+      }
+      child.stdout!.on('data', (chunk) => {
+        if (settled) return;
+        pending += chunk.toString();
+        let newline: number;
+        while ((newline = pending.indexOf('\n')) >= 0) {
+          event(pending.slice(0, newline));
+          pending = pending.slice(newline + 1);
+        }
+        if (pending.length > 2_000_000) {
+          failure('AUDIENCE_LAB_PROVIDER_RESPONSE_INVALID');
+          child.kill('SIGKILL');
         }
       });
-
+      child.stderr!.on('data', (chunk) => { stderr = (stderr + chunk.toString()).slice(-16_000); });
       child.on('error', () => {
-        clearTimeout(timeout);
-        if (existsSync(tmpFile)) {
-          try {
-            unlinkSync(tmpFile);
-          } catch {}
-        }
-        reject(
-          new LabInferenceError('AUDIENCE_LAB_PROVIDER_UNAVAILABLE', {
-            ...receipt,
-            outcome: 'unknown',
-            latencyMs: Math.round(performance.now() - started),
-          }),
-        );
+        receipt.dispatchState = 'not-dispatched';
+        failure('AUDIENCE_LAB_PROVIDER_UNAVAILABLE', true);
       });
+      child.stdin!.on('error', () => {
+        failure('AUDIENCE_LAB_PROVIDER_UNAVAILABLE', true);
+        child.kill('SIGKILL');
+      });
+      child.on('close', (code) => {
+        if (settled) return;
+        if (pending.trim()) event(pending);
+        if (code !== 0 || eventError) {
+          const retryable = /429|rate.?limit|temporar|overloaded|502|503/i.test(stderr + eventError);
+          failure('AUDIENCE_LAB_PROVIDER_REJECTED', retryable);
+          return;
+        }
+        try {
+          const value = parseJsonOutput(readFileSync(outputFile, 'utf8'));
+          finish(undefined, value);
+        } catch {
+          failure('AUDIENCE_LAB_PROVIDER_RESPONSE_INVALID', true);
+        }
+      });
+      timer = setTimeout(() => {
+        failure('AUDIENCE_LAB_PROVIDER_TIMEOUT', true);
+        child.kill('SIGKILL');
+      }, timeoutMs);
+      child.stdin!.end(`Evaluate only the supplied data. Do not use tools or inspect files.\n\nSYSTEM INSTRUCTIONS:\n${request.system}\n\nUSER PROMPT:\n${request.prompt}\n`);
     });
   }
 }

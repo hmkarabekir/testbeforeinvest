@@ -6,12 +6,15 @@ describe('OctopIQ Standalone Audience Lab Engine', () => {
   const engine = new AudienceLabEngine('local');
   const orchestrator = new AudienceLabOrchestrator(engine);
 
+  const nowIso = new Date().toISOString();
+  const fromIso = new Date(Date.now() - 30 * 86400000).toISOString();
+
   const dataset: AudienceDatasetV1 = {
     schemaVersion: 1,
     label: 'Test Creator Dataset',
     synthetic: true,
-    asOf: new Date().toISOString(),
-    window: { from: new Date().toISOString(), to: new Date().toISOString() },
+    asOf: nowIso,
+    window: { from: fromIso, to: nowIso },
     brand: {
       name: 'Test Creator',
       category: 'personal-brand',
@@ -30,7 +33,7 @@ describe('OctopIQ Standalone Audience Lab Engine', () => {
         price: null,
       },
     ],
-    sources: [{ id: 's1', platform: 'instagram', population: 'engaged-audience', sampled: true, complete: false, collectedAt: new Date().toISOString() }],
+    sources: [{ id: 's1', platform: 'instagram', population: 'engaged-audience', sampled: true, complete: false, collectedAt: nowIso }],
     observations: [],
     content: [],
     events: [],
@@ -104,5 +107,57 @@ describe('OctopIQ Standalone Audience Lab Engine', () => {
 
     expect(derivedB.headline).toBeTruthy();
     expect(derivedB.body).toBeTruthy();
+  });
+
+  it('ingests social audience from Meta and X handles into validated dataset and personas', async () => {
+    const { SocialAudienceIngestionService } = await import('../core/social-ingestion.js');
+    const service = new SocialAudienceIngestionService();
+
+    const { dataset: igDataset, summary: igSummary } = await service.ingestSocialAudience({
+      platform: 'instagram',
+      handle: '@devstudio',
+      demo: true,
+    });
+
+    expect(igDataset.schemaVersion).toBe(1);
+    expect(igDataset.sources[0].platform).toBe('instagram');
+    expect(igDataset.observations.length).toBeGreaterThan(0);
+    expect(igSummary.demographics.gender.male).toBeGreaterThan(0);
+    expect(igSummary.recentPosts.length).toBeGreaterThan(0);
+
+    const { personas, identities } = orchestrator.compilePanel(igDataset);
+    expect(personas.length).toBeGreaterThanOrEqual(1);
+    expect(identities.length).toBe(personas.length * 3);
+  });
+
+  it('creates custom planned product dataset and compiles panel according to audience hypothesis', async () => {
+    const { SocialAudienceIngestionService } = await import('../core/social-ingestion.js');
+    const service = new SocialAudienceIngestionService();
+
+    const { dataset: customDs, summary } = service.createCustomProductDataset({
+      productName: 'Terminal AI Reviewer',
+      brandName: 'Mert Labs',
+      category: 'software',
+      description: 'Geliştiriciler için terminal tabanlı AI kod inceleme aracı.',
+      facts: [
+        '18 izole sanal ajanla A/B testi yapar.',
+        'Terminal üzerinden tek komutla çalışır ve CI/CD hattına entegre edilir.',
+        'Açık kaynak kural motorunu destekler.',
+      ],
+      targetAudienceHypothesis: 'Linux ve Rust/Go kullanan, temiz kod ve kanıt isteyen kıdemli yazılımcılar.',
+      samplePosts: [
+        'Clean code sadece estetik değil, bakım maliyetini düşüren bir zorunluluktur.',
+        'Talk is cheap, show me the code. 18 ajanla simülasyon sonuçları yayında.',
+      ],
+    });
+
+    expect(customDs.products[0].name).toBe('Terminal AI Reviewer');
+    expect(customDs.products[0].facts.length).toBe(3);
+    expect(customDs.research.length).toBe(1);
+    expect(customDs.content.length).toBe(2);
+
+    const { personas, identities } = orchestrator.compilePanel(customDs);
+    expect(personas.length).toBeGreaterThanOrEqual(1);
+    expect(identities.length).toBe(personas.length * 3);
   });
 });

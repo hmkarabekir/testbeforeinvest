@@ -130,7 +130,7 @@ export function parseCreativeVariant(
     ),
     format: labEnum(
       row.format,
-      ['text-ad', 'story', 'image-ad', 'html'],
+      ['text-ad', 'story', 'image-ad', 'html', 'text', 'screen', 'web-page', 'flow'],
       'variant.format',
     ),
     headline,

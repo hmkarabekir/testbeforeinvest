@@ -1,10 +1,11 @@
 {
-  "name": "octopiq-audience-lab",
+  "name": "testbeforeinvest",
   "version": "1.0.0",
   "description": "Standalone AI Audience Simulation & Creative A/B Testing Engine powered by Codex CLI (GPT-6 Luna) and Offline Local Evaluators",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
+    "testbeforeinvest": "dist/cli.js",
     "audience-lab": "dist/cli.js"
   },
   "scripts": {
@@ -12,7 +13,8 @@
     "start": "node dist/server.js",
     "dev": "node --loader ts-node/esm src/server.ts",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "smoke:luna": "npm run build && node scripts/smoke-luna.cjs"
   },
   "keywords": [
     "ai-agent",
@@ -25,11 +27,11 @@
   ],
   "author": "OctopIQ Team",
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.1",
     "jest": "^29.7.0",
+    "jsdom": "26.1.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"

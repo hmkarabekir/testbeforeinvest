@@ -790,7 +790,7 @@ export function compilePersonaPanel(
       datasetHash: normalized.datasetHash,
       compilerVersion: PERSONA_COMPILER_VERSION,
       title: `${theme.title} · ${dataset.brand.name}`,
-      summary: `${dataset.brand.name} için ${dataset.synthetic ? 'sentetik veriden' : 'veri paketinden'} oluşturulan ${isCreator ? 'kişiye verilen konu ve içerik' : theme.key} odaklı simülasyon kartı. ${primary.platform}/${primary.population} birincil kaynak; ${posts.length ? 'içerik teması destekli' : research.length ? 'kullanıcının içerik/araştırma beyanına dayalı' : 'ürün/brief bağlamına dayalı varsayım'}; gerçek kişi veya ölçülmüş segment değildir.`,
+      summary: theme.need,
       observedFacts,
       derivedSignals,
       assumptions,
@@ -815,7 +815,7 @@ export function compilePersonaPanel(
         {
           id: `${id}:rule-specific`,
           condition:
-            'Reklam ihtiyaçla ilgili somut ve destekli ürün bilgisi veriyorsa',
+            'Deneyim, ihtiyaç ve görevle ilgili somut ve destekli bilgi veriyorsa',
           effect: 'prefer',
           reason: theme.need,
           claimRefs: knownClaims.map((c) => c.id),

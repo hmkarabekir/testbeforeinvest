@@ -69,12 +69,12 @@ export type PairEvaluation = {
 };
 export class LabEvaluationValidationError extends Error {
   readonly code = 'AUDIENCE_LAB_EVALUATION_INVALID';
-  constructor() {
+  constructor(readonly issue = 'STRUCTURE_INVALID') {
     super('AUDIENCE_LAB_EVALUATION_INVALID');
   }
 }
-const invalid = (): never => {
-  throw new LabEvaluationValidationError();
+const invalid = (issue?: string): never => {
+  throw new LabEvaluationValidationError(issue);
 };
 const record = (v: unknown): v is Record<string, unknown> =>
   v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -111,17 +111,17 @@ function strings(
   });
   const deduped = [...new Set(result)];
   if (allowed && deduped.some((item) => !allowed.includes(item)))
-    return invalid();
+    return invalid('CLAIM_REFERENCE_INVALID');
   return deduped;
 }
 function claimRefs(v: unknown, allowed: readonly string[]): string[] {
   const refs = strings(v, 20, allowed);
-  if (allowed.length && !refs.length) return invalid();
+  if (allowed.length && !refs.length) return invalid('CLAIM_REFERENCE_REQUIRED');
   return refs;
 }
 function excerpt(v: unknown, creative: string): string {
   const result = boundedText(v, 500);
-  if (!creative.includes(result)) return invalid();
+  if (!creative.includes(result)) return invalid('CREATIVE_EXCERPT_INVALID');
   return result;
 }
 export function rubricScore(scores: CriterionScores): number {
@@ -169,7 +169,7 @@ export function validateSingleEvaluation(
   ) as CriterionScores;
   const score = rubricScore(criterionScores);
   if (!Array.isArray(data.reasons) || data.reasons.length !== CRITERIA.length)
-    return invalid();
+    return invalid('REASON_COUNT_INVALID');
   const seen = new Set<string>();
   const reasons = data.reasons.map((value) => {
     const row = exact(value, [
@@ -182,7 +182,7 @@ export function validateSingleEvaluation(
       !CRITERIA.includes(row.criterion as Criterion) ||
       seen.has(String(row.criterion))
     )
-      return invalid();
+      return invalid('CRITERION_DUPLICATE_OR_UNKNOWN');
     seen.add(String(row.criterion));
     return {
       criterion: row.criterion as Criterion,

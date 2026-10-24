@@ -4,11 +4,19 @@
 
 export * from './dataset-contract.js';
 
+export type InferenceImage = { name: string; mimeType: 'image/png' | 'image/jpeg' | 'image/webp'; data: string };
+export type ExperimentContext = {
+  objective: 'attention' | 'consideration' | 'click-intent' | 'task-completion' | 'clarity' | 'trust';
+  task: string;
+  surface: 'web' | 'mobile' | 'content' | 'other';
+  changedElement: string;
+};
+
 export type InferenceUsage = {
   inputTokens: number;
   cachedInputTokens: number;
   outputTokens: number;
-  reasoningTokens: number;
+  reasoningTokens: number | null;
   totalTokens: number;
 };
 
@@ -32,7 +40,7 @@ export type InferenceReceipt = {
   cost: {
     state: 'not-billed' | 'unknown' | 'estimated';
     reason: string;
-    providerChargeNanoUsd: number;
+    providerChargeNanoUsd: number | null;
     currency: string;
     invoice: boolean;
   };
@@ -55,5 +63,6 @@ export interface InferencePort {
     prompt: string;
     maxOutputTokens?: number;
     requestId?: string;
+    images?: InferenceImage[];
   }): Promise<InferenceResult>;
 }

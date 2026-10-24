@@ -1,7 +1,7 @@
-# 🐙 OctopIQ Audience Agent Lab
+# TestBeforeInvest
 
 > **Open-Source Standalone AI Audience Simulation & Creative A/B Testing Engine**  
-> Powered by **Codex CLI (GPT-6 Luna · ChatGPT Plus OAuth · 0₺ API Cost)** and **100% Offline Local Evaluator**.
+> Powered by **Codex CLI (GPT-6 Luna)** and an **Offline Local Evaluator**.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)](https://www.typescriptlang.org/)
@@ -9,24 +9,32 @@
 
 ---
 
-## 🎯 Overview
+## Overview
 
-Instead of publishing blind Instagram stories, ad hooks, or brand copies into the void, **OctopIQ Audience Agent Lab** simulates your real audience using **18 isolated, multi-scenario synthetic agents**.
+**TestBeforeInvest** uses brand and audience inputs to construct a default panel of **18 fictional agents across multiple scenarios** for assessing Instagram stories, ad hooks, and brand copy.
 
-- **No "A mı B mi?" Guesswork**: Avoids primacy effect / position bias via systematic order-flipping (**counterbalancing**).
-- **Zero Cost (0₺ / 0$)**: Runs directly on your local **Codex CLI** (`gpt-6-luna` + `medium/high reasoning`) using your active ChatGPT Plus OAuth session, or completely offline via local rule heuristics.
+- **Order Checks**: Flips pair presentation order across repeats (**counterbalancing**) to inspect position sensitivity.
+- **Two Explicit Engines**: Uses your configured **Codex CLI** (`gpt-6-luna` + `medium/high reasoning`) or offline local rules. This app does not configure an API key or infer CLI billing from a response.
 - **Story & Visual Kanca Support**: Test full Instagram Stories, banners, visual descriptions (e.g. *Linus Torvalds meme vs. İlber Ortaylı quote*), or rich HTML.
-- **Segment-Level Decision Reasons**: Get exact qualitative quotes and criterion scores (*Relevance, Credibility, Clarity, Objection Resolution, Attention, CTA Fit*).
+- **Persona-Level Decision Reasons**: Get generated explanations tied to creative excerpts and criterion scores (*Relevance, Credibility, Clarity, Objection Resolution, Attention, CTA Fit*).
+
+### Research foundation
+
+Our methodological reference is Hut and Masoero's (2026) [Can AI Agents Simulate A/B Test Outcomes? A Validation Framework for Agentic Experimentation](https://www.amazon.science/publications/can-ai-agents-simulate-a-b-test-outcomes-a-validation-framework-for-agentic-experimentation).
+
+The immediate goal is a **working hackathon MVP**. The current engine produces **uncalibrated synthetic panel assessments**. Preference percentages and rubric scores describe this panel; predictive accuracy against real experiments has not yet been measured. Historical validation and pre-period calibration belong to the research roadmap after the MVP.
+
+See [Research foundation](docs/RESEARCH_FOUNDATION.md) for the implementation snapshot and next steps.
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Installation
 
 ```bash
-git clone https://github.com/octopiq/audience-lab.git
-cd audience-lab
+git clone https://github.com/hmkarabekir/testbeforeinvest.git
+cd testbeforeinvest
 npm install
 ```
 
@@ -44,6 +52,7 @@ You will see the live simulation running:
 ### 3. Start the Web UI & API Server
 
 ```bash
+npm run build
 npm start
 # or for development:
 npm run dev
@@ -51,9 +60,25 @@ npm run dev
 
 Open your browser at [http://localhost:3344](http://localhost:3344) to interact with the visual dashboard.
 
+Choose **Demo** for up to six identities (one per persona), two repeats, and up to 36 assessments. **Full panel** retains the default 18 identities and 108 assessments. At most two identities run concurrently. Two repeats preserve the presentation-order check; one repeat cannot establish an A/B recommendation under the existing aggregation rules.
+
+### 4. Verify live Luna inference
+
+With the existing CLI installed and authenticated:
+
+```bash
+npm run smoke:luna
+# Run the complete demo panel:
+npm run smoke:luna -- --demo
+```
+
+The first command validates separate A, B, and pair assessments using a fixed synthetic fixture. These commands make real model calls; they are excluded from `npm test`. See [the validation record](docs/LUNA_VALIDATION.md) for observed latency and results.
+
+An explicit Codex selection reports provider failures instead of switching to local rules. Invalid responses and transient errors get at most one retry; exhausted assessments remain missing. `AUDIENCE_LAB_TIMEOUT_MS` sets the per-call timeout (default 75000, maximum 120000). Explicit engine selections override `AUDIENCE_LAB_ENGINE`; auto mode respects it.
+
 ---
 
-## 🧠 Architecture: How It Works
+## Architecture: How It Works
 
 ```mermaid
 graph TD
@@ -87,7 +112,7 @@ graph TD
 
 ---
 
-## 🔌 REST API Reference (For Custom Frontends)
+## REST API Reference (For Custom Frontends)
 
 The built-in server exposes standard REST endpoints ready for any React/Vue/Next.js UI:
 
@@ -111,18 +136,23 @@ Derives Variant B from Variant A using selected angle.
 ```
 
 ### `POST /api/run-experiment`
-Executes the full 18-agent counterbalanced simulation.
+Executes a counterbalanced simulation; omitted `panelMode` retains the full panel.
 ```json
 {
   "dataset": { ... },
   "variantA": { ... },
   "variantB": { ... },
-  "repeats": 2
+  "repeats": 2,
+  "panelMode": "demo",
+  "concurrency": 2,
+  "engine": "codex"
 }
 ```
 
+Results include `summary.decision`, the complete `aggregate` diagnostics, `evaluationMode`, synthetic-data `provenance`, `creativeIssues`, and `timing` with per-attempt receipts. Preferences retain missing panel weight. Scores can be `null` when no supported evaluations exist. A returned model identity or billing amount is left unknown when the CLI does not report it.
+
 ---
 
-## 📜 License
+## License
 
-[MIT License](LICENSE) © 2026 OctopIQ & Mert Karabaş.
+[MIT License](LICENSE) (c) 2026 TestBeforeInvest.

@@ -94,7 +94,7 @@ async function main() {
       format: 'story',
       headline: 'Cahil kalmayın, mimariyi öğrenin',
       body: 'Günübirlik trendler yerine sağlam yazılım mimarisi kurun. 18 izole sanal kimlikle kitle psikolojisini analitik olarak analiz edin.',
-      callToAction: 'Rehberi Oku 📚',
+      callToAction: 'Rehberi Oku',
       testedVariable: 'hook',
       productFactRefs: ['f1', 'f2'],
       assumptions: [],
@@ -126,10 +126,13 @@ async function main() {
     });
 
     console.log(`======================================================`);
-    console.log(`  SONUÇ: KAZANAN VARYANT -> [${result.summary.winner.toUpperCase()}]`);
+    console.log(`  SONUÇ: PANEL KARARI -> [${result.summary.decision}]`);
     console.log(`======================================================`);
     console.log(`  Oylar: A: ${result.summary.votes.a} | B: ${result.summary.votes.b} | Beraberlik: ${result.summary.votes.tie} | İkisi de Zayıf: ${result.summary.votes.neither}`);
     console.log(`  Ortalama Puan: A: ${result.summary.averageScores.a}/100 | B: ${result.summary.averageScores.b}/100\n`);
+    console.log(`  Mod: ${result.evaluationMode} | Sentetik veri: ${result.provenance.datasetSynthetic} | Panel: sentetik`);
+    console.log(`  Geçerli görev: ${result.aggregate.completion.validTasks}/${result.aggregate.completion.expectedTasks} | Süre: ${result.timing.totalMs} ms`);
+    if (result.aggregate.warnings.length) console.log(`  Kontroller: ${result.aggregate.warnings.join(', ')}`);
 
     console.log(`Segment Dağılımı ve Gerekçeler:`);
     for (const seg of result.segmentBreakdown) {
