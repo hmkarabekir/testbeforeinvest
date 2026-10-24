@@ -7,6 +7,7 @@ import { AudienceLabEngine } from './inference/index.js';
 import type { AudienceDatasetV1 } from './core/types.js';
 import { SocialAudienceIngestionService } from './core/social-ingestion.js';
 import { XgBoostPersonaService } from './ml/xgboost-bridge.js';
+import { appendDemoDataset, demoCatalog, generateDemoData, seededRandom } from './core/demo-data.js';
 
 // Native .env loader
 if (existsSync(join(process.cwd(), '.env'))) {
@@ -45,9 +46,14 @@ export type PixelEventRecord = {
   synthetic: boolean;
 };
 
-function generateSyntheticPixelEvents(count: number, startAnonIndex = 1): PixelEventRecord[] {
+function generateSyntheticPixelEvents(count: number, startAnonIndex = 1, options: { scenario?: string; seed?: string | number } = {}): PixelEventRecord[] {
   const events: PixelEventRecord[] = [];
-  const eventTypes = ['page_view', 'page_view', 'scroll_depth', 'cta_click', 'product_view'];
+  const scenario=options.scenario || 'explore';
+  if (!['explore','compare','high-intent'].includes(scenario)) throw Object.assign(new Error('DEMO_OPTIONS_INVALID'),{code:'DEMO_OPTIONS_INVALID',status:400});
+  const rng=seededRandom(String(options.seed ?? randomUUID()));
+  const eventTypes = scenario==='explore'?['page_view','page_view','scroll_depth','cta_click','product_view','time_on_page']:
+    scenario==='compare'?['page_view','pricing_view','pricing_view','integration_docs_view','scroll_depth','cta_click']:
+    ['page_view','cta_click','cta_click','trial_requested','add_to_cart','checkout_started'];
   const pages = [
     'https://octopiq.io/',
     'https://octopiq.io/pricing',
@@ -58,8 +64,8 @@ function generateSyntheticPixelEvents(count: number, startAnonIndex = 1): PixelE
   const now = Date.now();
   for (let i = 0; i < count; i++) {
     const anonId = `anon-usr-${String(startAnonIndex + (i % 73)).padStart(3, '0')}`;
-    const evType = eventTypes[i % eventTypes.length];
-    const pageUrl = pages[i % pages.length];
+    const evType = eventTypes[i < eventTypes.length ? i : Math.floor(rng()*eventTypes.length)];
+    const pageUrl = evType==='pricing_view'?pages[1]:evType==='integration_docs_view'?pages[4]:pages[Math.floor(rng()*pages.length)];
     const timeOffset = (count - i) * 17000;
     events.push({
       id: `ev-synth-${i + 1}-${randomUUID().slice(0, 6)}`,
@@ -69,7 +75,7 @@ function generateSyntheticPixelEvents(count: number, startAnonIndex = 1): PixelE
       pageUrl,
       pageTitle: pageUrl.includes('pricing') ? 'Pricing Plans | OctopIQ' : 'Audience Lab | OctopIQ',
       referrer: i % 3 === 0 ? 'https://x.com/' : i % 3 === 1 ? 'https://google.com/' : null,
-      details: { scrollPercent: 40 + (i % 55), durationSec: 15 + (i % 105) },
+      details: { scrollPercent: 20 + Math.floor(rng()*80), durationSec: 10 + Math.floor(rng()*220) },
       timestamp: new Date(now - timeOffset).toISOString(),
       synthetic: true,
     });
@@ -78,7 +84,7 @@ function generateSyntheticPixelEvents(count: number, startAnonIndex = 1): PixelE
 }
 
 const pixelEventsBuffer: PixelEventRecord[] = generateSyntheticPixelEvents(243, 1);
-const oauthSessions = new Map<string, { platform: 'facebook' | 'instagram'; handle: string; expires: number }>();
+const oauthSessions = new Map<string, { platform: 'facebook' | 'instagram'; handle: string; redirectUri: string; expires: number }>();
 
 function getOrchestrator(mode?: string) {
   if (mode !== undefined && !['auto', 'local', 'codex'].includes(mode)) {
@@ -189,6 +195,27 @@ const server = createServer(async (req, res) => {
       return sendJson(res, 200, prediction);
     }
 
+    if (pathname === '/api/demo/catalog' && req.method === 'GET') return sendJson(res,200,demoCatalog());
+    if (pathname === '/api/demo/export' && req.method === 'GET') {
+      const generated=generateDemoData(Object.fromEntries(url.searchParams));
+      res.writeHead(200,{'Content-Type':'application/json; charset=utf-8','Content-Disposition':`attachment; filename="demo-${generated.demo.scenarioId}.json"`});
+      return res.end(JSON.stringify(generated.dataset,null,2));
+    }
+    if (['/api/demo/load','/api/audience/synthetic/load','/api/social/synthetic/load','/api/grok/synthetic/load'].includes(pathname) && req.method==='POST') {
+      const body=await parseJsonBody(req);
+      const source=pathname==='/api/grok/synthetic/load'?'grok':pathname==='/api/social/synthetic/load'?(body.platform || 'instagram'):body.source;
+      const generated=generateDemoData({...body,source});
+      const dataset=body.dataset && body.mode!=='replace'?appendDemoDataset(body.dataset,generated.dataset):generated.dataset;
+      const {summary}=socialService.importFromJson(dataset);
+      const panel=getOrchestrator('local').compilePanel(dataset);
+      const product=dataset.products[0],bodyText=product.facts.slice(0,2).map(f=>f.text).join(' ');
+      const sampleExperiment={...generated.sampleExperiment,context:{...generated.sampleExperiment.context,task:`${product.name} için uygunluğu değerlendirmek`},
+        variantA:{...generated.sampleExperiment.variantA,productId:product.id,headline:product.name,body:bodyText},
+        variantB:{...generated.sampleExperiment.variantB,productId:product.id,body:bodyText}};
+      return sendJson(res,200,{...generated,dataset,summary,sampleExperiment,datasetHash:panel.datasetHash,
+        panel:{personas:panel.personas,personasCount:panel.personas.length,identitiesCount:panel.identities.length,analysis:panel.analysis}});
+    }
+
     // 2. Load Sample Fixtures
     if (pathname === '/api/fixtures' && req.method === 'GET') {
       const fixturesDir = join(process.cwd(), 'src', 'fixtures');
@@ -243,9 +270,14 @@ const server = createServer(async (req, res) => {
       const body = await parseJsonBody(req);
       const requestedCount = body.count ?? 120;
       if (!Number.isInteger(requestedCount) || requestedCount < 1 || requestedCount > 1000) return sendJson(res, 400, { error: 'Demo olay sayısı 1–1000 arasında olmalıdır.' });
-      const newEvents = generateSyntheticPixelEvents(requestedCount, pixelEventsBuffer.length + 1);
-      const result = body.dataset ? socialService.appendPixelEvents(body.dataset, newEvents) : null;
-      const panel = result ? getOrchestrator('local').compilePanel(result.dataset) : null;
+      const newEvents = generateSyntheticPixelEvents(requestedCount, pixelEventsBuffer.length + 1,{scenario:body.scenario,seed:body.seed});
+      let baseDataset=body.dataset;
+      if(!baseDataset){
+        baseDataset=generateDemoData({source:'pixel',scenarioId:body.scenarioId,seed:body.seed}).dataset;
+        baseDataset.events=[];baseDataset.sources=baseDataset.sources.map((s:any)=>({...s,id:'src-pixel-demo'}));
+      }
+      const result = socialService.appendPixelEvents(baseDataset, newEvents);
+      const panel = getOrchestrator('local').compilePanel(result.dataset);
       pixelEventsBuffer.unshift(...newEvents);
       if (pixelEventsBuffer.length > 2500) {
         pixelEventsBuffer.length = 2500;
@@ -255,6 +287,7 @@ const server = createServer(async (req, res) => {
         ...(result || {}), ...(panel ? { panel: { personas: panel.personas, personasCount: panel.personas.length, identitiesCount: panel.identities.length } } : {}),
         success: true,
         addedCount: requestedCount,
+        demo:{synthetic:true,scenario:body.scenario || 'explore',seed:body.seed ?? null},
         totalEvents: pixelEventsBuffer.length,
         uniqueVisitors,
         message: `${requestedCount} sentetik demo olayı oluşturuldu.`,
@@ -301,42 +334,53 @@ const server = createServer(async (req, res) => {
     }
 
     // Only verified token exchange can return a successful connection. No demo fallback.
-    if (pathname === '/api/auth/meta/config' && req.method === 'GET') {
-      const appId = process.env.META_APP_ID || '';
-      const configured = Boolean(appId && process.env.META_APP_SECRET);
-      const redirectUri = process.env.META_OAUTH_REDIRECT_URI || `http://localhost:${PORT}/api/auth/meta/callback`;
-      const platform = url.searchParams.get('platform') === 'instagram' ? 'instagram' : 'facebook';
+    if (['/api/auth/meta/config','/api/auth/instagram/config'].includes(pathname) && req.method === 'GET') {
+      const platform = pathname.includes('/instagram/') || url.searchParams.get('platform') === 'instagram' ? 'instagram' : 'facebook';
+      const instagram=platform==='instagram';
+      const appId = instagram ? process.env.INSTAGRAM_APP_ID || '' : process.env.META_APP_ID || '';
+      const configured = Boolean(appId && (instagram?process.env.INSTAGRAM_APP_SECRET:process.env.META_APP_SECRET));
+      const redirectUri = (instagram?process.env.INSTAGRAM_OAUTH_REDIRECT_URI:process.env.META_OAUTH_REDIRECT_URI)
+        || `http://localhost:${PORT}/api/auth/${instagram?'instagram':'meta'}/callback`;
       const state = randomUUID();
       for (const [key, value] of oauthSessions) if (value.expires < Date.now()) oauthSessions.delete(key);
-      if (configured) oauthSessions.set(state, { platform, handle: url.searchParams.get('handle') || 'connected-account', expires: Date.now() + 600000 });
-      const scope = 'pages_show_list,pages_read_engagement' + (platform === 'instagram' ? ',instagram_basic,instagram_manage_insights' : '');
-      const oauthUrl = configured ? `https://www.facebook.com/v25.0/dialog/oauth?client_id=${appId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope}&response_type=code&state=${state}` : null;
-      return sendJson(res, 200, { configured, oauthUrl, hasTestToken: Boolean(process.env.META_TEST_ACCESS_TOKEN),
-        note: configured ? 'Hesabın izin verdiği alanlar alınır; eksikler bilinmiyor kalır.' : 'Meta App ID ve App Secret sunucuda yapılandırılmalı.' });
+      if (configured) oauthSessions.set(state, { platform, redirectUri, handle: url.searchParams.get('handle') || 'connected-account', expires: Date.now() + 600000 });
+      const scope = instagram ? process.env.INSTAGRAM_OAUTH_SCOPES || 'instagram_business_basic,instagram_business_manage_insights' : 'pages_show_list,pages_read_engagement';
+      const target=new URL(instagram?'https://www.instagram.com/oauth/authorize':'https://www.facebook.com/v25.0/dialog/oauth');
+      target.search=new URLSearchParams({client_id:appId,redirect_uri:redirectUri,scope,response_type:'code',state,...(instagram?{enable_fb_login:'0'}:{})}).toString();
+      return sendJson(res, 200, { platform,loginProvider:platform,configured, oauthUrl:configured?target.toString():null,
+        hasTestToken: Boolean(instagram?process.env.INSTAGRAM_TEST_ACCESS_TOKEN:process.env.META_TEST_ACCESS_TOKEN),
+        note: configured ? 'Hesabın izin verdiği alanlar alınır.' : `${instagram?'INSTAGRAM':'META'}_APP_ID ve APP_SECRET sunucuda yapılandırılmalı.` });
     }
-    if (pathname === '/api/auth/meta/connect-test' && req.method === 'POST') {
+    if (['/api/auth/meta/connect-test','/api/auth/instagram/connect-test'].includes(pathname) && req.method === 'POST') {
       const body = await parseJsonBody(req);
-      const token = process.env.META_TEST_ACCESS_TOKEN;
+      const instagram=pathname.includes('/instagram/') || body.platform==='instagram';
+      const token = instagram?process.env.INSTAGRAM_TEST_ACCESS_TOKEN:process.env.META_TEST_ACCESS_TOKEN;
       if (!token) return sendJson(res, 400, { error: 'Sunucuda Meta test tokenı yapılandırılmadı.' });
-      const result = await socialService.ingestSocialAudience({ platform: body.platform === 'instagram' ? 'instagram' : 'facebook',
+      const result = await socialService.ingestSocialAudience({ platform: instagram ? 'instagram' : 'facebook',login:instagram?'instagram':'facebook',
         handle: body.handle || 'connected-account', accessToken: token, population: 'followers' });
       const panel = getOrchestrator('local').compilePanel(result.dataset);
       return sendJson(res, 200, { ...result, panel: { personas: panel.personas, personasCount: panel.personas.length, identitiesCount: panel.identities.length } });
     }
-    if (pathname === '/api/auth/meta/callback' && req.method === 'GET') {
+    if (['/api/auth/meta/callback','/api/auth/instagram/callback'].includes(pathname) && req.method === 'GET') {
       const state = url.searchParams.get('state') || '';
       const session = oauthSessions.get(state);
       oauthSessions.delete(state);
-      if (!session || session.expires < Date.now() || !url.searchParams.get('code') || url.searchParams.has('error')) {
+      if (!session || session.expires < Date.now() || !url.searchParams.get('code') || url.searchParams.has('error')
+        || (pathname.includes('/instagram/') && session.platform!=='instagram')) {
         return sendJson(res, 400, { error: 'Meta yetkilendirmesi tamamlanmadı veya oturum süresi doldu.' });
       }
-      const redirectUri = process.env.META_OAUTH_REDIRECT_URI || `http://localhost:${PORT}/api/auth/meta/callback`;
-      const tokenUrl = new URL('https://graph.facebook.com/v25.0/oauth/access_token');
-      tokenUrl.search = new URLSearchParams({ client_id: process.env.META_APP_ID || '', client_secret: process.env.META_APP_SECRET || '', redirect_uri: redirectUri, code: url.searchParams.get('code')! }).toString();
-      const tokenResponse = await fetch(tokenUrl, { signal: AbortSignal.timeout(12000) });
-      const token = await tokenResponse.json() as any;
+      const instagram=session.platform==='instagram';
+      const fields=new URLSearchParams({client_id:(instagram?process.env.INSTAGRAM_APP_ID:process.env.META_APP_ID)||'',
+        client_secret:(instagram?process.env.INSTAGRAM_APP_SECRET:process.env.META_APP_SECRET)||'',redirect_uri:session.redirectUri,code:url.searchParams.get('code')!,
+        ...(instagram?{grant_type:'authorization_code'}:{})});
+      const tokenResponse = instagram ? await fetch('https://api.instagram.com/oauth/access_token',{
+        method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fields.toString(),signal:AbortSignal.timeout(12000)})
+        : await fetch(`https://graph.facebook.com/v25.0/oauth/access_token?${fields}`,{signal:AbortSignal.timeout(12000)});
+      const rawToken = await tokenResponse.json() as any;
+      const token=Array.isArray(rawToken.data)&&rawToken.data.length===1?rawToken.data[0]:rawToken;
       if (!tokenResponse.ok || !token.access_token || token.error) throw new Error('META_REQUEST_FAILED');
-      const result = await socialService.ingestSocialAudience({ platform: session.platform, handle: session.handle, accessToken: token.access_token, population: 'followers' });
+      const result = await socialService.ingestSocialAudience({ platform: session.platform, handle: session.handle, accessToken: token.access_token,
+        login:instagram?'instagram':'facebook',population: 'followers' });
       const panel = getOrchestrator('local').compilePanel(result.dataset);
       const payload = JSON.stringify({ type: 'META_AUTH_SUCCESS', ...result, panel: { personas: panel.personas, personasCount: panel.personas.length, identitiesCount: panel.identities.length } }).replace(/</g, '\\u003c');
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
@@ -346,13 +390,14 @@ const server = createServer(async (req, res) => {
     // 2.5 Social Audience Extraction (Meta & X)
     if (pathname === '/api/social/fetch' && req.method === 'POST') {
       const body = await parseJsonBody(req);
-      const { platform = 'instagram', handle, accessToken, population, brandName, brandDescription, category, demo } = body;
+      const { platform = 'instagram', handle, accessToken, population, brandName, brandDescription, category, demo, seed, scenarioId, size, login } = body;
       if (!handle) return sendJson(res, 400, { error: 'handle is required' });
       const { dataset, summary } = await socialService.ingestSocialAudience({
         platform,
         handle,
         accessToken,
         demo: demo === true,
+        seed,scenarioId,size,login,
         population,
         brandName,
         brandDescription,
@@ -381,6 +426,7 @@ const server = createServer(async (req, res) => {
         x,
         includePixel: Boolean(includePixel),
         pixelEvents: includePixel ? pixelEventsBuffer : [],
+        dataset:body.dataset,
       });
 
       const activeOrchestrator = getOrchestrator(engine);
@@ -494,7 +540,7 @@ const server = createServer(async (req, res) => {
       if (!reportText || typeof reportText !== 'string' || !reportText.trim()) {
         return sendJson(res, 400, { error: 'reportText is required' });
       }
-      const { dataset, summary } = socialService.importGrokReport(reportText.trim());
+      const { dataset, summary } = socialService.importGrokReport(reportText.trim(),body.dataset);
       const activeOrchestrator = getOrchestrator(engine);
       const panel = activeOrchestrator.compilePanel(dataset);
       return sendJson(res, 200, {
@@ -631,9 +677,11 @@ const server = createServer(async (req, res) => {
       ML_TIMEOUT: 'Yerel model işlemi zaman aşımına uğradı.',
       ML_RUNTIME_UNAVAILABLE: 'Python bulunamadı. AUDIENCE_LAB_PYTHON yolunu yapılandırın.',
       ML_DEPENDENCIES_MISSING: 'Python ortamında ML bağımlılıkları eksik. ml/requirements.txt dosyasını kullanın.',
+      DEMO_OPTIONS_INVALID: 'Demo senaryosu, kaynak, boyut veya seed geçersiz. /api/demo/catalog listesini kullanın.',
+      SOCIAL_SOURCE_REQUIRED:'Bir veri kaynağı veya pixel olayları ekleyin; demo için /api/demo/load kullanın.',
     };
     const code = err.code || err.message;
-    const status = typeof err.status === 'number' ? err.status : ['AUDIENCE_LAB_EXPERIMENT_INVALID', 'AUDIENCE_LAB_ENGINE_INVALID', 'AUDIENCE_LAB_IDENTICAL_VARIANTS', 'AUDIENCE_LAB_LIVE_DISABLED', 'AUDIENCE_LAB_VISION_REQUIRES_MODEL', 'AUDIENCE_LAB_DERIVATION_INVALID', 'AUDIENCE_LAB_IMAGE_GENERATION_UNSUPPORTED', 'SOCIAL_TOKEN_REQUIRED', 'X_DIRECT_DISABLED_USE_GROK', 'GROK_REPORT_INVALID', 'META_ACCOUNT_SELECTION_REQUIRED', 'META_INSTAGRAM_ACCOUNT_REQUIRED'].includes(code) || err.code === 'AUDIENCE_LAB_INPUT_INVALID' ? 400
+    const status = typeof err.status === 'number' ? err.status : ['AUDIENCE_LAB_EXPERIMENT_INVALID', 'AUDIENCE_LAB_ENGINE_INVALID', 'AUDIENCE_LAB_IDENTICAL_VARIANTS', 'AUDIENCE_LAB_LIVE_DISABLED', 'AUDIENCE_LAB_VISION_REQUIRES_MODEL', 'AUDIENCE_LAB_DERIVATION_INVALID', 'AUDIENCE_LAB_IMAGE_GENERATION_UNSUPPORTED', 'SOCIAL_TOKEN_REQUIRED', 'SOCIAL_SOURCE_REQUIRED','X_DIRECT_DISABLED_USE_GROK', 'GROK_REPORT_INVALID', 'META_ACCOUNT_SELECTION_REQUIRED', 'META_INSTAGRAM_ACCOUNT_REQUIRED'].includes(code) || err.code === 'AUDIENCE_LAB_INPUT_INVALID' ? 400
       : code === 'META_REQUEST_FAILED' ? 502
       : String(code).startsWith('AUDIENCE_LAB_PROVIDER_') ? 503 : 500;
     sendJson(res, status, { error: messages[code] || err.message || 'Internal server error', code });

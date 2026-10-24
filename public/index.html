@@ -1216,6 +1216,69 @@
         <span id="activeDatasetLabel" class="pill pill-blue">Varsayilan Kitle</span>
       </div>
 
+      <!-- Demo Senaryolari ve Sentetik Veri Yukleme Bari -->
+      <div class="demo-catalog-bar" style="background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-weight: 700; font-size: 13px; color: var(--text-main);">Hazır Demo Senaryoları ve Sentetik Veri Paketi</span>
+            <span class="pill pill-blue" style="font-size: 10px;">12 Sektörel Senaryo</span>
+          </div>
+          <div style="font-size: 11px; color: var(--text-muted);">
+            Tek tıkla tüm kaynaklarla (sosyal, pixel, araştırma) veya saf kitle JSON'ı ile test edin.
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end;">
+          <div style="display: flex; flex-direction: column; gap: 4px; flex: 2; min-width: 220px;">
+            <label for="demoScenarioSelect" style="font-size: 11px; font-weight: 600; color: var(--text-muted);">Senaryo Seçimi:</label>
+            <select id="demoScenarioSelect" class="builder-select" style="font-size: 12px; padding: 7px 10px; background: #fff; color: #172033; border: 1px solid var(--border); border-radius: 6px;">
+              <optgroup label="Yazılım & B2B SaaS">
+                <option value="software-builders" selected>Yazılım · Bağımsız Geliştiriciler (API, Kurulum)</option>
+                <option value="software-teams">Yazılım · Ekip ve Güvenlik (Rol, Yetki, Kota)</option>
+                <option value="software-buyers">Yazılım · Satın Alma Kararı (Plan Kapsamı, Destek)</option>
+              </optgroup>
+              <optgroup label="Kahve & Gastronomi">
+                <option value="coffee-routine">Kahve · Pratik Günlük Kullanım (Abonelik, Tarif)</option>
+                <option value="coffee-explorers">Kahve · Tat Keşfi (Köken, Çekirdek, Nota)</option>
+                <option value="coffee-gifts">Kahve · Hediye Seçimi (Kutu Seçkisi, Paket)</option>
+              </optgroup>
+              <optgroup label="Mobilya & Yaşam Alanı">
+                <option value="furniture-small-space">Mobilya · Küçük Alanlar (Modüler, Boyut)</option>
+                <option value="furniture-design">Mobilya · Tasarım ve Malzeme (Ahşap, Mekan)</option>
+                <option value="furniture-value">Mobilya · Toplam Maliyet (Kargo, Kurulum)</option>
+              </optgroup>
+              <optgroup label="İçerik & Kişisel Marka">
+                <option value="creator-builders">İçerik · Kurucu Yolculuğu (Build In Public, Otomasyon)</option>
+                <option value="creator-technical">İçerik · Teknik Derinlik (Mimari, Benchmark)</option>
+                <option value="creator-beginners">İçerik · Yeni Başlayanlar (Şablon, Adım Adım Rehber)</option>
+              </optgroup>
+            </select>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 140px;">
+            <label for="demoSizeSelect" style="font-size: 11px; font-weight: 600; color: var(--text-muted);">Veri Boyutu:</label>
+            <select id="demoSizeSelect" class="builder-select" style="font-size: 12px; padding: 7px 10px; background: #fff; color: #172033; border: 1px solid var(--border); border-radius: 6px;">
+              <option value="small">Küçük (12 Gönderi / 60 Pixel / 3 Araştırma)</option>
+              <option value="medium" selected>Orta (36 Gönderi / 300 Pixel / 9 Araştırma)</option>
+              <option value="large">Büyük (90 Gönderi / 1200 Pixel / 18 Araştırma)</option>
+            </select>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px; width: 85px;">
+            <label for="demoSeedInput" style="font-size: 11px; font-weight: 600; color: var(--text-muted);">Seed (Opt):</label>
+            <input id="demoSeedInput" type="text" placeholder="Rastgele" style="font-size: 12px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px;" />
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+            <button id="btnLoadDemoAll" class="btn btn-primary" onclick="loadDemoScenario('all')" style="font-size: 11px; padding: 8px 14px; font-weight: 600;">
+              Tüm Kaynaklarla Demo Yükle
+            </button>
+            <button id="btnLoadAudienceSynthetic" class="btn" onclick="loadDemoScenario('audience')" style="font-size: 11px; padding: 8px 14px; font-weight: 600;">
+              Kitle JSON Örneği Yükle
+            </button>
+            <button id="btnExportDemo" class="btn" onclick="exportDemoJson()" style="font-size: 11px; padding: 8px 12px; font-weight: 600;">
+              JSON İndir
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- Segmented Tab: Gercek Veri vs Sentetik / Planlanan Urun -->
       <div class="segmented-tabs" style="margin-bottom: 16px;">
         <button class="tab-item active" id="btnModeReal" onclick="switchAudienceMode('real')">
@@ -1244,6 +1307,9 @@
                 </button>
                 <button id="btnConnectTestToken" class="btn" style="font-size: 11px; padding: 6px 12px;" onclick="connectMetaTestToken()">
                   Test Token ile Baglan
+                </button>
+                <button id="btnLoadSocialSynthetic" class="btn" style="font-size: 11px; padding: 6px 12px;" onclick="loadSocialSyntheticSample()">
+                  Sentetik Sosyal Veri Ekle
                 </button>
               </div>
             </div>
@@ -1277,9 +1343,14 @@
                 <span id="copyGrokText">Grok Arastirma Promptunu Kopyala</span>
               </button>
               <textarea id="grokReportInput" rows="2" placeholder="Grok'tan alinan 3 musteri kartini buraya yapistirin..." style="font-family: inherit; font-size: 11px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; resize: vertical;"></textarea>
-              <button id="btnImportGrok" class="btn btn-primary" onclick="importGrokReport()" style="padding: 6px 10px; font-size: 11px; font-weight: 600;">
-                Grok Raporunu Kitleye Ekle
-              </button>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                <button id="btnImportGrok" class="btn btn-primary" onclick="importGrokReport()" style="padding: 6px 10px; font-size: 11px; font-weight: 600; flex: 1;">
+                  Grok Raporunu Kitleye Ekle
+                </button>
+                <button id="btnLoadGrokSynthetic" class="btn" onclick="loadGrokSyntheticSample()" style="padding: 6px 10px; font-size: 11px; font-weight: 600;">
+                  Örnek Araştırma Ekle
+                </button>
+              </div>
             </div>
           </div>
 
@@ -1499,26 +1570,26 @@ Talk is cheap show me the code prensibi.</textarea>
         <div class="demographics-row">
           <div class="metric-card">
             <div class="metric-title">Incelenen Segment</div>
-            <div class="metric-val" id="tdHandle">@devstudio</div>
-            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;" id="tdPopulation">engaged-audience</div>
+            <div class="metric-val" id="tdHandle">—</div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;" id="tdPopulation">—</div>
           </div>
           <div class="metric-card">
             <div class="metric-title">Cinsiyet Dagilimi</div>
-            <div class="metric-val" id="tdGender">78% Erkek / 22% Kadin</div>
+            <div class="metric-val" id="tdGender">—</div>
             <div class="bar-track">
-              <div id="barGenderMale" class="bar-fill-a" style="width: 78%;"></div>
-              <div id="barGenderFemale" class="bar-fill-b" style="width: 22%;"></div>
+              <div id="barGenderMale" class="bar-fill-a" style="width: 0%;"></div>
+              <div id="barGenderFemale" class="bar-fill-b" style="width: 0%;"></div>
             </div>
           </div>
           <div class="metric-card">
             <div class="metric-title">Agirlikli Yas Grubu</div>
-            <div class="metric-val" id="tdAge">25-34 Yas (%54)</div>
-            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;" id="tdCities">Istanbul, Ankara, Izmir</div>
+            <div class="metric-val" id="tdAge">—</div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;" id="tdCities">—</div>
           </div>
           <div class="metric-card">
             <div class="metric-title">Analiz Edilen Olay & Gonderi</div>
-            <div class="metric-val" id="tdPosts">12 veri noktasi</div>
-            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Web pixel ve icerik sinyalleri</div>
+            <div class="metric-val" id="tdPosts">—</div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Web pixel, icerik ve arastirma metrikleri</div>
           </div>
         </div>
 
@@ -1643,6 +1714,7 @@ Talk is cheap show me the code prensibi.</textarea>
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             reportText,
+            dataset: activeDataset || undefined,
             engine: document.getElementById('engineSelector').value
           })
         });
@@ -1659,6 +1731,146 @@ Talk is cheap show me the code prensibi.</textarea>
           btn.disabled = false;
         }
       }
+    }
+
+    async function loadGrokSyntheticSample() {
+      const btn = document.getElementById('btnLoadGrokSynthetic');
+      const origText = btn ? btn.innerText : '';
+      if (btn) {
+        btn.innerText = 'Ekleniyor...';
+        btn.disabled = true;
+      }
+      try {
+        const scenarioId = document.getElementById('demoScenarioSelect')?.value || 'software-builders';
+        const seed = document.getElementById('demoSeedInput')?.value.trim() || undefined;
+        const res = await fetch('/api/grok/synthetic/load', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            dataset: activeDataset || undefined,
+            scenarioId,
+            seed
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Grok örneği yüklenemedi.');
+        activeDataset = data.dataset;
+        if (data.reportText) {
+          const grokInput = document.getElementById('grokReportInput');
+          if (grokInput) grokInput.value = data.reportText;
+        }
+        renderAudienceSummary(data.summary, data.panel);
+        showToast('Sentetik Grok araştırma örneği kitleye eklendi.', 'success');
+      } catch (err) {
+        showToast('Grok Örnek Hatası: ' + err.message, 'error');
+      } finally {
+        if (btn) {
+          btn.innerText = origText;
+          btn.disabled = false;
+        }
+      }
+    }
+
+    async function loadSocialSyntheticSample() {
+      const btn = document.getElementById('btnLoadSocialSynthetic');
+      const origText = btn ? btn.innerText : '';
+      if (btn) {
+        btn.innerText = 'Ekleniyor...';
+        btn.disabled = true;
+      }
+      try {
+        const platform = document.getElementById('metaPlatform')?.value || 'facebook';
+        const scenarioId = document.getElementById('demoScenarioSelect')?.value || 'software-builders';
+        const seed = document.getElementById('demoSeedInput')?.value.trim() || undefined;
+        const res = await fetch('/api/social/synthetic/load', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            platform,
+            scenarioId,
+            seed,
+            dataset: activeDataset || undefined
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Sosyal veri örneği yüklenemedi.');
+        activeDataset = data.dataset;
+        renderAudienceSummary(data.summary, data.panel);
+        showToast(`Sentetik ${platform === 'instagram' ? 'Instagram' : 'Facebook'} verisi kitleye eklendi.`, 'success');
+      } catch (err) {
+        showToast('Sosyal Veri Hatası: ' + err.message, 'error');
+      } finally {
+        if (btn) {
+          btn.innerText = origText;
+          btn.disabled = false;
+        }
+      }
+    }
+
+    async function loadDemoScenario(kind) {
+      const scenarioId = document.getElementById('demoScenarioSelect')?.value || 'software-builders';
+      const size = document.getElementById('demoSizeSelect')?.value || 'medium';
+      const seedVal = document.getElementById('demoSeedInput')?.value.trim();
+      const seed = seedVal || undefined;
+      const isAll = kind === 'all';
+      const btn = document.getElementById(isAll ? 'btnLoadDemoAll' : 'btnLoadAudienceSynthetic');
+      const origText = btn ? btn.innerText : '';
+      if (btn) {
+        btn.innerText = 'Yükleniyor...';
+        btn.disabled = true;
+      }
+      try {
+        const endpoint = isAll ? '/api/demo/load' : '/api/audience/synthetic/load';
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ scenarioId, size, seed, mode: 'replace' })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Demo yükleme başarısız.');
+        activeDataset = data.dataset;
+        renderAudienceSummary(data.summary, data.panel);
+        
+        if (data.sampleExperiment) {
+          const exp = data.sampleExperiment;
+          if (exp.context) {
+            if (exp.context.objective && document.getElementById('testObjective')) document.getElementById('testObjective').value = exp.context.objective;
+            if (exp.context.surface && document.getElementById('testSurface')) document.getElementById('testSurface').value = exp.context.surface;
+            if (exp.context.task && document.getElementById('testTask')) document.getElementById('testTask').value = exp.context.task;
+            if (exp.context.changedElement && document.getElementById('testedVariable')) document.getElementById('testedVariable').value = exp.context.changedElement;
+          }
+          if (exp.variantA) {
+            if (exp.variantA.headline && document.getElementById('artifactTitleA')) document.getElementById('artifactTitleA').value = exp.variantA.headline;
+            if (exp.variantA.body && document.getElementById('artifactContentA')) document.getElementById('artifactContentA').value = exp.variantA.body;
+            if (exp.variantA.callToAction && document.getElementById('artifactCtaA')) document.getElementById('artifactCtaA').value = exp.variantA.callToAction;
+          }
+          if (exp.variantB) {
+            if (exp.variantB.headline && document.getElementById('artifactTitleB')) document.getElementById('artifactTitleB').value = exp.variantB.headline;
+            if (exp.variantB.body && document.getElementById('artifactContentB')) document.getElementById('artifactContentB').value = exp.variantB.body;
+            if (exp.variantB.callToAction && document.getElementById('artifactCtaB')) document.getElementById('artifactCtaB').value = exp.variantB.callToAction;
+          }
+          const taskInput = document.getElementById('testTask');
+          if (taskInput) taskInput.dispatchEvent(new Event('input'));
+        }
+        
+        showToast(`Demo senaryosu başarıyla yüklendi (${data.demo?.scenarioId || scenarioId}). A/B alanları hazırlandı.`, 'success');
+      } catch (err) {
+        showToast('Demo Yükleme Hatası: ' + err.message, 'error');
+      } finally {
+        if (btn) {
+          btn.innerText = origText;
+          btn.disabled = false;
+        }
+      }
+    }
+
+    function exportDemoJson() {
+      const scenarioId = document.getElementById('demoScenarioSelect')?.value || 'software-builders';
+      const size = document.getElementById('demoSizeSelect')?.value || 'medium';
+      const seed = document.getElementById('demoSeedInput')?.value.trim();
+      const params = new URLSearchParams({ scenarioId, size });
+      if (seed) params.set('seed', seed);
+      window.location.href = `/api/demo/export?${params.toString()}`;
     }
 
     function switchAudienceMode(mode) {
@@ -1720,12 +1932,13 @@ Talk is cheap show me the code prensibi.</textarea>
       try {
         const platform = document.getElementById('metaPlatform')?.value || 'facebook';
         const handle = document.getElementById('metaHandle')?.value.trim() || '';
-        const res = await fetch('/api/auth/meta/config?' + new URLSearchParams({ platform, handle }));
+        const endpoint = platform === 'instagram' ? '/api/auth/instagram/config' : '/api/auth/meta/config';
+        const res = await fetch(endpoint + '?' + new URLSearchParams({ platform, handle }));
         const data = await res.json();
-        if (data.oauthUrl) {
+        if (data.configured && data.oauthUrl) {
           window.open(data.oauthUrl, '_blank', 'width=600,height=700');
         } else {
-          showToast('Meta OAuth App ID henüz yapılandırılmadı.', 'error');
+          showToast(data.note || 'OAuth yapılandırılmadı.', 'info');
         }
       } catch (err) {
         showToast('Meta OAuth Hatası: ' + err.message, 'error');
@@ -1734,26 +1947,36 @@ Talk is cheap show me the code prensibi.</textarea>
 
     async function connectMetaTestToken() {
       const btn = document.getElementById('btnConnectTestToken');
-      const originalText = btn.innerText;
-      btn.innerText = 'Token ile Baglaniliyor...';
-      btn.disabled = true;
+      const originalText = btn ? btn.innerText : '';
+      if (btn) {
+        btn.innerText = 'Token ile Baglaniliyor...';
+        btn.disabled = true;
+      }
 
       try {
-        const res = await fetch('/api/auth/meta/connect-test', {
+        const platform = document.getElementById('metaPlatform')?.value || 'facebook';
+        const endpoint = platform === 'instagram' ? '/api/auth/instagram/connect-test' : '/api/auth/meta/connect-test';
+        const res = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ handle: document.getElementById('metaHandle')?.value.trim() || 'connected-account', platform: document.getElementById('metaPlatform')?.value || 'facebook', engine: document.getElementById('engineSelector').value })
+          body: JSON.stringify({
+            handle: document.getElementById('metaHandle')?.value.trim() || 'connected-account',
+            platform,
+            engine: document.getElementById('engineSelector').value
+          })
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Meta token baglantisi basarisiz.');
+        if (!res.ok) throw new Error(data.error || 'Test token bağlantısı başarısız.');
         activeDataset = data.dataset;
         renderAudienceSummary(data.summary, data.panel);
-        showToast('Meta Graph API bağlantısı kuruldu, veriler kitle modeline aktarıldı.', 'success');
+        showToast(`${platform === 'instagram' ? 'Instagram' : 'Facebook'} bağlantısı kuruldu, veriler kitle modeline aktarıldı.`, 'success');
       } catch (err) {
-        showToast('Meta Bağlantı Hatası: ' + err.message, 'error');
+        showToast('Bağlantı Hatası: ' + err.message, 'error');
       } finally {
-        btn.innerText = originalText;
-        btn.disabled = false;
+        if (btn) {
+          btn.innerText = originalText;
+          btn.disabled = false;
+        }
       }
     }
 
@@ -2028,15 +2251,32 @@ Talk is cheap show me the code prensibi.</textarea>
       const btn = document.getElementById('btnCollectPixel');
       if (btn) btn.disabled = true;
       try {
-        const res = await fetch('/api/pixel/synthetic/load', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ count: 120, dataset: getActiveDataset() }) });
+        const scenarioId = document.getElementById('demoScenarioSelect')?.value || 'software-builders';
+        const seed = document.getElementById('demoSeedInput')?.value.trim() || undefined;
+        const res = await fetch('/api/pixel/synthetic/load', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            count: 500,
+            scenario: 'high-intent',
+            scenarioId,
+            seed,
+            dataset: activeDataset || undefined
+          })
+        });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Demo olayları eklenemedi.');
-        if (data.dataset) { activeDataset = data.dataset; renderAudienceSummary(data.summary, data.panel); }
+        if (data.dataset) {
+          activeDataset = data.dataset;
+          renderAudienceSummary(data.summary, data.panel);
+        }
         await refreshPixelStats();
-        showToast(`${data.addedCount} sentetik demo olayı kitle paketine eklendi. Gerçek kullanıcı ölçümü değildir.`, 'success');
-      } catch (err) { showToast(err.message, 'error'); }
-      finally { if (btn) btn.disabled = false; }
+        showToast(`${data.addedCount} sentetik demo olayı kitle paketine eklendi.`, 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      } finally {
+        if (btn) btn.disabled = false;
+      }
     }
 
     function animateValue(obj, start, end, duration, suffix = '') {

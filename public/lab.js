@@ -106,15 +106,24 @@
       else frame.srcdoc='';
     }
   }
-  function renderCards(personas) {
+  function renderCards(personas, analysis) {
     const container=$('personasContainer');container.className='lab-personas';container.replaceChildren();
     if(!personas.length){container.innerHTML='<p class="lab-empty">Kart oluşturacak kitle bağlamı bulunamadı.</p>';return;}
+    const cardsMap = new Map((analysis?.cards || []).map(c => [c.personaId, c]));
     personas.forEach((p,index)=>{
       const card=document.createElement('article');card.className='lab-persona';
+      const anCard = cardsMap.get(p.id);
       const observed=p.observedFacts || [], inferred=p.derivedSignals || [], assumptions=p.assumptions || [];
       const total=observed.length+inferred.length+assumptions.length || 1;
       const section=(title,claims)=>`<strong>${title}</strong><ul>${claims.length?claims.map(c=>`<li>${escape(c.text || c)}</li>`).join(''):'<li>Bu grupta bilgi yok.</li>'}</ul>`;
-      card.innerHTML=`<div class="lab-persona-head"><div class="lab-avatar"><img src="/avatars/persona-${index%6+1}.svg" alt="Kurgusal persona çizimi"><small>Kurgusal temsil</small></div><div><span class="lab-status" data-kind="synthetic-demo">Simülasyon personası ${index+1}</span><h3>${escape(p.title)}</h3><span class="lab-help">${pct((p.weight?.value || 0)*100)} senaryo ağırlığı · nüfus payı değildir</span></div></div><p>${escape(p.summary)}</p><div class="lab-chips">${(p.needs||[]).slice(0,3).map(n=>`<span class="lab-chip">${escape(n)}</span>`).join('')}</div><div class="lab-need"><strong>Öne çıkan ihtiyaç</strong><br>${escape(p.needs?.[0] || 'Belirtilmedi')}</div><div class="lab-objection"><strong>Çekince:</strong> ${escape(p.objections?.[0] || 'Belirtilmedi')}</div><div class="lab-evidence-bar" aria-label="Kart bilgisinin kaynak dağılımı"><span style="width:${observed.length/total*100}%;background:#6895cb"></span><span style="width:${inferred.length/total*100}%;background:#9b8abd"></span><span style="width:${assumptions.length/total*100}%;background:#d6b379"></span></div><div class="lab-legend"><span>${observed.length} kaynak / beyan</span><span>${inferred.length} çıkarım</span><span>${assumptions.length} varsayım</span></div><details><summary>Karar kuralları ve bilgi sınırları</summary>${section('Karar kuralları',(p.decisionRules||[]).map(r=>({text:`${r.condition} → ${r.reason}`})))}${section('Bilinmeyenler',p.unknowns||[])}</details><details><summary>Kaynaklar, çıkarımlar ve varsayımlar</summary>${section('Kaynak / beyan',observed)}${section('Çıkarım',inferred)}${section('Varsayım',assumptions)}<p>Kaynak referansları: ${escape((p.evidenceRefs||[]).join(', ') || 'Yok')}</p></details>`;
+      const weightDisplay = anCard?.scenarioWeightPercent !== undefined
+        ? `%${anCard.scenarioWeightPercent} senaryo ağırlığı`
+        : pct((p.weight?.value || 0)*100) + ' senaryo ağırlığı';
+      const supportBadge = anCard?.support === 'source-context' ? 'Kaynak Verisi Destekli' : 'Kurgusal Senaryo';
+      const recCount = anCard?.audienceRecordCount !== undefined ? ` · ${anCard.audienceRecordCount} kaynak kaydı` : '';
+      const testQ = anCard?.testQuestion ? `<div style="font-size:11px;color:#3b82f6;margin-top:6px;font-style:italic;"><strong>Test sorusu:</strong> ${escape(anCard.testQuestion)}</div>` : '';
+      
+      card.innerHTML=`<div class="lab-persona-head"><div class="lab-avatar"><img src="/avatars/persona-${index%6+1}.svg" alt="Kurgusal persona çizimi"><small>Kurgusal temsil</small></div><div><span class="lab-status" data-kind="synthetic-demo">${supportBadge} · Simülasyon personası ${index+1}</span><h3>${escape(p.title)}</h3><span class="lab-help">${weightDisplay}${recCount} · nüfus payı değildir</span></div></div><p>${escape(p.summary)}</p><div class="lab-chips">${(p.needs||[]).slice(0,3).map(n=>`<span class="lab-chip">${escape(n)}</span>`).join('')}</div><div class="lab-need"><strong>Öne çıkan ihtiyaç</strong><br>${escape(anCard?.need || p.needs?.[0] || 'Belirtilmedi')}</div><div class="lab-objection"><strong>Çekince:</strong> ${escape(anCard?.objections?.[0] || p.objections?.[0] || 'Belirtilmedi')}</div>${testQ}<div class="lab-evidence-bar" aria-label="Kart bilgisinin kaynak dağılımı"><span style="width:${observed.length/total*100}%;background:#6895cb"></span><span style="width:${inferred.length/total*100}%;background:#9b8abd"></span><span style="width:${assumptions.length/total*100}%;background:#d6b379"></span></div><div class="lab-legend"><span>${observed.length} kaynak / beyan</span><span>${inferred.length} çıkarım</span><span>${assumptions.length} varsayım</span></div><details><summary>Karar kuralları ve bilgi sınırları</summary>${section('Karar kuralları',(p.decisionRules||[]).map(r=>({text:`${r.condition} → ${r.reason}`})))}${section('Bilinmeyenler',p.unknowns||[])}</details><details><summary>Kaynaklar, çıkarımlar ve varsayımlar</summary>${section('Kaynak / beyan',observed)}${section('Çıkarım',inferred)}${section('Varsayım',assumptions)}<p>Kaynak referansları: ${escape((p.evidenceRefs||[]).join(', ') || 'Yok')}</p></details>`;
       container.appendChild(card);
     });
   }
@@ -122,21 +131,33 @@
     state.dataset=dataset;state.personas=panel?.personas || [];changed();
     $('audienceSummarySection').style.display='block';
     const kind=summary.provenance?.kind || (dataset?.synthetic?'synthetic-demo':'declared-research');
-    const provenance={ 'synthetic-demo':'Sentetik demo verisi', 'declared-research':'Kullanıcı / model beyanı', 'source-data':'Kaynak verisi · eksikler bilinmiyor' }[kind];
-    $('activeDatasetLabel').textContent=provenance;$('tdHandle').textContent=summary.handle;$('tdPopulation').textContent=summary.population;
-    const gender=summary.demographics.gender;
-    $('tdGender').textContent=`Erkek: ${pct(gender.male)} / Kadın: ${pct(gender.female)}`;
-    $('barGenderMale').style.width=`${gender.male ?? 0}%`;$('barGenderFemale').style.width=`${gender.female ?? 0}%`;
-    $('tdAge').textContent=summary.demographics.topAgeGroup || 'Bilinmiyor';
-    $('tdCities').textContent=summary.demographics.topCities.length?summary.demographics.topCities.map(c=>`${c.city} (${pct(c.percentage)})`).join(', '):'Bilinmiyor';
-    $('tdPosts').textContent=`${summary.recentPosts?.length || 0} içerik · toplam kitle ${summary.totalAudience ?? 'bilinmiyor'}`;
+    const provenance={ 'synthetic-demo':'Sentetik demo verisi', 'declared-research':'Kullanıcı / model beyanı', 'source-data':'Kaynak verisi · eksikler bilinmiyor' }[kind] || 'Kitle verisi';
+    $('activeDatasetLabel').textContent=provenance;$('tdHandle').textContent=summary.handle || 'Genel Kitle';$('tdPopulation').textContent=summary.population || 'engaged-audience';
+    const gender=summary.demographics?.gender;
+    if (!gender || (gender.male === null && gender.female === null)) {
+      $('tdGender').textContent='Bilinmiyor';
+      $('barGenderMale').style.width='0%';
+      $('barGenderFemale').style.width='0%';
+    } else {
+      $('tdGender').textContent=`Erkek: ${pct(gender.male)} / Kadın: ${pct(gender.female)}`;
+      $('barGenderMale').style.width=`${gender.male ?? 0}%`;$('barGenderFemale').style.width=`${gender.female ?? 0}%`;
+    }
+    $('tdAge').textContent=summary.demographics?.topAgeGroup || 'Bilinmiyor';
+    $('tdCities').textContent=(summary.demographics?.topCities && summary.demographics.topCities.length)?summary.demographics.topCities.map(c=>`${c.city} (${pct(c.percentage)})`).join(', '):'Bilinmiyor';
+    const metrics=summary.metrics || {};
+    const contentCount=metrics.contentCount ?? summary.recentPosts?.length ?? 0;
+    const eventCount=metrics.eventCount ?? 0;
+    const researchCount=metrics.researchCount ?? 0;
+    const totalAudience=summary.totalAudience !== null && summary.totalAudience !== undefined ? summary.totalAudience.toLocaleString('tr-TR') : 'Bilinmiyor';
+    $('tdPosts').textContent=`${contentCount} içerik · ${eventCount} olay · ${researchCount} araştırma (Kitle: ${totalAudience})`;
     let note=$('sourceProvenance');if(!note){note=document.createElement('p');note.id='sourceProvenance';note.className='lab-source-note';$('personasContainer').before(note);}
     note.textContent=`${provenance}. ${(summary.provenance?.notices||[]).join(' ')}`;
-    renderCards(state.personas);updateControls();
+    renderCards(state.personas, panel?.analysis || dataset?.analysis);updateControls();
   }
   function renderResults(result) {
     const agg=result.aggregate,votes=result.summary.votes;
-    $('resWinnerTitle').textContent=labels[result.summary.decision] || 'Karar üretilemedi';
+    const an=result.analysis;
+    $('resWinnerTitle').textContent=labels[result.summary.decision] || an?.headline || 'Karar üretilemedi';
     $('resEngine').textContent=result.evaluationMode==='local-rules'?'Yerel kurallar · model kullanılmadı':`Model değerlendirmesi · istenen: ${result.model}`;
     $('resProvenance').textContent=`Veri: ${result.provenance.datasetSynthetic?'sentetik demo':'kaynak / beyan paketi'} · Panel: sentetik · Eşit senaryo ağırlıkları. Görev: ${result.context?.task || 'Belirtilmedi'}`;
     $('resTiming').textContent=`${result.panelSize} kimlik · ${result.repeats} tekrar · ${agg.completion.validTasks}/${agg.completion.expectedTasks} geçerli görev · ${(result.timing.totalMs/1000).toFixed(1)} sn`;
@@ -144,10 +165,37 @@
     $('resVotes').textContent=`A ${pct(votes.a)} · B ${pct(votes.b)} · Beraberlik ${pct(votes.tie)} · İkisi de değil ${pct(votes.neither)} · Bağlam yetersiz ${pct(votes.insufficientContext)} · Eksik ${pct(votes.missing)}`;
     const claims=[...new Set((result.creativeIssues||[]).flatMap(i=>i.unsupportedClaims))];
     $('resDiagnostics').textContent=[...agg.warnings.map(w=>warningLabels[w]||w),...claims.map(c=>`İşaretlenen iddia: ${c}`)].join(' ');
-    $('resultCriteria').innerHTML=Object.entries(result.criterionComparison).map(([key,value])=>`<div class="lab-criterion"><span>${escape(criterionLabels[key]||key)}</span><span>A: ${value.a ?? '—'} / 4</span><span>B: ${value.b ?? '—'} / 4</span></div>`).join('');
+    
+    let headlineEl=$('resAnalysisHeadline');
+    if(!headlineEl){headlineEl=document.createElement('div');headlineEl.id='resAnalysisHeadline';$('resWinnerTitle').after(headlineEl);}
+    if(an?.headline){
+      const gapBadge=an.preferenceGapPoints !== null && an.preferenceGapPoints !== undefined ? `<span class="lab-status" style="margin-left:8px;font-weight:600;background:#eff6ff;color:#2563eb;border-color:#bfdbfe;">B vs A: ${an.preferenceGapPoints > 0 ? '+' : ''}${an.preferenceGapPoints} puan fark (Dönüşüm artışı değildir)</span>` : '';
+      headlineEl.innerHTML=`<p style="font-size:14px;font-weight:600;color:var(--text-main);margin:4px 0 10px;">${escape(an.headline)}${gapBadge}</p>`;
+    } else {headlineEl.innerHTML='';}
+
+    if(an?.criteria && an.criteria.length){
+      $('resultCriteria').innerHTML=an.criteria.map(c=>{
+        const deltaStr=c.delta !== null ? (c.delta > 0 ? `+${c.delta}` : `${c.delta}`) : '—';
+        const advClass=c.advantage === 'b' ? 'color:#15803d;font-weight:700;' : c.advantage === 'a' ? 'color:#1d4ed8;font-weight:700;' : 'color:#64748b;';
+        return `<div class="lab-criterion"><span>${escape(c.label || criterionLabels[c.criterion] || c.criterion)}</span><span>A: ${c.a ?? '—'} / 4</span><span>B: ${c.b ?? '—'} / 4</span><span style="${advClass}">Fark (B-A): ${deltaStr}</span></div>`;
+      }).join('');
+    } else {
+      $('resultCriteria').innerHTML=Object.entries(result.criterionComparison).map(([key,value])=>`<div class="lab-criterion"><span>${escape(criterionLabels[key]||key)}</span><span>A: ${value.a ?? '—'} / 4</span><span>B: ${value.b ?? '—'} / 4</span></div>`).join('');
+    }
+
+    let extraEl=$('resExtraAnalysis');
+    if(!extraEl){extraEl=document.createElement('div');extraEl.id='resExtraAnalysis';extraEl.style.marginTop='16px';$('resultCriteria').after(extraEl);}
+    const driversHtml=(an?.drivers && an.drivers.length)?`<div style="margin-bottom:14px;"><strong style="font-size:12px;color:var(--text-main);">Öne Çıkan Karar Belirleyicileri (Drivers):</strong><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">${an.drivers.map(d=>`<span class="lab-chip" style="font-weight:600;border:1px solid #bfdbfe;background:#f0f7ff;color:#1e40af;">${escape(d.label)} · ${d.advantage === 'b' ? 'B Avantajı' : d.advantage === 'a' ? 'A Avantajı' : 'Beraberlik'} (${d.delta > 0 ? '+' : ''}${d.delta})</span>`).join('')}</div></div>`:'';
+    const nextEditsHtml=(an?.nextEdits && an.nextEdits.length)?`<div style="margin-bottom:14px;background:#f8fafc;padding:12px 14px;border:1px solid #e2e8f0;border-radius:8px;"><strong style="font-size:12px;color:var(--text-main);">Önerilen Sonraki Düzenlemeler:</strong><ul style="margin:6px 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.6;">${an.nextEdits.map(e=>`<li><strong>${escape(e.title)}:</strong> ${escape(e.instruction)} <span style="color:#64748b;">(${escape(e.reason)})</span></li>`).join('')}</ul></div>`:'';
+    const questionsHtml=(an?.unansweredQuestions && an.unansweredQuestions.length)?`<div style="margin-bottom:14px;background:#fffbf0;padding:12px 14px;border:1px solid #fed7aa;border-radius:8px;"><strong style="font-size:12px;color:#9a3412;">Kitle Tarafından Sorulan Cevapsız Sorular:</strong><ul style="margin:6px 0 0;padding-left:18px;font-size:12px;color:#7c2d12;line-height:1.6;">${an.unansweredQuestions.map(q=>`<li>${escape(q.question)} <span style="font-size:10px;color:#9a3412;">(${q.occurrences} tekrar · ${q.personaIds.length} persona)</span></li>`).join('')}</ul></div>`:'';
+    extraEl.innerHTML=driversHtml+nextEditsHtml+questionsHtml;
+
     $('resultsSegmentsContainer').innerHTML=result.segmentBreakdown.map((segment,index)=>{
       const persona=agg.personas[index];
-      return `<article class="lab-segment"><h3>${escape(segment.personaTitle)}</h3><span class="lab-status">${escape(({a:'A tercihi',b:'B tercihi',mixed:'Bölünmüş',tie:'Beraberlik',neither:'İkisi de değil','insufficient-data':'Bilgi yetersiz','invalid-creative':'Desteksiz iddia'})[segment.winner])}</span><div class="lab-score-line">A <meter min="0" max="100" value="${persona?.scoreA || 0}"></meter><span>${persona?.scoreA ?? '—'}</span></div><div class="lab-score-line">B <meter min="0" max="100" value="${persona?.scoreB || 0}"></meter><span>${persona?.scoreB ?? '—'}</span></div><p>${escape(segment.pairExplanation)}</p><details><summary class="lab-help">A / B örnek gerekçeleri</summary><p>A: ${escape(segment.reasonA)}</p><p>B: ${escape(segment.reasonB)}</p></details></article>`;
+      const anSegment=an?.segments?.find(s=>s.personaId === persona?.personaId || s.title === segment.personaTitle);
+      const consensusBadge = anSegment?.consensus ? `<span class="lab-status" style="font-size:10px;margin-left:6px;">${escape(({unanimous:'Oybirliği',majority:'Çoğunluk',divided:'Bölünmüş',missing:'Eksik'})[anSegment.consensus] || anSegment.consensus)}</span>` : '';
+      const repReason = anSegment?.representativeReason ? `<p style="font-size:11px;color:#1e3a8a;margin-top:6px;background:#eff6ff;padding:6px 8px;border-radius:4px;"><strong>Temsili Gerekçe:</strong> ${escape(anSegment.representativeReason.explanation)}</p>` : '';
+      return `<article class="lab-segment"><h3>${escape(segment.personaTitle)}${consensusBadge}</h3><span class="lab-status">${escape(({a:'A tercihi',b:'B tercihi',mixed:'Bölünmüş',tie:'Beraberlik',neither:'İkisi de değil','insufficient-data':'Bilgi yetersiz','invalid-creative':'Desteksiz iddia'})[segment.winner])}</span><div class="lab-score-line">A <meter min="0" max="100" value="${persona?.scoreA || 0}"></meter><span>${persona?.scoreA ?? '—'}</span></div><div class="lab-score-line">B <meter min="0" max="100" value="${persona?.scoreB || 0}"></meter><span>${persona?.scoreB ?? '—'}</span></div><p>${escape(segment.pairExplanation)}</p>${repReason}<details><summary class="lab-help">A / B örnek gerekçeleri</summary><p>A: ${escape(segment.reasonA)}</p><p>B: ${escape(segment.reasonB)}</p></details></article>`;
     }).join('');
     $('resultsArea').classList.remove('lab-hidden');$('resultsArea').scrollIntoView({behavior:'smooth',block:'start'});
   }

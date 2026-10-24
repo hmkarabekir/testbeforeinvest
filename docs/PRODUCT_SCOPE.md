@@ -2,17 +2,21 @@
 
 Kullanıcı yönlendirmesi: 2026-10-24.
 
+Güncel backend bağlantısı: [UI API sözleşmesi](UI_API_CONTRACT.md). UI ayrı ajan tarafından geliştirilir; mevcut XGBoost modeli, kartlar ve skorlar korunur.
+
 ## Ürün
 
 OctopIQ, farklı A/B adaylarını hedef kitle senaryolarına göre değerlendiren bir hackathon MVP'sidir. Story ve reklam başlığı örnek kullanım senaryolarıdır. Kapsam; web sayfası, mobil uygulama ekranı, kayıt/ödeme akışı, HTML, görsel, teklif ve metin gibi karşılaştırılabilir deneyimleri içerir.
 
 Temel test girdileri: kullanıcının yapmak istediği görev, değerlendirme hedefi, kitle bağlamı, A materyali, B materyali ve değişen öğeler. Birden fazla öğe değişirse sonuç bütün konseptin tercihini anlatır; tek öğenin etkisini izole ettiği iddia edilmez.
 
-Öncelikli MVP akışı kullanıcının A ve B'yi sağlamasıdır. Alternatif üretme ayrı ve isteğe bağlı bir yardımcı yetenektir. Mevcut `A'dan B türet` uygulaması metin üretir; görsel düzenleme veya genel web/mobil arayüz üretimi yaptığı söylenmemelidir.
+Öncelikli MVP akışı kullanıcının A ve B'yi sağlamasıdır. Alternatif üretme ayrı ve isteğe bağlı bir yardımcı yetenektir. Mevcut `A'dan B türet` uygulaması metin ve düzenlenebilir HTML alternatifi üretir; görsel düzenleme veya çalışır bir uygulama üretimi yaptığı söylenmemelidir.
 
-Gerçek ekran görüntüsü aktarımı henüz Luna değerlendirme yoluna bağlı değildir. HTML kodu metin olarak iletilebilir; render edilmiş görünümün değerlendirilmesi ayrı ekran görüntüsü girdisi gerektirir. Mevcut reklam rubriğinin görev ve materyale göre uyarlanması da planlanan iştir.
+PNG/JPEG/WebP ekran görüntüleri Luna CLI yoluna bağlandı; taşıma ve sıra eşleme testleri taklit CLI süreçleriyle geçti. Bu son değişiklikler için canlı Luna çağrısı yapılmadı. HTML kaynak olarak değerlendirilir; render edilmiş görünüm için ekran görüntüsü gerekir. Görev, yüzey, hedef ve değişen öğe altı kriterli değerlendirmeye aktarılır. Analiz; segmentler, kriter farkları, sorular, dayanaklar ve sonraki düzenlemeleri ek model çağrısı olmadan üretir.
 
-## Facebook / Meta kod incelemesi
+## Facebook / Meta ilk inceleme kaydı
+
+Aşağıdaki tablo düzeltmelerden **önceki** uygulamanın tarihsel incelemesidir. Güncel uygulama; eksik demografiyi boş bırakır, OAuth/Graph hatasında sentetik başarıya dönmez, Facebook Page ve bağlı profesyonel Instagram hesabını ayırır. Bu yollar kontrollü HTTP/Graph fixture'larıyla sınandı; canlı Meta hesabı doğrulaması yapılmadı. XGBoost'un mevcut demo varsayılanları ise kullanıcı isteğiyle korunur ve `featureReport` içinde işaretlenir; bunlar sosyal kaynak özeti değildir.
 
 İncelenen yol: `src/core/social-ingestion.ts` içindeki `fetchLiveMetaGraph` ve `buildSummary`. Bu inceleme canlı hesaptan alınan bir Meta yanıtını doğrulamaz.
 
@@ -36,4 +40,4 @@ OAuth akışındaki v25 ile veri çekme yolundaki v19 farklıdır. Facebook Page
 - **X:** Doğrudan API bağlantısını yeniden eklemek yerine kopyalanabilir Grok araştırma promptu ve kullanıcının geri getirdiği rapor planlanır. Kaynaklı açık içerik gözlemleri, kitle hipotezleri ve bilinmeyen demografi ayrı tutulur.
 - **Pixel:** Mekanizma kalabilir. Hackathon demosunda sentetik davranış olayları kullanılabilir ve demo olarak etiketlenir. Bu olaylar gerçek kullanıcı davranışı veya tahmin başarısı kanıtı sayılmaz.
 
-[Grok promptu](GROK_AUDIENCE_PROMPT_TR.md) kullanıcıya verilebilecek somut bir başlangıçtır. Bu turda otomatik Grok rapor içe aktarıcısı, yeni Instagram bağlantısı veya görsel aktarım özelliği uygulanmadı.
+[Grok promptu](GROK_AUDIENCE_PROMPT_TR.md) ve rapor içe aktarıcısı mevcuttur. Güncel uygulamanın payload ve çıktı alanları için [UI sözleşmesini](UI_API_CONTRACT.md) kullanın.

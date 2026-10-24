@@ -19,6 +19,13 @@ export type FeatureReport = {
   assumedFeatures: number;
   datasetSynthetic: boolean;
 };
+function observationPercent(dataset: AudienceDatasetV1, row: AudienceDatasetV1['observations'][number] | undefined): number | null {
+  if (!row || row.status !== 'observed' || row.value === null) return null;
+  if (row.unit === 'percent') return row.value;
+  const denominator = dataset.observations.find(o => o.id === row.denominatorRef && o.sourceRef === row.sourceRef
+    && o.status === 'observed' && o.unit === 'count' && o.value !== null && o.value > 0);
+  return denominator && row.value <= denominator.value! ? row.value / denominator.value! * 100 : null;
+}
 
 export type XgBoostReceipt = {
   contract: string;
@@ -59,6 +66,7 @@ export type PersonaPrediction = {
     recommendedWeight: number;
   }>;
   featuresUsed: Record<string, number>;
+  scenarioWeights?: Array<{ index: number; label: string; weight: number }>;
   model?: { artifactHash: string; engine: string; latencyMs: number };
   provenance?: { trainingData: 'synthetic'; scoreMeaning: 'model-class-probability'; populationShare: false; calibratedBehavior: false };
   featureReport?: FeatureReport;
@@ -126,7 +134,11 @@ export class XgBoostPersonaService {
     const sorted = [...scores].sort((a, b) => b.probability - a.probability);
     if (result.dominantIndex !== sorted[0].index || result.dominantPersona !== sorted[0].label) throw new PersonaModelError('ML_OUTPUT_INVALID', 502);
     const margin = sorted[0].probability - sorted[1].probability;
+    const weightTotal = scores.reduce((sum, s) => sum + Math.max(0.05, s.probability), 0);
+    const weights = scores.map(s => Math.round(Math.max(0.05, s.probability) / weightTotal * 10_000) / 10_000);
+    weights[weights.length - 1] = Math.round((1 - weights.slice(0, -1).reduce((sum, w) => sum + w, 0)) * 10_000) / 10_000;
     return { ...result,
+      scenarioWeights: scores.map((s, i) => ({ index:s.index, label:s.label, weight:weights[i] })),
       model: { artifactHash: receipt.artifact.sha256, engine: receipt.engine, latencyMs: Math.max(1, Math.round(performance.now() - start)) },
       provenance: { trainingData: 'synthetic', scoreMeaning: 'model-class-probability', populationShare: false, calibratedBehavior: false },
       diagnostics: { entropy: Math.round(-scores.reduce((sum, s) => sum + (s.probability ? s.probability * Math.log(s.probability) : 0), 0) / Math.log(6) * 1000) / 1000,
@@ -187,8 +199,11 @@ export class XgBoostPersonaService {
     const categories = ['software', 'creator', 'coffee', 'furniture', 'personal-brand', 'other'];
     const catIdx = Math.max(0, categories.indexOf(dataset.brand.category || 'other'));
 
-    const igMaleObs = dataset.observations.find((o) => o.dimensions.gender === 'M')?.value ?? 60;
-    const igAgeObs = dataset.observations.find((o) => o.dimensions.age === '25-34')?.value ?? 50;
+    const igMaleObs = observationPercent(dataset, dataset.observations.find((o) => o.dimensions.gender === 'M')) ?? 60;
+    const igAgeObs = observationPercent(dataset, dataset.observations.find((o) => o.dimensions.age === '25-34')) ?? 50;
+    const metaSources = new Set(dataset.sources.filter(s => ['facebook','instagram'].includes(s.platform)).map(s => s.id));
+    const followers = dataset.observations.find(o => metaSources.has(o.sourceRef) && o.status === 'observed'
+      && o.metric === 'followers_count' && o.unit === 'count' && o.value !== null);
 
     const allText = [
       dataset.brand.description,
@@ -204,14 +219,14 @@ export class XgBoostPersonaService {
     const techDensity = Math.min(1.0, techHits / 4.0);
 
     const pixelEventsCount = (dataset.events || []).length;
-    const pixelCtaCount = (dataset.events || []).filter((e) => e.name === 'pricing_view' || e.name === 'trial_requested').length;
+    const pixelCtaCount = (dataset.events || []).filter((e) => ['pricing_view','trial_requested','cta_click'].includes(e.name)).length;
     const pixelCtaRatio = pixelEventsCount > 0 ? pixelCtaCount / pixelEventsCount : 0.05;
 
     const hasProof = (dataset.products?.[0]?.facts || []).length >= 2 ? 1 : 0;
     const hasCodeSnippet = allText.includes('talk is cheap') || allText.includes('terminal') || allText.includes('code') ? 1 : 0;
 
     return {
-      ig_followers_log: 4.3,
+      ig_followers_log: followers ? Math.log10(Math.max(10, followers.value!)) : 4.3,
       ig_engagement_rate: 0.045,
       ig_male_ratio: igMaleObs / 100.0,
       ig_top_age_idx: igAgeObs > 40 ? 1.0 : 0.0,
@@ -241,8 +256,13 @@ export class XgBoostPersonaService {
     };
     const male = dataset.observations.find(o => o.dimensions.gender === 'M');
     const age = dataset.observations.find(o => o.dimensions.age === '25-34');
-    if (male?.value !== null && male?.value !== undefined) refs.ig_male_ratio = { basis:'computed', refs:[`observation:${male.id}`] };
-    if (age?.value !== null && age?.value !== undefined) refs.ig_top_age_idx = { basis:'computed', refs:[`observation:${age.id}`] };
+    const evidence = (row: NonNullable<typeof male>) => [`observation:${row.id}`, ...(row.unit === 'count' && row.denominatorRef ? [`observation:${row.denominatorRef}`] : [])];
+    if (male && observationPercent(dataset, male) !== null) refs.ig_male_ratio = { basis:'computed', refs:evidence(male) };
+    if (age && observationPercent(dataset, age) !== null) refs.ig_top_age_idx = { basis:'computed', refs:evidence(age) };
+    const metaSources = new Set(dataset.sources.filter(s => ['facebook','instagram'].includes(s.platform)).map(s => s.id));
+    const followers = dataset.observations.find(o => metaSources.has(o.sourceRef) && o.status === 'observed'
+      && o.metric === 'followers_count' && o.unit === 'count' && o.value !== null);
+    if (followers) refs.ig_followers_log = { basis:'computed', refs:[`observation:${followers.id}`] };
     refs.pixel_events_log = { basis:'computed', refs:dataset.events.slice(0, 12).map(e => `event:${e.id}`) };
     if (dataset.events.length) refs.pixel_cta_ratio = { basis:'computed', refs:dataset.events.slice(0, 12).map(e => `event:${e.id}`) };
     const features = ML_FEATURE_NAMES.map(name => ({ name, value:values[name], basis:refs[name]?.basis || 'assumed' as const, evidenceRefs:refs[name]?.refs || [] }));

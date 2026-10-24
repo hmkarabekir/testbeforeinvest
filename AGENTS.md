@@ -32,6 +32,8 @@ simulation methodology, audience ingestion, result interpretation, or product cl
 ## Local verification
 
 - Do not run real Luna inference or live demos unless the user explicitly asks again. The user requested token-free verification; use local rules and mocked providers.
+- Latest ownership: the external agent handles UI; this agent handles backend, analysis, and ML. Preserve the existing XGBoost model, scores, defaults, and card capabilities. The user explicitly asked not to remove them. Prioritize a polished hackathon demo; do not expand this into a research/calibration project.
+- The additive backend handoff is [UI API contract](docs/UI_API_CONTRACT.md). No extra model calls are required for the new analysis summaries.
 - Persona card design should follow the Merts customer group/catalog cards and fictional avatar artwork under `merts/nextjs/src/components/customers`.
 - Build: `npm run build`
 - Tests: `npm test -- --runInBand`

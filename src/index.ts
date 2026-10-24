@@ -13,6 +13,7 @@ export * from './core/evaluation-contract.js';
 export * from './core/evaluation-aggregate.js';
 export * from './core/experiment-analysis.js';
 export * from './core/audience-analysis.js';
+export * from './core/demo-data.js';
 export * from './ml/xgboost-bridge.js';
 export * from './inference/index.js';
 export * from './orchestrator.js';
