@@ -21,49 +21,49 @@ const THEMES: Record<AudienceDatasetV1['brand']['category'], Theme[]> = {
   furniture: [
     {
       key: 'dimensions',
-      title: 'Ölçüsünü netleştiren',
+      title: 'Küçük Alan Mimarı',
       terms: ['ölçü', 'sığ', 'küçük alan', 'boyut', 'dimensions'],
       need: 'Ürünün kullanım alanına uygun ölçülerini açıkça görmek',
       objection: 'Ölçüler ve yerleşim açıklanmadan uygunluğuna karar veremem.',
     },
     {
       key: 'material',
-      title: 'Malzeme kanıtı arayan',
+      title: 'Masif Ahşap Tutkunu',
       terms: ['malzeme', 'ahşap', 'kumaş', 'dayan', 'material'],
       need: 'Malzeme ve bakım bilgisini somut ürün özellikleriyle karşılaştırmak',
       objection: 'Genel kalite sözü yerine malzeme ve bakım ayrıntısı isterim.',
     },
     {
       key: 'delivery',
-      title: 'Teslimatı planlayan',
+      title: 'Hızlı Teslimatçı',
       terms: ['teslim', 'kurulum', 'kargo', 'delivery'],
       need: 'Teslimat ve kurulum koşullarının açıklığını değerlendirmek',
       objection: 'Teslimat koşulu belirsizse önce soru sorarım.',
     },
     {
       key: 'design',
-      title: 'Yaşam alanı uyumunu arayan',
+      title: 'Tasarım Tutkunu',
       terms: ['tasarım', 'renk', 'uyum', 'dekor', 'design'],
       need: 'Ürünün mekânda ve diğer eşyalarla nasıl kullanılacağını görmek',
       objection: 'Güzel görünmesi kullanım alanıma uyduğunu göstermiyor.',
     },
     {
       key: 'value',
-      title: 'Toplam bedeli karşılaştıran',
+      title: 'Maliyet Odaklı',
       terms: ['fiyat', 'bedel', 'maliyet', 'ödeme', 'value'],
       need: 'Ürün ve sunulan hizmetin bedelini açıkça karşılaştırmak',
       objection: 'Ek kalemleri bilmeden ucuz veya avantajlı diyemem.',
     },
     {
       key: 'care',
-      title: 'Bakım kolaylığını araştıran',
+      title: 'Pratik Kullanıcı',
       terms: ['bakım', 'temiz', 'sil', 'care'],
       need: 'Gündelik kullanım ve bakım gereksinimini anlamak',
       objection: 'Bakım yöntemi açıklanmadan kolay kullanım vaadine güvenmem.',
     },
     {
       key: 'modular',
-      title: 'Esnek yerleşim isteyen',
+      title: 'Modüler Yaşam Mimarı',
       terms: ['modüler', 'katlan', 'esnek', 'modular'],
       need: 'Yerleşim ve kullanım seçeneklerini görmek',
       objection:
@@ -71,7 +71,7 @@ const THEMES: Record<AudienceDatasetV1['brand']['category'], Theme[]> = {
     },
     {
       key: 'business',
-      title: 'İş yeri kullanımını değerlendiren',
+      title: 'Ofis Tasarımcısı',
       terms: ['ofis', 'iş yeri', 'proje', 'business'],
       need: 'Birden çok kullanım ve proje koşullarına uygun bilgi görmek',
       objection:
@@ -81,14 +81,14 @@ const THEMES: Record<AudienceDatasetV1['brand']['category'], Theme[]> = {
   coffee: [
     {
       key: 'grind',
-      title: 'Öğütüm seçimini netleştiren',
+      title: 'Demleme Meraklısı',
       terms: ['öğüt', 'ekipman', 'filtre', 'grind'],
       need: 'Kullanılan hazırlama yöntemine uygun öğütümü seçmek',
       objection: 'Hangi ekipmana uygun olduğu açıklanmadan seçemem.',
     },
     {
       key: 'taste',
-      title: 'Tat profilini keşfeden',
+      title: 'Tat Kaşifi',
       terms: ['tat', 'aroma', 'nota', 'çikolata', 'taste'],
       need: 'Tat profilini anlaşılır bir kullanım örneğiyle görmek',
       objection:
@@ -96,35 +96,35 @@ const THEMES: Record<AudienceDatasetV1['brand']['category'], Theme[]> = {
     },
     {
       key: 'origin',
-      title: 'Köken bilgisini inceleyen',
+      title: 'Gurme Kahveci',
       terms: ['köken', 'bölge', 'çekirdek', 'çiftlik', 'origin'],
       need: 'Çekirdek kökeni ve ürünün somut hikâyesini anlamak',
       objection: 'Kaynağı belli olmayan özel üretim iddiasını kontrol ederim.',
     },
     {
       key: 'brewing',
-      title: 'Pratik hazırlama isteyen',
+      title: 'Pratik Kahveci',
       terms: ['hazırla', 'demle', 'tarif', 'pratik', 'brewing'],
       need: 'Hazırlama adımlarını ve gereken ekipmanı açıkça görmek',
       objection: 'Kolay deniyor ama nasıl hazırlanacağı açıklanmıyor.',
     },
     {
       key: 'freshness',
-      title: 'Tazelik bilgisini arayan',
+      title: 'Tazelik Takipçisi',
       terms: ['taze', 'kavur', 'sakla', 'freshness'],
       need: 'Kavurma ve saklama bilgilerinin açıklığını değerlendirmek',
       objection: 'Tazelik sözü ölçülebilir ürün bilgisi olmadan yeterli değil.',
     },
     {
       key: 'subscription',
-      title: 'Düzenli siparişi planlayan',
+      title: 'Abonelik Alıcısı',
       terms: ['abon', 'düzenli', 'yenile', 'subscription'],
       need: 'Düzenli sipariş koşullarını ve değiştirme seçeneklerini anlamak',
       objection: 'Aboneliğin sıklığı ve koşulları belirsizse önce incelerim.',
     },
     {
       key: 'value',
-      title: 'Paket bedelini karşılaştıran',
+      title: 'Fiyat Karşılaştıran',
       terms: ['fiyat', 'paket', 'gram', 'bedel', 'value'],
       need: 'Paket içeriğini ve bedelini somut karşılaştırmak',
       objection:
@@ -132,7 +132,7 @@ const THEMES: Record<AudienceDatasetV1['brand']['category'], Theme[]> = {
     },
     {
       key: 'gift',
-      title: 'Hediye seçimini düşünen',
+      title: 'Hediye Alıcısı',
       terms: ['hediye', 'seçki', 'kutusu', 'gift'],
       need: 'İçerik ve kullanım uygunluğunu hediye bağlamında görmek',
       objection:
@@ -142,7 +142,7 @@ const THEMES: Record<AudienceDatasetV1['brand']['category'], Theme[]> = {
   software: [
     {
       key: 'integration',
-      title: 'Entegrasyon kanıtını arayan',
+      title: 'Kıdemli Entegratör',
       terms: ['entegrasyon', 'api', 'webhook', 'integration'],
       need: 'Mevcut iş akışına bağlantıyı somut örnekle görmek',
       objection:
@@ -150,14 +150,14 @@ const THEMES: Record<AudienceDatasetV1['brand']['category'], Theme[]> = {
     },
     {
       key: 'setup',
-      title: 'Kurulum adımlarını inceleyen',
+      title: 'Hızlı Kurulumcu',
       terms: ['kurulum', 'başlangıç', 'yükle', 'setup'],
       need: 'Kurulumun gerektirdiği adımları ve sorumlulukları anlamak',
       objection: 'Anında hazır vaadi yerine açık kurulum adımları isterim.',
     },
     {
       key: 'team',
-      title: 'Ekip kullanımını değerlendiren',
+      title: 'Ekip Yöneticisi',
       terms: ['ekip', 'rol', 'yetki', 'team'],
       need: 'Ekip üyeleri ve erişim rollerinin nasıl çalıştığını görmek',
       objection:
@@ -165,28 +165,28 @@ const THEMES: Record<AudienceDatasetV1['brand']['category'], Theme[]> = {
     },
     {
       key: 'pricing',
-      title: 'Plan sınırlarını karşılaştıran',
+      title: 'Plan ve Fiyat Alıcısı',
       terms: ['fiyat', 'plan', 'kota', 'ücret', 'pricing'],
       need: 'Planın bedeli ve kapsam sınırlarını karşılaştırmak',
       objection: 'Hangi özelliğin plana dahil olduğu belirsizse karar veremem.',
     },
     {
       key: 'workflow',
-      title: 'İş akışındaki faydayı arayan',
+      title: 'Verimlilik Lideri',
       terms: ['iş akış', 'otomasyon', 'zaman', 'workflow'],
       need: 'Ürünün somut bir iş adımını nasıl değiştirdiğini anlamak',
       objection: 'Ölçüm olmadan kesin zaman veya verim artışı kabul etmem.',
     },
     {
       key: 'trial',
-      title: 'Denemeden önce kapsamı soran',
+      title: 'Titiz Alıcı',
       terms: ['deneme', 'demo', 'sandbox', 'trial'],
       need: 'Denemede hangi işlevleri inceleyebileceğini görmek',
       objection: 'Deneme kapsamı belirtilmeden kaydolmak istemem.',
     },
     {
       key: 'security',
-      title: 'Veri erişimini sorgulayan',
+      title: 'Güvenlik Uzmanı',
       terms: ['veri', 'güven', 'erişim', 'security'],
       need: 'Veriye erişim ve kullanım sınırlarını anlamak',
       objection:
@@ -194,7 +194,7 @@ const THEMES: Record<AudienceDatasetV1['brand']['category'], Theme[]> = {
     },
     {
       key: 'support',
-      title: 'Destek sürecini planlayan',
+      title: 'Operasyon Lideri',
       terms: ['destek', 'rehber', 'doküman', 'support'],
       need: 'Sorun olduğunda başvurulacak kaynakları görmek',
       objection: 'Destek kapsamı ve iletişim yolu belirsizse önce sorarım.',
@@ -203,42 +203,42 @@ const THEMES: Record<AudienceDatasetV1['brand']['category'], Theme[]> = {
   other: [
     {
       key: 'features',
-      title: 'Ürün özelliklerini inceleyen',
+      title: 'Ürün Kaşifi',
       terms: ['özellik', 'ürün', 'feature'],
       need: 'Ürünün somut özelliklerini anlamak',
       objection: 'Somut özellik olmadan genel övgü yeterli değil.',
     },
     {
       key: 'usage',
-      title: 'Kullanım biçimini araştıran',
+      title: 'Kullanım Analisti',
       terms: ['kullan', 'uygun', 'usage'],
       need: 'Ürünün hangi kullanım için uygun olduğunu görmek',
       objection: 'Kendi kullanım senaryoma uygunluk açıklanmıyor.',
     },
     {
       key: 'value',
-      title: 'Bedeli karşılaştıran',
+      title: 'Fiyat Analisti',
       terms: ['fiyat', 'bedel', 'plan', 'value'],
       need: 'Bedeli ve dahil olanları açıkça karşılaştırmak',
       objection: 'Kapsam belirsizken avantajlı olduğunu kabul edemem.',
     },
     {
       key: 'support',
-      title: 'Hizmet koşullarını soran',
+      title: 'Hizmet Denetçisi',
       terms: ['destek', 'teslim', 'hizmet', 'support'],
       need: 'Hizmet ve destek koşullarını anlamak',
       objection: 'Koşullar açıklanmadan hizmet vaadini değerlendiremem.',
     },
     {
       key: 'evidence',
-      title: 'Somut kanıt isteyen',
+      title: 'Kanıt Arayan',
       terms: ['kanıt', 'örnek', 'ayrıntı', 'evidence'],
       need: 'İddiaları somut ürün bilgisiyle kontrol etmek',
       objection: 'Kaynağı olmayan kesin iddiayı sorgularım.',
     },
     {
       key: 'choice',
-      title: 'Seçenekleri karşılaştıran',
+      title: 'Seçenek Karşılaştırıcı',
       terms: ['seçenek', 'karşılaştır', 'çeşit', 'choice'],
       need: 'Seçenekler arasındaki farkı görmek',
       objection: 'Alternatifler arasındaki fark açıklanmıyor.',
@@ -247,7 +247,7 @@ const THEMES: Record<AudienceDatasetV1['brand']['category'], Theme[]> = {
   'personal-brand': [
     {
       key: 'technical-depth',
-      title: 'Teknik mimari ve kod kanıtı arayan',
+      title: 'Teknik Mimar',
       terms: [
         'kod',
         'mimari',
@@ -268,7 +268,7 @@ const THEMES: Record<AudienceDatasetV1['brand']['category'], Theme[]> = {
     },
     {
       key: 'builder-journey',
-      title: 'Girişimci yolculuğunu takip eden',
+      title: 'Solo Girişimci',
       terms: [
         'hikâye',
         'öğrendim',
@@ -288,7 +288,7 @@ const THEMES: Record<AudienceDatasetV1['brand']['category'], Theme[]> = {
     },
     {
       key: 'actionable-framework',
-      title: 'Uygulanabilir taktik ve şablon arayan',
+      title: 'Taktik Arayan',
       terms: [
         'şablon',
         'rehber',
@@ -307,7 +307,7 @@ const THEMES: Record<AudienceDatasetV1['brand']['category'], Theme[]> = {
     },
     {
       key: 'contrarian-insight',
-      title: 'Ezber bozan analitik bakış arayan',
+      title: 'Analitik Eleştirmen',
       terms: [
         'ezber bozan',
         'farklı',
@@ -326,7 +326,7 @@ const THEMES: Record<AudienceDatasetV1['brand']['category'], Theme[]> = {
     },
     {
       key: 'fast-roi',
-      title: 'Hızlı çözüm ve zaman tasarrufu isteyen',
+      title: 'Hızlı İcraatçı',
       terms: [
         'hızlı',
         'pratik',
@@ -344,7 +344,7 @@ const THEMES: Record<AudienceDatasetV1['brand']['category'], Theme[]> = {
     },
     {
       key: 'critical-skeptic',
-      title: 'Abartıyı filtreleyen şüpheci gözlemci',
+      title: 'Şüpheci Gözlemci',
       terms: [
         'kanıt',
         'abartı',
@@ -536,13 +536,34 @@ function creatorThemes(
       topics.set(key, { subject: words.slice(0, 9).join(' ').slice(0, 120), terms });
   }
   if (topics.size) {
-    return [...topics.values()].slice(0, 12).map(({ subject, terms }) => ({
-      key: `creator-topic-${hashCanonical(terms).slice(0, 12)}`,
-      title: `${subject} konusunu inceleyen`,
-      terms,
-      need: `${subject} bağlamında kendi kullanımına uyarlayabileceği somut bir örnek ve açıklık görmek`,
-      objection: `${subject} hakkında yalnız genel bir vaat varsa önce ayrıntı ve kaynak sorarım.`,
-    }));
+    return [...topics.values()].slice(0, 12).map(({ subject, terms }) => {
+      const lowerTerms = terms.map(t => t.toLowerCase()).join(' ');
+      let title = 'İçerik Kaşifi';
+      if (lowerTerms.includes('otomasyon') || lowerTerms.includes('verim') || lowerTerms.includes('hızlı')) {
+        title = 'Hızlı İcraatçı';
+      } else if (lowerTerms.includes('kurucu') || lowerTerms.includes('yolculuk') || lowerTerms.includes('buildinpublic')) {
+        title = 'Solo Girişimci';
+      } else if (lowerTerms.includes('kod') || lowerTerms.includes('mimari') || lowerTerms.includes('api') || lowerTerms.includes('teknik')) {
+        title = 'Teknik Mimar';
+      } else if (lowerTerms.includes('şablon') || lowerTerms.includes('rehber') || lowerTerms.includes('taktik')) {
+        title = 'Taktik Arayan';
+      } else if (lowerTerms.includes('analiz') || lowerTerms.includes('karşıt') || lowerTerms.includes('veri')) {
+        title = 'Analitik Eleştirmen';
+      } else if (lowerTerms.includes('hata') || lowerTerms.includes('öğrenim') || lowerTerms.includes('deneyim')) {
+        title = 'Deneyim Kaşifi';
+      } else if (terms.length >= 2) {
+        title = `${terms[0].charAt(0).toUpperCase() + terms[0].slice(1)} ${terms[1].charAt(0).toUpperCase() + terms[1].slice(1)}`;
+      } else if (terms.length === 1) {
+        title = `${terms[0].charAt(0).toUpperCase() + terms[0].slice(1)} Kaşifi`;
+      }
+      return {
+        key: `creator-topic-${hashCanonical(terms).slice(0, 12)}`,
+        title,
+        terms,
+        need: `${subject} bağlamında kendi kullanımına uyarlayabileceği somut bir örnek ve açıklık görmek`,
+        objection: `${subject} hakkında yalnız genel bir vaat varsa önce ayrıntı ve kaynak sorarım.`,
+      };
+    });
   }
   const subject = dataset.brand.description
     .split(/[.!?\n]/)[0]
@@ -551,14 +572,14 @@ function creatorThemes(
   return [
     {
       key: 'creator-brief-example',
-      title: 'Konuya somut örnekle yaklaşan',
+      title: 'Somut Örnekçi',
       terms: ['örnek', 'uygulama', 'deneyim'],
       need: `${subject}: konuyu somut örnekle anlamak`,
       objection: 'Örnek görmeden bu içeriğin kendime uygunluğunu bilemem.',
     },
     {
       key: 'creator-brief-depth',
-      title: 'Ayrıntı ve kaynak arayan',
+      title: 'Kaynak Denetçisi',
       terms: ['ayrıntı', 'kaynak', 'kanıt'],
       need: `${subject}: açıklamanın dayanağını ve sınırlarını görmek`,
       objection:
@@ -566,7 +587,7 @@ function creatorThemes(
     },
     {
       key: 'creator-brief-start',
-      title: 'İlk adımı netleştiren',
+      title: 'İlk Adımcı',
       terms: ['başlangıç', 'ilk adım', 'rehber'],
       need: `${subject}: nasıl başlanacağını anlamak`,
       objection:
@@ -789,7 +810,7 @@ export function compilePersonaPanel(
       version: 1,
       datasetHash: normalized.datasetHash,
       compilerVersion: PERSONA_COMPILER_VERSION,
-      title: `${theme.title} · ${dataset.brand.name}`,
+      title: theme.title,
       summary: theme.need,
       observedFacts,
       derivedSignals,

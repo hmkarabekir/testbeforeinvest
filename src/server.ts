@@ -83,8 +83,8 @@ function generateSyntheticPixelEvents(count: number, startAnonIndex = 1, options
   return events;
 }
 
-// Start with no traffic. Synthetic traffic is added only when the demo action is used.
-const pixelEventsBuffer: PixelEventRecord[] = [];
+// Keep the established synthetic starter panel so the pixel dashboard has a visible demo on launch.
+const pixelEventsBuffer: PixelEventRecord[] = generateSyntheticPixelEvents(243, 1);
 const oauthSessions = new Map<string, { platform: 'facebook' | 'instagram'; handle: string; redirectUri: string; expires: number }>();
 
 function getOrchestrator(mode?: string) {
@@ -207,8 +207,8 @@ const server = createServer(async (req, res) => {
       const source=pathname==='/api/grok/synthetic/load'?'grok':pathname==='/api/social/synthetic/load'?(body.platform || 'instagram'):body.source;
       const generated=generateDemoData({...body,source});
       const dataset=body.dataset && body.mode!=='replace'?appendDemoDataset(body.dataset,generated.dataset):generated.dataset;
-      const {summary}=socialService.importFromJson(dataset);
-      const panel=getOrchestrator('local').compilePanel(dataset);
+      const { summary } = socialService.importFromJson(dataset);
+      const panel = getOrchestrator('local').compilePanel(dataset);
       const product=dataset.products[0],bodyText=product.facts.slice(0,2).map(f=>f.text).join(' ');
       const sampleExperiment={...generated.sampleExperiment,context:{...generated.sampleExperiment.context,task:`${product.name} için uygunluğu değerlendirmek`},
         variantA:{...generated.sampleExperiment.variantA,productId:product.id,headline:product.name,body:bodyText},
@@ -616,7 +616,7 @@ const server = createServer(async (req, res) => {
     // 5. Run A/B Experiment
     if (pathname === '/api/run-experiment' && req.method === 'POST') {
       const body = await parseJsonBody(req);
-      let { dataset, variantA, variantB, repeats, panelMode, concurrency, context, engine: mode } = body;
+      let { dataset, variantA, variantB, repeats, panelMode, concurrency, context, engine: mode, selectedPersonaIds } = body;
       if (!variantA || !variantB) {
         return sendJson(res, 400, { error: 'variantA and variantB are required' });
       }
@@ -642,6 +642,7 @@ const server = createServer(async (req, res) => {
         repeats: repeats ?? 2,
         panelMode: panelMode || 'demo',
         concurrency: concurrency ?? 2,
+        selectedPersonaIds,
       });
       return sendJson(res, 200, experiment);
     }

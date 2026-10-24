@@ -170,6 +170,7 @@ export class AudienceLabOrchestrator {
     repeats?: number;
     panelMode?: PanelMode;
     concurrency?: number;
+    selectedPersonaIds?: string[];
   }): Promise<ExperimentResult> {
     const started = performance.now();
     const { dataset, repeats = 2, panelMode = 'full', concurrency = 2 } = params;
@@ -177,6 +178,12 @@ export class AudienceLabOrchestrator {
     const context = experimentContext(params.context);
     const variantA = normalizeExperimentVariant(params.variantA, dataset, 'a');
     const variantB = normalizeExperimentVariant(params.variantB, dataset, 'b');
+    const selectedPersonaIds = params.selectedPersonaIds;
+    if (selectedPersonaIds !== undefined && (!Array.isArray(selectedPersonaIds) || !selectedPersonaIds.length
+      || new Set(selectedPersonaIds).size !== selectedPersonaIds.length
+      || selectedPersonaIds.some(id => !panel.personas.some(persona => persona.id === id)))) {
+      throw new Error('AUDIENCE_LAB_EXPERIMENT_INVALID');
+    }
     if (!['demo', 'full'].includes(panelMode) || !Number.isInteger(repeats) || repeats < 1 || repeats > 6
       || !Number.isInteger(concurrency) || concurrency < 1 || concurrency > 2
       || !variantA.id || !variantB.id || variantA.id === variantB.id || variantA.productId !== variantB.productId) {
@@ -185,10 +192,13 @@ export class AudienceLabOrchestrator {
     if (variantA.contentHash === variantB.contentHash) throw new Error('AUDIENCE_LAB_IDENTICAL_VARIANTS');
     const normalizedDataset = panel.dataset;
     // One normal-attention identity per persona; never take the first six identities of the full panel.
-    const personas = panelMode === 'demo' ? panel.personas.slice(0, 6) : panel.personas;
+    const selectedPersonas = selectedPersonaIds
+      ? panel.personas.filter(persona => selectedPersonaIds.includes(persona.id))
+      : panel.personas;
+    const personas = panelMode === 'demo' ? selectedPersonas.slice(0, 6) : selectedPersonas;
     const identities = panelMode === 'demo'
       ? personas.map((p) => panel.identities.find((i) => i.personaId === p.id && i.scenario.attention === 'normal')!)
-      : panel.identities;
+      : panel.identities.filter(identity => personas.some(persona => persona.id === identity.personaId));
     const product = normalizedDataset.products.find((p) => p.id === variantA.productId);
     if (!product) throw new Error('AUDIENCE_LAB_EXPERIMENT_INVALID');
     const config = this.engine.configuration();

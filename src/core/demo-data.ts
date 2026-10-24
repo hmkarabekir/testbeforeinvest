@@ -54,12 +54,27 @@ export function generateDemoData(options: { scenarioId?: string; source?: string
     (focus:string)=>`${focus} seçimini karşılaştırıyorum. Kapsam, koşullar ve sonraki adım daha açık anlatılmalı.`,
     (focus:string)=>`${focus} için kısa bir rehber arıyorum; ilk adımı bilmeden devam etmek istemiyorum.`,
   ];
-  const demographic = { male:integer(24,81), total:integer(1200,94000), ages:[integer(10,35),integer(20,40),integer(10,24)] };
-  const cities = ['İstanbul','Ankara','İzmir','Bursa','Antalya','Eskişehir'];
+  let demographic = { male: integer(48, 55), total: integer(24000, 52000), ages: [integer(20, 28), integer(40, 50), integer(15, 25)] };
+  let cities = ['İstanbul', 'Ankara', 'İzmir', 'Bursa', 'Antalya', 'Eskişehir'];
+
+  if (scenario.fixture === 'b2b-software') {
+    demographic = { male: integer(72, 79), total: integer(32000, 68000), ages: [18, 56, 18] };
+    cities = ['İstanbul (Teknopark)', 'Ankara (ODTÜ)', 'İzmir', 'Eskişehir', 'Berlin', 'London'];
+  } else if (scenario.fixture === 'specialty-coffee') {
+    demographic = { male: integer(42, 46), total: integer(16000, 29000), ages: [30, 46, 16] };
+    cities = ['Kadıköy / İst', 'İzmir (Alsancak)', 'Ankara (Çankaya)', 'Eskişehir', 'Bursa', 'Antalya'];
+  } else if (scenario.fixture === 'furniture-studio') {
+    demographic = { male: integer(34, 40), total: integer(22000, 44000), ages: [12, 36, 42] };
+    cities = ['İstanbul (Nişantaşı)', 'Bodrum', 'Antalya', 'Ankara', 'İzmir (Urla)', 'Bursa'];
+  } else if (scenario.fixture === 'personal-brand-creator') {
+    demographic = { male: integer(50, 54), total: integer(52000, 94000), ages: [38, 42, 12] };
+    cities = ['İstanbul', 'Berlin', 'London', 'Amsterdam', 'İzmir', 'Ankara'];
+  }
+
   // Shuffle the city order as well as the shares; every seed changes the sample.
   const cityOrder=[...cities];
   for(let i=cityOrder.length-1;i>0;i--){const j=integer(0,i);[cityOrder[i],cityOrder[j]]=[cityOrder[j],cityOrder[i]];}
-  const shuffled = cityOrder.slice(0,3), cityShares=[integer(20,43),integer(12,24),integer(8,19)];
+  const shuffled = cityOrder.slice(0,3), cityShares=[integer(24,42),integer(14,24),integer(8,18)];
   for (const platform of platforms) {
     const sourceId=`src-demo-${platform}`;
     dataset.sources.push({id:sourceId,platform:platform==='grok'?'x':platform==='pixel'?'custom':platform,
@@ -90,13 +105,18 @@ export function generateDemoData(options: { scenarioId?: string; source?: string
     }
   }
   const reportText=dataset.research.slice(0,3).map((r,i)=>`MÜŞTERİ KARTI ${i+1}: ${scenario.focus[i%3]}\n- Temel İhtiyaç: ${r.statement}\n- Not: Sentetik demo; gerçek Grok/X araması yapılmadı.`).join('\n\n');
-  const factTexts=product.facts.slice(0,2).map(f=>f.text).join(' ');
-  return {dataset:parseAudienceDataset(dataset),reportText,
-    demo:{synthetic:true,scenarioId:scenario.id,title:scenario.title,seed,source,size,behavior:scenario.behavior,
-      counts:{posts:dataset.content.length,events:dataset.events.length,research:dataset.research.length,observations:dataset.observations.length}},
-    sampleExperiment:{context:{objective:'consideration',surface:'content',task:`${product.name} için uygunluğu değerlendirmek`,changedElement:'Ana mesaj ve bilgi sırası'},
-      variantA:{id:'demo-a',productId:product.id,format:'text',headline:product.name,body:factTexts,callToAction:'İncele'},
-      variantB:{id:'demo-b',productId:product.id,format:'text',headline:`${scenario.focus[0]} senin için önemli mi?`,body:factTexts,callToAction:'Ayrıntıları incele'}} };
+
+  const factTexts = product.facts.slice(0,2).map(f=>f.text).join(' ');
+  const sampleExperiment = {
+    context: { objective: 'consideration', surface: 'content', task: `${product.name} için uygunluğu değerlendirmek`, changedElement: 'Ana mesaj ve bilgi sırası' },
+    variantA: { id: 'demo-a', productId: product.id, format: 'text', headline: product.name, body: factTexts, callToAction: 'İncele' },
+    variantB: { id: 'demo-b', productId: product.id, format: 'text', headline: `${scenario.focus[0]} senin için önemli mi?`, body: factTexts, callToAction: 'Ayrıntıları incele' }
+  };
+
+  return { dataset: parseAudienceDataset(dataset), reportText,
+    demo: { synthetic: true, scenarioId: scenario.id, title: scenario.title, seed, source, size, behavior: scenario.behavior,
+      counts: { posts: dataset.content.length, events: dataset.events.length, research: dataset.research.length, observations: dataset.observations.length } },
+    sampleExperiment };
 }
 
 /** Append a demo source without losing the user's product or invalidating references. */
